@@ -17,28 +17,31 @@ function generateRandomTile() {
 }
 
 export default React.createClass({
-    onTileClick(row, col) {
-        console.log('tile clicked: ', row, col)
-    },
-
-    render() {
-        let queuedTiles = []
+    getInitialState() {
+        let queue = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {
-            queuedTiles.push(generateRandomTile())
+            queue.push(generateRandomTile())
         }
 
-        let boardTiles = []
+        let board = []
         for (let row = 0; row < NUM_BOARD_ROWS; row++) {
             let rowTiles = []
             for (let col = 0; col < NUM_BOARD_COLS; col++) {
                 rowTiles.push(Tiles.EMPTY)
             }
-            boardTiles.push(rowTiles)
+            board.push(rowTiles)
         }
+        return { board, queue }
+    },
 
+    onTileClick(row, col) {
+        console.log('tile clicked: ', row, col)
+    },
+
+    render() {
         return <div>
-            <Queue tiles={ queuedTiles } />
-            <Board board={ boardTiles }
+            <Queue tiles={ this.state.queue } />
+            <Board board={ this.state.board }
                    onTileClick={ this.onTileClick } />
         </div>
     }
