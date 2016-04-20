@@ -1,12 +1,10 @@
 import React, { PropTypes as Type } from 'react'
 
 import { TileType } from 'constants'
-import Tiles from 'tiles'
+import { StartTiles } from 'tiles'
 import styles from './styles.less'
 
-const START_TILES = [
-    Tiles.START_UP, Tiles.START_RIGHT, Tiles.START_DOWN, Tiles.START_LEFT
-]
+const START_TILES = Object.keys(StartTiles).map((key) => StartTiles[key])
 
 export default React.createClass({
     propTypes: {

@@ -1,5 +1,5 @@
 // 1 = up, 2 = right, 3 = down, 4 = left
-export default {
+export const Tiles = {
     UP_RIGHT: {
         id: 1,
         openings: [1, 2],
@@ -38,24 +38,26 @@ export default {
     EMPTY: {
         id: 8,
         openings: []
-    },
-    START_UP: {
-        id: 9,
+    }
+}
+export const StartTiles = {
+    UP: {
+        id: 1,
         openings: [1],
         image: 'start-up.png'
     },
-    START_RIGHT: {
-        id: 10,
+    RIGHT: {
+        id: 2,
         openings: [2],
         image: 'start-right.png'
     },
-    START_DOWN: {
-        id: 11,
+    DOWN: {
+        id: 3,
         openings: [3],
         image: 'start-down.png'
     },
-    START_LEFT: {
-        id: 12,
+    LEFT: {
+        id: 4,
         openings: [4],
         image: 'start-left.png'
     }

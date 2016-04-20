@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Tiles from 'tiles'
+import { StartTiles, Tiles } from 'tiles'
 import Board from 'components/Board'
 import Queue from 'components/Queue'
 
@@ -33,7 +33,7 @@ export default React.createClass({
         }
 
         // TODO: randomly choose a start position and orientation
-        board[1][1] = Tiles.START_RIGHT
+        board[1][1] = StartTiles.RIGHT
 
         return { board, queue }
     },
