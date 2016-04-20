@@ -1,8 +1,26 @@
+@TILE_SIZE: 100px;
+
 .tile {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     display: inline-block;
-    width: 100px;
-    height: 100px;
+
+    width: @TILE_SIZE;
+    height: @TILE_SIZE;
+
+    position: relative;
+    &::before {
+        background-image: url('../../../public/images/back-tile.png');
+        background-size: cover;
+        content: "";
+        opacity: 0.5;
+        z-index: -1;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 }
