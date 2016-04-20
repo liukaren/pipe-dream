@@ -6,17 +6,13 @@ import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        board: Type.arrayOf(Type.arrayOf(TileType))
+        tiles: Type.arrayOf(TileType)
     },
 
     render() {
         return <div className={ styles.main }>
-            { this.props.board.map((row, rowIndex) => (
-                <div key={ rowIndex }>
-                    { row.map((tile, colIndex) => (
-                        <Tile tile={ tile } key={ colIndex } />
-                    )) }
-                </div>
+            { this.props.tiles.map((tile, index) => (
+                <Tile tile={ tile } key={ index } />
             )) }
         </div>
     }
