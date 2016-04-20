@@ -6,6 +6,8 @@ import Queue from 'components/Queue'
 
 const NUM_UNIQUE_TILES = 7 // Excludes EMPTY
 const NUM_QUEUED_TILES = 5
+const NUM_BOARD_ROWS = 5
+const NUM_BOARD_COLS = 6
 
 function generateRandomTile() {
     const randomId = Math.floor(Math.random() * NUM_UNIQUE_TILES) + 1
@@ -21,12 +23,18 @@ export default React.createClass({
             queuedTiles.push(generateRandomTile())
         }
 
+        let boardTiles = []
+        for (let row = 0; row < NUM_BOARD_ROWS; row++) {
+            let rowTiles = []
+            for (let col = 0; col < NUM_BOARD_COLS; col++) {
+                rowTiles.push(Tiles.EMPTY)
+            }
+            boardTiles.push(rowTiles)
+        }
+
         return <div>
             <Queue tiles={ queuedTiles } />
-            <Board board={ [
-                [Tiles.UP_RIGHT, Tiles.RIGHT_LEFT, Tiles.EMPTY, Tiles.DOWN_LEFT],
-                [Tiles.RIGHT_LEFT, Tiles.RIGHT_DOWN, Tiles.UP_DOWN, Tiles.EMPTY]
-            ] } />
+            <Board board={ boardTiles } />
         </div>
     }
 })
