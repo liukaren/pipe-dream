@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { PropTypes as Type } from 'react'
 
 import { TileType } from 'constants'
 import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        tile: TileType.isRequired
+        tile: TileType.isRequired,
+        onClick: Type.func
     },
 
     render() {
@@ -13,6 +14,8 @@ export default React.createClass({
         if (this.props.tile.image) {
             tileStyle.backgroundImage = `url(public/images/${this.props.tile.image})`
         }
-        return <div className={ styles.tile } style={ tileStyle }></div>
+        return <div onClick={ this.props.onClick }
+                    className={ styles.tile }
+                    style={ tileStyle }></div>
     }
 })

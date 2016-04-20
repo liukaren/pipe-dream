@@ -17,6 +17,10 @@ function generateRandomTile() {
 }
 
 export default React.createClass({
+    onTileClick(row, col) {
+        console.log('tile clicked: ', row, col)
+    },
+
     render() {
         let queuedTiles = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {
@@ -34,7 +38,8 @@ export default React.createClass({
 
         return <div>
             <Queue tiles={ queuedTiles } />
-            <Board board={ boardTiles } />
+            <Board board={ boardTiles }
+                   onTileClick={ this.onTileClick } />
         </div>
     }
 })
