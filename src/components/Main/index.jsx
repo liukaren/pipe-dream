@@ -4,13 +4,14 @@ import { StartTiles, Tiles } from 'tiles'
 import Board from 'components/Board'
 import Queue from 'components/Queue'
 
-const NUM_UNIQUE_TILES = 7 // Excludes EMPTY and START tiles
+const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY and START tiles
+const NUM_START_TILES = 4
 const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 5
 const NUM_BOARD_COLS = 6
 
 function generateRandomTile() {
-    const randomId = Math.floor(Math.random() * NUM_UNIQUE_TILES) + 1
+    const randomId = Math.floor(Math.random() * NUM_PLAYABLE_TILES) + 1
     return Object.keys(Tiles)
         .map((key) => Tiles[key])
         .find((tile) => tile.id === randomId)
@@ -32,8 +33,16 @@ export default React.createClass({
             board.push(rowTiles)
         }
 
-        // TODO: randomly choose a start position and orientation
-        board[1][1] = StartTiles.RIGHT
+        // Randomly choose a start orientation
+        const randomId = Math.floor(Math.random() * NUM_START_TILES) + 1
+        const startTile = Object.keys(StartTiles)
+            .map((key) => StartTiles[key])
+            .find((tile) => tile.id === randomId)
+
+        // Randomly choose a start position (but don't choose edges)
+        const randomRow = Math.floor(Math.random() * (NUM_BOARD_ROWS - 2)) + 1
+        const randomCol = Math.floor(Math.random() * (NUM_BOARD_COLS - 2)) + 1
+        board[randomRow][randomCol] = startTile
 
         return { board, queue }
     },
