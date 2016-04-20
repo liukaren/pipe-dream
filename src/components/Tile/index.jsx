@@ -14,23 +14,25 @@ export default React.createClass({
     },
 
     render() {
-        const isStartTile = START_TILES.indexOf(this.props.tile) !== -1
+        const tile = this.props.tile
+        const nextTile = this.props.nextTile
+        const isStartTile = START_TILES.indexOf(tile.type) !== -1
 
         let tileStyle = {}
-        if (this.props.tile.image) {
-            tileStyle.backgroundImage = `url(public/images/${this.props.tile.image})`
+        if (tile.type.image) {
+            tileStyle.backgroundImage = `url(public/images/${tile.type.image})`
         }
 
         let nextTileStyle = {}
-        if (this.props.nextTile && this.props.nextTile.image) {
-            nextTileStyle.backgroundImage = `url(public/images/${this.props.nextTile.image})`
+        if (nextTile && nextTile.type.image) {
+            nextTileStyle.backgroundImage = `url(public/images/${nextTile.type.image})`
         }
 
         // Show the current tile, with an optional ghost preview of the next tile.
         return <div onClick={ () => { !isStartTile && this.props.onClick() } }
                     className={ styles.tile }
                     style={ tileStyle }>
-            { this.props.nextTile && !isStartTile &&
+            { nextTile && !isStartTile &&
                  <div className={ styles.tilePreview }
                       style={ nextTileStyle }></div> }
         </div>

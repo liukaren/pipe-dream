@@ -21,14 +21,14 @@ export default React.createClass({
     getInitialState() {
         let queue = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {
-            queue.push(generateRandomTile())
+            queue.push({ type: generateRandomTile() })
         }
 
         let board = []
         for (let row = 0; row < NUM_BOARD_ROWS; row++) {
             let rowTiles = []
             for (let col = 0; col < NUM_BOARD_COLS; col++) {
-                rowTiles.push(Tiles.EMPTY)
+                rowTiles.push({ type: Tiles.EMPTY })
             }
             board.push(rowTiles)
         }
@@ -42,7 +42,7 @@ export default React.createClass({
         // Randomly choose a start position (but don't choose edges)
         const randomRow = Math.floor(Math.random() * (NUM_BOARD_ROWS - 2)) + 1
         const randomCol = Math.floor(Math.random() * (NUM_BOARD_COLS - 2)) + 1
-        board[randomRow][randomCol] = startTile
+        board[randomRow][randomCol] = { type: startTile }
 
         return { board, queue }
     },
@@ -50,7 +50,7 @@ export default React.createClass({
     onTileClick(row, col) {
         const board = this.state.board
         board[row][col] = this.state.queue.shift()
-        this.state.queue.push(generateRandomTile())
+        this.state.queue.push({ type: generateRandomTile() })
         this.setState({ board, queue: this.state.queue })
     },
 
