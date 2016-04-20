@@ -31,6 +31,9 @@ export default React.createClass({
 
     onNextClick() {
         const gooPosition = this.state.gooPosition
+
+        this.state.board[gooPosition.row][gooPosition.col].hasGoo = true
+
         const nextGooPosition = TileHelper.getNextPosition(
             gooPosition.row, gooPosition.col, gooPosition.exitDirection)
 

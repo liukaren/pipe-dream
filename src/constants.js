@@ -5,5 +5,6 @@ export const TileType = Type.shape({
         id: Type.number.isRequired,
         openings: Type.arrayOf(Type.number).isRequired,
         image: Type.string
-    })
+    }),
+    hasGoo: Type.bool
 })

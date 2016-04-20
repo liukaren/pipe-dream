@@ -1,4 +1,5 @@
 import React, { PropTypes as Type } from 'react'
+import cn from 'classnames'
 
 import { TileType } from 'constants'
 import { StartTiles } from 'tiles'
@@ -30,7 +31,7 @@ export default React.createClass({
 
         // Show the current tile, with an optional ghost preview of the next tile.
         return <div onClick={ () => { !isStartTile && this.props.onClick() } }
-                    className={ styles.tile }
+                    className={ cn(styles.tile, tile.hasGoo && styles.hasGoo) }
                     style={ tileStyle }>
             { nextTile && !isStartTile &&
                  <div className={ styles.tilePreview }
