@@ -7,6 +7,7 @@ import styles from './styles.less'
 export default React.createClass({
     propTypes: {
         board: Type.arrayOf(Type.arrayOf(TileType)),
+        nextTile: TileType,
         onTileClick: Type.func
     },
 
@@ -16,6 +17,7 @@ export default React.createClass({
                 <div key={ row}>
                     { rowTiles.map((tile, col) => (
                         <Tile tile={ tile } key={ col}
+                              nextTile={ this.props.nextTile }
                               onClick={ () => { this.props.onTileClick(row, col) } } />
                     )) }
                 </div>

@@ -8,10 +8,6 @@ const NUM_UNIQUE_TILES = 7 // Excludes EMPTY and START tiles
 const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 5
 const NUM_BOARD_COLS = 6
-const START_TILES = [
-    Tiles.START_UP, Tiles.START_RIGHT,
-    Tiles.START_DOWN, Tiles.START_LEFT
-]
 
 function generateRandomTile() {
     const randomId = Math.floor(Math.random() * NUM_UNIQUE_TILES) + 1
@@ -44,10 +40,6 @@ export default React.createClass({
 
     onTileClick(row, col) {
         const board = this.state.board
-
-        // Do nothing if the user clicks a start tile
-        if (START_TILES.indexOf(board[row][col]) !== -1) { return }
-
         board[row][col] = this.state.queue.shift()
         this.state.queue.push(generateRandomTile())
         this.setState({ board, queue: this.state.queue })
@@ -57,7 +49,8 @@ export default React.createClass({
         return <div>
             <Queue tiles={ this.state.queue } />
             <Board board={ this.state.board }
-                   onTileClick={ this.onTileClick } />
+                   onTileClick={ this.onTileClick }
+                   nextTile={ this.state.queue[0] } />
         </div>
     }
 })
