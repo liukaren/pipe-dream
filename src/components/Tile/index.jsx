@@ -1,14 +1,11 @@
-import React, { PropTypes as Type } from 'react'
+import React from 'react'
 
+import { TileType } from 'constants'
 import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        tile: Type.shape({
-            id: Type.number.isRequired,
-            openings: Type.arrayOf(Type.number).isRequired,
-            image: Type.string
-        }).isRequired
+        tile: TileType.isRequired
     },
 
     render() {
