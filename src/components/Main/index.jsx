@@ -35,7 +35,10 @@ export default React.createClass({
     },
 
     onTileClick(row, col) {
-        console.log('tile clicked: ', row, col)
+        const board = this.state.board
+        board[row][col] = this.state.queue.shift()
+        this.state.queue.push(generateRandomTile())
+        this.setState({ board, queue: this.state.queue })
     },
 
     render() {
