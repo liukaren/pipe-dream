@@ -34,5 +34,9 @@ export default {
         id: 7,
         openings: [1, 2, 3, 4],
         image: 'cross.png'
+    },
+    EMPTY: {
+        id: 8,
+        openings: []
     }
 }
