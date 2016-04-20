@@ -30,7 +30,7 @@ export default React.createClass({
         }
 
         // Show the current tile, with an optional ghost preview of the next tile.
-        return <div onClick={ () => { !isStartTile && this.props.onClick() } }
+        return <div onClick={ () => { !isStartTile && !tile.hasGoo && this.props.onClick() } }
                     className={ cn(styles.tile, tile.hasGoo && styles.hasGoo) }
                     style={ tileStyle }>
             { nextTile && !isStartTile &&
