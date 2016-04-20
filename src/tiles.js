@@ -38,5 +38,25 @@ export default {
     EMPTY: {
         id: 8,
         openings: []
+    },
+    START_UP: {
+        id: 9,
+        openings: [1],
+        image: 'start-up.png'
+    },
+    START_RIGHT: {
+        id: 10,
+        openings: [2],
+        image: 'start-right.png'
+    },
+    START_DOWN: {
+        id: 11,
+        openings: [3],
+        image: 'start-down.png'
+    },
+    START_LEFT: {
+        id: 12,
+        openings: [4],
+        image: 'start-left.png'
     }
 }
