@@ -27,7 +27,7 @@ module.exports = {
         }],
 
         loaders: [{
-            test: /\.svg$/,
+            test: [/\.svg$/, /\.png$/],
             loader: 'url'
         }]
     },

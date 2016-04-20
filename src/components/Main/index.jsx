@@ -1,9 +1,10 @@
 import React from 'react'
 
+import Tiles from 'tiles'
 import Board from 'components/Board'
 
 export default React.createClass({
     render() {
-        return <Board board={ [1,2,3,4] } />
+        return <Board board={ [Tiles.UP_RIGHT, Tiles.RIGHT_LEFT] } />
     }
 })
