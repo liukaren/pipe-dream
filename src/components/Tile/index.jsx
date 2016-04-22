@@ -18,6 +18,7 @@ export default React.createClass({
         const tile = this.props.tile
         const nextTile = this.props.nextTile
         const isStartTile = START_TILES.indexOf(tile.type) !== -1
+        const isChangeableTile = !isStartTile && !tile.hasGoo
 
         let tileStyle = {}
         if (tile.type.image) {
@@ -30,10 +31,10 @@ export default React.createClass({
         }
 
         // Show the current tile, with an optional ghost preview of the next tile.
-        return <div onClick={ () => { !isStartTile && !tile.hasGoo && this.props.onClick() } }
+        return <div onClick={ () => { isChangeableTile && this.props.onClick() } }
                     className={ cn(styles.tile, tile.hasGoo && styles.hasGoo) }
                     style={ tileStyle }>
-            { nextTile && !isStartTile &&
+            { nextTile && isChangeableTile &&
                  <div className={ styles.tilePreview }
                       style={ nextTileStyle }></div> }
         </div>
