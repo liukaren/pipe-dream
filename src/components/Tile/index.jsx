@@ -1,5 +1,6 @@
 import React, { PropTypes as Type } from 'react'
 
+import animationStyles from 'animations.less'
 import { TileType } from 'constants'
 import { StartTiles } from 'tiles'
 import styles from './styles.less'
@@ -27,7 +28,10 @@ export default React.createClass({
         let gooStyle = {}
         if (tile.type.image) {
             gooStyle.backgroundImage = `url(public/images/${tile.type.image}-fill.png)`
-            // TODO: Set gooStyle.animationDuration to a variable amount of time
+
+            const transitionTime = '1s' // TODO: Set transition time
+            const transitionName = animationStyles.flowUpDown // TODO: Set direction
+            gooStyle.animation = `${transitionName} ${transitionTime} both`
         }
 
         let nextTileStyle = {}
@@ -40,7 +44,8 @@ export default React.createClass({
                     className={ styles.tile }
                     style={ tileStyle }>
             { tile.hasGoo &&
-                <div className={ styles.tileGoo } style={ gooStyle }></div> }
+                <div className={ styles.tileGoo }
+                     style={ gooStyle }></div> }
             { nextTile && isChangeableTile &&
                  <div className={ styles.tilePreview }
                       style={ nextTileStyle }></div> }

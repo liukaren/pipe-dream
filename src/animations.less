@@ -1,1 +1,19 @@
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes flowUpDown {
+    from { clip-path: inset(0% 0% 100% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+
+@keyframes flowDownUp {
+    from { clip-path: inset(100% 0% 0% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+
+@keyframes flowLeftRight {
+    from { clip-path: inset(0% 100% 0% 0%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
+
+@keyframes flowRightLeft {
+    from { clip-path: inset(0% 0% 0% 100%); }
+    to { clip-path: inset(0% 0% 0% 0%); }
+}
