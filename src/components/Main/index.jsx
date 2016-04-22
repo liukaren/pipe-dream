@@ -11,15 +11,12 @@ export default React.createClass({
         const { row, col } = TileHelper.generateRandomInnerPosition()
         board[row][col] = { type: startTile }
 
-        // Use this to calculate the next goo position.
-        // exitDirection is where it will go next, one of { 1, 2, 3, 4 } --
-        // clockwise from top.
-        const gooPosition = {
-            row, col,
-            exitDirection: startTile.openings[0]
+        return {
+            board,
+            queue: TileHelper.generateQueue(),
+            gooPosition: null,
+            startPosition: { row, col }
         }
-
-        return { board, queue: TileHelper.generateQueue(), gooPosition }
     },
 
     onTileClick(row, col) {
@@ -29,27 +26,42 @@ export default React.createClass({
         this.setState({ board, queue: this.state.queue })
     },
 
-    onNextClick() {
-        const gooPosition = this.state.gooPosition
+    onStep() {
+        // If no goo yet, initialize goo position to the start tile.
+        if (!this.state.gooPosition) {
+            const { row, col } = this.state.startPosition
+            const startTile = this.state.board[row][col]
+            const gooPosition = {
+                row, col,
+                exitDirection: startTile.type.openings[0]
+            }
+            this.state.board[row][col].hasGoo = true
+            this.setState({ gooPosition, board: this.state.board })
+            return
+        }
 
-        this.state.board[gooPosition.row][gooPosition.col].hasGoo = true
+        // Flow to the next position
+        const { row, col, exitDirection } = this.state.gooPosition
+        console.log(row, col, exitDirection)
+        const nextGooPosition = TileHelper.getNextPosition(row, col, exitDirection)
 
-        const nextGooPosition = TileHelper.getNextPosition(
-            gooPosition.row, gooPosition.col, gooPosition.exitDirection)
-
+        // Check if the next position is on the board
         if (TileHelper.isOutOfBounds(nextGooPosition.row, nextGooPosition.col)) {
             console.log('game over, out of bounds')
             return
         }
 
+        // Check if next position has an opening where the goo would enter
         const nextGooTile = this.state.board[nextGooPosition.row][nextGooPosition.col].type
-        const enterDirection = TileHelper.getOppositeDirection(gooPosition.exitDirection)
+        const enterDirection = TileHelper.getOppositeDirection(exitDirection)
         if (nextGooTile.openings.indexOf(enterDirection) === -1) {
             console.log('game over, next tile does not have opening')
             return
         }
-        nextGooPosition.exitDirection = TileHelper.getExitDirection(nextGooTile, enterDirection)
 
+        // Fill the next position with goo
+        this.state.board[nextGooPosition.row][nextGooPosition.col].hasGoo = true
+        nextGooPosition.exitDirection = TileHelper.getExitDirection(nextGooTile, enterDirection)
         this.setState({ gooPosition: nextGooPosition })
     },
 
@@ -61,11 +73,11 @@ export default React.createClass({
                    nextTile={ this.state.queue[0] } />
             <ul>
                 <li>Current goo position:</li>
-                <li>Row: { this.state.gooPosition.row }</li>
-                <li>Col: { this.state.gooPosition.col }</li>
-                <li>Exit Direction: { this.state.gooPosition.exitDirection }</li>
+                <li>Row: { this.state.gooPosition && this.state.gooPosition.row }</li>
+                <li>Col: { this.state.gooPosition && this.state.gooPosition.col }</li>
+                <li>Exit Direction: { this.state.gooPosition && this.state.gooPosition.exitDirection }</li>
             </ul>
-            <button onClick={ this.onNextClick }>Next</button>
+            <button onClick={ this.onStep }>Next</button>
         </div>
     }
 })
