@@ -1,9 +1,17 @@
+@import '~animations.less';
 @import '~constants.less';
 
-.tile {
+.tile, .tileGoo, .tilePreview {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.tile {
+    @backgroundZIndex: -1;
+    @gooZIndex: 1;
+    @previewZIndex: 2;
+
     display: inline-block;
 
     width: @TILE_SIZE;
@@ -15,7 +23,7 @@
         background-size: cover;
         content: "";
         opacity: 0.5;
-        z-index: -1;
+        z-index: @backgroundZIndex;
 
         position: absolute;
         top: 0;
@@ -24,27 +32,27 @@
         left: 0;
     }
 
-    .tilePreview {
-        background-color: rgba(0, 0, 0, 0.6);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        cursor: pointer;
-        z-index: 1;
-
+    .tileGoo, .tilePreview {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
+    }
+
+    .tileGoo {
+        animation: fadeIn @TRANSITION;
+        z-index: @gooZIndex;
+    }
+
+    .tilePreview {
+        background-color: rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+        z-index: @previewZIndex;
 
         opacity: 0;
         &:hover {
             opacity: 0.8;
         }
-    }
-
-    &.hasGoo {
-        background-color: green;
     }
 }
