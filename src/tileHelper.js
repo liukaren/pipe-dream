@@ -1,4 +1,5 @@
 import { StartTiles, Tiles } from 'tiles'
+import animationStyles from 'animations.less'
 
 const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY and START tiles
 const NUM_START_TILES = 4
@@ -6,19 +7,34 @@ const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 5
 const NUM_BOARD_COLS = 6
 
+function getDirectionName(direction) {
+    switch(direction) {
+        case 1: return 'Up'
+        case 2: return 'Right'
+        case 3: return 'Down'
+        case 4: return 'Left'
+    }
+}
+
+function initTileWithType(type) {
+    return { type, gooDirections: [] }
+}
+
 const TileHelper = {
     generateRandomTile() {
         const randomId = Math.floor(Math.random() * NUM_PLAYABLE_TILES) + 1
-        return Object.keys(Tiles)
+        const tileType = Object.keys(Tiles)
             .map((key) => Tiles[key])
             .find((tile) => tile.id === randomId)
+        return initTileWithType(tileType)
     },
 
     generateRandomStartTile() {
         const randomId = Math.floor(Math.random() * NUM_START_TILES) + 1
-        return Object.keys(StartTiles)
+        const tileType = Object.keys(StartTiles)
             .map((key) => StartTiles[key])
             .find((tile) => tile.id === randomId)
+        return initTileWithType(tileType)
     },
 
     // Avoids edges when generating a position.
@@ -58,7 +74,7 @@ const TileHelper = {
         for (let row = 0; row < NUM_BOARD_ROWS; row++) {
             let rowTiles = []
             for (let col = 0; col < NUM_BOARD_COLS; col++) {
-                rowTiles.push({ type: Tiles.EMPTY })
+                rowTiles.push(initTileWithType(Tiles.EMPTY))
             }
             board.push(rowTiles)
         }
@@ -68,13 +84,20 @@ const TileHelper = {
     generateQueue() {
         let queue = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {
-            queue.push({ type: TileHelper.generateRandomTile() })
+            queue.push(TileHelper.generateRandomTile())
         }
         return queue
     },
 
     isOutOfBounds(row, col) {
         return row < 0 || row >= NUM_BOARD_ROWS || col < 0 || col >= NUM_BOARD_COLS
+    },
+
+    getGooAnimation(enter, exit) {
+        const enterName = getDirectionName(enter)
+        const exitName = getDirectionName(exit)
+        const animationName = `flow${enterName}To${exitName}`
+        return animationStyles[animationName]
     }
 }
 

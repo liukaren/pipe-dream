@@ -1,19 +1,69 @@
-@keyframes flowUpDown {
+// -------- Straight paths --------
+
+@keyframes flowUpToDown {
     from { clip-path: inset(0% 0% 100% 0%); }
     to { clip-path: inset(0% 0% 0% 0%); }
 }
 
-@keyframes flowDownUp {
+@keyframes flowDownToUp {
     from { clip-path: inset(100% 0% 0% 0%); }
     to { clip-path: inset(0% 0% 0% 0%); }
 }
 
-@keyframes flowLeftRight {
+@keyframes flowLeftToRight {
     from { clip-path: inset(0% 100% 0% 0%); }
     to { clip-path: inset(0% 0% 0% 0%); }
 }
 
-@keyframes flowRightLeft {
+@keyframes flowRightToLeft {
     from { clip-path: inset(0% 0% 0% 100%); }
     to { clip-path: inset(0% 0% 0% 0%); }
+}
+
+// Aliases that are a little easier to think about
+@left: 0%;
+@right: 100%;
+@up: 0%;
+@down: 100%;
+
+// -------- Curved paths --------
+
+@keyframes flowUpToRight {
+    from { clip-path: polygon(@right @up, @left @up, @left @up, @left @up); }
+    to { clip-path: polygon(@right @up, @left @up, @left @down, @right @down); }
+}
+
+@keyframes flowRightToUp {
+    from { clip-path: polygon(@right @up, @right @down, @right @down, @right @down); }
+    to { clip-path: polygon(@right @up, @right @down, @left @down, @left @up); }
+}
+
+@keyframes flowRightToDown {
+    from { clip-path: polygon(@right @down, @right @up, @right @up, @right @up); }
+    to { clip-path: polygon(@right @down, @right @up, @left @up, @left @down); }
+}
+
+@keyframes flowDownToRight {
+    from { clip-path: polygon(@right @down, @left @down, @left @down, @left @down); }
+    to { clip-path: polygon(@right @down, @left @down, @left @up, @right @up); }
+}
+
+@keyframes flowDownToLeft {
+    from { clip-path: polygon(@left @down, @right @down, @right @down, @right @down); }
+    to { clip-path: polygon(@left @down, @right @down, @right @up, @left @up); }
+}
+
+@keyframes flowLeftToDown {
+    from { clip-path: polygon(@left @down, @left @up, @left @up, @left @up); }
+    to { clip-path: polygon(@left @down, @left @up, @right @up, @right @down); }
+}
+
+@keyframes flowLeftToUp {
+    from { clip-path: polygon(@left @up, @left @down, @left @down, @left @down); }
+    to { clip-path: polygon(@left @up, @left @down, @right @down, @right @up); }
+}
+
+@keyframes flowUpToLeft {
+    from { clip-path: polygon(@left @up, @right @up, @right @up, @right @up); }
+    to { clip-path: polygon(@left @up, @right @up, @right @down, @left @down); }
 }

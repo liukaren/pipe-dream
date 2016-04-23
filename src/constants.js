@@ -5,6 +5,10 @@ export const TileType = Type.shape({
         id: Type.number.isRequired,
         openings: Type.arrayOf(Type.number).isRequired,
         image: Type.string
-    }),
-    hasGoo: Type.bool
+    }).isRequired,
+
+    // Documents all the directions the goo has flowed through, for animation
+    // purposes. e.g. [[1,3],[4,2]] means goo flowed from top to bottom and
+    // left to right.
+    gooDirections: Type.arrayOf(Type.arrayOf(Type.number)).isRequired
 })

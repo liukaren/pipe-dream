@@ -9,7 +9,7 @@ export default React.createClass({
         const board = TileHelper.generateEmptyBoard()
         const startTile = TileHelper.generateRandomStartTile()
         const { row, col } = TileHelper.generateRandomInnerPosition()
-        board[row][col] = { type: startTile }
+        board[row][col] = startTile
 
         return {
             board,
@@ -22,7 +22,7 @@ export default React.createClass({
     onTileClick(row, col) {
         const board = this.state.board
         board[row][col] = this.state.queue.shift()
-        this.state.queue.push({ type: TileHelper.generateRandomTile() })
+        this.state.queue.push(TileHelper.generateRandomTile())
         this.setState({ board, queue: this.state.queue })
     },
 
@@ -31,18 +31,16 @@ export default React.createClass({
         if (!this.state.gooPosition) {
             const { row, col } = this.state.startPosition
             const startTile = this.state.board[row][col]
-            const gooPosition = {
-                row, col,
-                exitDirection: startTile.type.openings[0]
-            }
-            this.state.board[row][col].hasGoo = true
+            const exitDirection = startTile.type.openings[0]
+            const enterDirection = TileHelper.getOppositeDirection(exitDirection)
+            const gooPosition = { row, col, exitDirection }
+            this.state.board[row][col].gooDirections = [[enterDirection, exitDirection]]
             this.setState({ gooPosition, board: this.state.board })
             return
         }
 
         // Flow to the next position
         const { row, col, exitDirection } = this.state.gooPosition
-        console.log(row, col, exitDirection)
         const nextGooPosition = TileHelper.getNextPosition(row, col, exitDirection)
 
         // Check if the next position is on the board
@@ -59,9 +57,14 @@ export default React.createClass({
             return
         }
 
-        // Fill the next position with goo
-        this.state.board[nextGooPosition.row][nextGooPosition.col].hasGoo = true
+        // Set the next exit direction
         nextGooPosition.exitDirection = TileHelper.getExitDirection(nextGooTile, enterDirection)
+
+        // Fill the next position with goo
+        this.state.board[nextGooPosition.row][nextGooPosition.col].gooDirections.push(
+            [enterDirection, nextGooPosition.exitDirection]
+        )
+
         this.setState({ gooPosition: nextGooPosition })
     },
 
