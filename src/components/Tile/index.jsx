@@ -1,5 +1,6 @@
 import React, { PropTypes as Type } from 'react'
 
+import animationStyles from 'animations.less'
 import { TileType } from 'constants'
 import TileHelper from 'tileHelper'
 import { StartTiles } from 'tiles'
@@ -34,7 +35,10 @@ export default React.createClass({
             // TODO: Map through all goo directions
             const transitionName = TileHelper.getGooAnimation(
                 tile.gooDirections[0][0], tile.gooDirections[0][1])
-            gooStyle.animation = `${transitionName} ${transitionTime} both`
+            gooStyle.animation = [
+                `${transitionName} ${transitionTime} both`,
+                `${animationStyles.fadeIn} ${transitionTime} both`
+            ].join(', ')
         }
 
         let nextTileStyle = {}
