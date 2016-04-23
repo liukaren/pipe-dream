@@ -24,7 +24,7 @@ export default React.createClass({
 
         let tileStyle = {}
         if (tile.type.image) {
-            tileStyle.backgroundImage = `url(public/images/${tile.type.image}.png)`
+            tileStyle.backgroundImage = `url(public/images/${tile.type.image}.svg)`
         }
 
         let gooStyle = {}
@@ -43,7 +43,7 @@ export default React.createClass({
 
         let nextTileStyle = {}
         if (nextTile && nextTile.type.image) {
-            nextTileStyle.backgroundImage = `url(public/images/${nextTile.type.image}.png)`
+            nextTileStyle.backgroundImage = `url(public/images/${nextTile.type.image}.svg)`
         }
 
         // Show the current tile, with an optional ghost preview of the next tile.
