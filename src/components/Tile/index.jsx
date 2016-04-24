@@ -29,7 +29,7 @@ export default React.createClass({
 
         let gooStyle = {}
         if (tile.type.image && hasGoo) {
-            gooStyle.backgroundImage = `url(public/images/${tile.type.image}-fill.png)`
+            gooStyle.backgroundImage = `url(public/images/${tile.type.image}-fill.svg)`
 
             const transitionTime = '1s' // TODO: Set transition time
             // TODO: Map through all goo directions
