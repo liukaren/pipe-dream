@@ -1,7 +1,8 @@
-import { StartTiles, Tiles } from 'tiles'
 import animationStyles from 'animations.less'
+import { DIRECTIONS } from 'constants'
+import { StartTiles, Tiles } from 'tiles'
 
-const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY and START tiles
+const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY tile
 const NUM_START_TILES = 4
 const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 5
@@ -9,10 +10,10 @@ const NUM_BOARD_COLS = 6
 
 function getDirectionName(direction) {
     switch(direction) {
-        case 1: return 'Up'
-        case 2: return 'Right'
-        case 3: return 'Down'
-        case 4: return 'Left'
+        case DIRECTIONS.UP    : return 'Up'
+        case DIRECTIONS.RIGHT : return 'Right'
+        case DIRECTIONS.DOWN  : return 'Down'
+        case DIRECTIONS.LEFT  : return 'Left'
     }
 }
 
@@ -62,10 +63,10 @@ const TileHelper = {
 
     getNextPosition(row, col, direction) {
         switch (direction) {
-            case 1: return { row: row - 1, col }
-            case 2: return { row, col: col + 1 }
-            case 3: return { row: row + 1, col }
-            case 4: return { row, col: col - 1 }
+            case DIRECTIONS.UP    : return { row: row - 1, col }
+            case DIRECTIONS.RIGHT : return { row, col: col + 1 }
+            case DIRECTIONS.DOWN  : return { row: row + 1, col }
+            case DIRECTIONS.LEFT  : return { row, col: col - 1 }
         }
     },
 
@@ -101,9 +102,9 @@ const TileHelper = {
     },
 
     getGooImage(enter, exit) {
-        const directions = [enter, exit].sort()
-        const dirName1 = getDirectionName(directions[0]).toLowerCase()
-        const dirName2 = getDirectionName(directions[1]).toLowerCase()
+        const [dir1, dir2] = [enter, exit].sort()
+        const dirName1 = getDirectionName(dir1).toLowerCase()
+        const dirName2 = getDirectionName(dir2).toLowerCase()
         return `${dirName1}-${dirName2}-fill`
     }
 }
