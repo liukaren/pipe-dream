@@ -23,26 +23,28 @@ export default React.createClass({
         const hasGoo = tile.gooDirections.length > 0
         const isChangeableTile = !isStartTile && !hasGoo
 
-        let gooStyle = {}
-        if (hasGoo) {
+        const gooTiles = tile.gooDirections.map(([enter, exit], index) => {
+            let gooStyle = {}
+
             const transitionTime = '1s' // TODO: Set transition time
-            // TODO: Map through all goo directions
-            const transitionName = TileHelper.getGooAnimation(
-                tile.gooDirections[0][0], tile.gooDirections[0][1])
+            const transitionName = TileHelper.getGooAnimation(enter, exit)
             gooStyle.animation = [
                 `${transitionName} ${transitionTime} both`,
                 `${animationStyles.fadeIn} ${transitionTime} both`
             ].join(', ')
 
-            const gooImage = TileHelper.getGooImage(
-                tile.gooDirections[0][0], tile.gooDirections[0][1])
+            const gooImage = TileHelper.getGooImage(enter, exit)
             gooStyle.backgroundImage = `url(public/images/${gooImage}.svg)`
-        }
+
+            return <div key={ index }
+                        className={ styles.tileGoo }
+                        style={ gooStyle }></div>
+        })
 
         // Show the current tile, with an optional ghost preview of the next tile.
         return <div onClick={ () => { isChangeableTile && this.props.onClick() } }
                     className={ cn(styles.tile, tile.type.className) }>
-            { hasGoo && <div className={ styles.tileGoo } style={ gooStyle }></div> }
+            { gooTiles }
             { nextTile && isChangeableTile &&
                  <div className={ cn(styles.tilePreview, nextTile.type.className) }></div> }
         </div>
