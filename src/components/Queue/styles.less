@@ -5,3 +5,19 @@
     margin-right: @GUTTER;
     width: @TILE_SIZE;
 }
+
+// -------- Animations --------
+
+:global(.queue-enter.queue-enter-active),
+:global(.queue-leave) {
+    max-height: @TILE_SIZE;
+    opacity: 1;
+    transition: max-height @TRANSITION, opacity @TRANSITION;
+}
+
+:global(.queue-enter),
+:global(.queue-leave.queue-leave-active) {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height @TRANSITION, opacity @TRANSITION;
+}

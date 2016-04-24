@@ -1,19 +1,25 @@
 import React, { PropTypes as Type } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import { TileType } from 'constants'
+import { TileType, TRANSITION_MS } from 'constants'
 import Tile from 'components/Tile'
 import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        tiles: Type.arrayOf(TileType)
+        tiles: Type.arrayOf(TileType).isRequired,
+        startIndex: Type.number.isRequired
     },
 
     render() {
-        return <div className={ styles.main }>
+        return <ReactCSSTransitionGroup className={ styles.main }
+                                        transitionName="queue"
+                                        transitionEnterTimeout={ TRANSITION_MS }
+                                        transitionLeaveTimeout={ TRANSITION_MS }>
             { this.props.tiles.map((tile, index) => (
-                <Tile tile={ tile } key={ index } />
+                <Tile key={ this.props.startIndex + index }
+                      tile={ tile } />
             )) }
-        </div>
+        </ReactCSSTransitionGroup>
     }
 })
