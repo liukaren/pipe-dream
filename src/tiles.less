@@ -1,0 +1,77 @@
+// TODO: Remove all this boilerplate
+
+.upRight {
+    background-image: url(../public/images/up-right.svg);
+}
+
+.upDown {
+    background-image: url(../public/images/up-down.svg);
+}
+
+.upLeft {
+    background-image: url(../public/images/up-left.svg);
+}
+
+.rightDown {
+    background-image: url(../public/images/right-down.svg);
+}
+
+.rightLeft {
+    background-image: url(../public/images/right-left.svg);
+}
+
+.downLeft {
+    background-image: url(../public/images/down-left.svg);
+}
+
+.cross {
+    background-image: url(../public/images/cross.svg);
+}
+
+.startUp, .startRight, .startDown, .startLeft {
+    &::after {
+        content: "";
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        z-index: 1;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+}
+
+.startUp {
+    background-image: url(../public/images/up-down.svg);
+    &::after {
+        background-image: url(../public/images/green-horizontal.svg);
+        top: 50%;
+    }
+}
+
+.startRight {
+    background-image: url(../public/images/right-left.svg);
+    &::after {
+        background-image: url(../public/images/green-vertical.svg);
+        right: 50%;
+    }
+}
+
+.startDown {
+    background-image: url(../public/images/up-down.svg);
+    &::after {
+        background-image: url(../public/images/green-horizontal.svg);
+        bottom: 50%;
+    }
+}
+
+.startLeft {
+    background-image: url(../public/images/right-left.svg);
+    &::after {
+        background-image: url(../public/images/green-vertical.svg);
+        left: 50%;
+    }
+}

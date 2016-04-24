@@ -98,6 +98,13 @@ const TileHelper = {
         const exitName = getDirectionName(exit)
         const animationName = `flow${enterName}To${exitName}`
         return animationStyles[animationName]
+    },
+
+    getGooImage(enter, exit) {
+        const directions = [enter, exit].sort()
+        const dirName1 = getDirectionName(directions[0]).toLowerCase()
+        const dirName2 = getDirectionName(directions[1]).toLowerCase()
+        return `${dirName1}-${dirName2}-fill`
     }
 }
 

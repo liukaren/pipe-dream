@@ -1,4 +1,5 @@
 import React, { PropTypes as Type } from 'react'
+import cn from 'classnames'
 
 import animationStyles from 'animations.less'
 import { TileType } from 'constants'
@@ -22,15 +23,8 @@ export default React.createClass({
         const hasGoo = tile.gooDirections.length > 0
         const isChangeableTile = !isStartTile && !hasGoo
 
-        let tileStyle = {}
-        if (tile.type.image) {
-            tileStyle.backgroundImage = `url(public/images/${tile.type.image}.svg)`
-        }
-
         let gooStyle = {}
         if (tile.type.image && hasGoo) {
-            gooStyle.backgroundImage = `url(public/images/${tile.type.image}-fill.svg)`
-
             const transitionTime = '1s' // TODO: Set transition time
             // TODO: Map through all goo directions
             const transitionName = TileHelper.getGooAnimation(
@@ -39,21 +33,18 @@ export default React.createClass({
                 `${transitionName} ${transitionTime} both`,
                 `${animationStyles.fadeIn} ${transitionTime} both`
             ].join(', ')
-        }
 
-        let nextTileStyle = {}
-        if (nextTile && nextTile.type.image) {
-            nextTileStyle.backgroundImage = `url(public/images/${nextTile.type.image}.svg)`
+            const gooImage = TileHelper.getGooImage(
+                tile.gooDirections[0][0], tile.gooDirections[0][1])
+            gooStyle.backgroundImage = `url(public/images/${gooImage}.svg)`
         }
 
         // Show the current tile, with an optional ghost preview of the next tile.
         return <div onClick={ () => { isChangeableTile && this.props.onClick() } }
-                    className={ styles.tile }
-                    style={ tileStyle }>
+                    className={ cn(styles.tile, tile.type.className) }>
             { hasGoo && <div className={ styles.tileGoo } style={ gooStyle }></div> }
             { nextTile && isChangeableTile &&
-                 <div className={ styles.tilePreview }
-                      style={ nextTileStyle }></div> }
+                 <div className={ cn(styles.tilePreview, nextTile.type.className) }></div> }
         </div>
     }
 })
