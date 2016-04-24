@@ -24,7 +24,7 @@ export default React.createClass({
         const isChangeableTile = !isStartTile && !hasGoo
 
         let gooStyle = {}
-        if (tile.type.image && hasGoo) {
+        if (hasGoo) {
             const transitionTime = '1s' // TODO: Set transition time
             // TODO: Map through all goo directions
             const transitionName = TileHelper.getGooAnimation(
