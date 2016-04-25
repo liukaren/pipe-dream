@@ -1,6 +1,11 @@
 @import '~animations.less';
 @import '~constants.less';
 
+@keyframes pulse {
+    from { transform: scale(0.9, 0.9); }
+    to { transform: scale(1.0, 1.0); }
+}
+
 .tile, .tileGoo, .tilePreview {
     background-position: center;
     background-repeat: no-repeat;
@@ -51,7 +56,9 @@
 
         opacity: 0;
         &:hover {
-            opacity: 0.8;
+            border-radius: 5px;
+            opacity: 1;
+            animation: pulse @TRANSITION_HOVER ease-in-out infinite alternate;
         }
     }
 }

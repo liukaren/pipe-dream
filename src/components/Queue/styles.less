@@ -12,12 +12,12 @@
 :global(.queue-leave) {
     max-height: @TILE_SIZE;
     opacity: 1;
-    transition: max-height @TRANSITION, opacity @TRANSITION;
+    transition: max-height @TRANSITION_QUEUE, opacity @TRANSITION_QUEUE;
 }
 
 :global(.queue-enter),
 :global(.queue-leave.queue-leave-active) {
     max-height: 0;
     opacity: 0;
-    transition: max-height @TRANSITION, opacity @TRANSITION;
+    transition: max-height @TRANSITION_QUEUE, opacity @TRANSITION_QUEUE;
 }

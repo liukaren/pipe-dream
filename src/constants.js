@@ -1,6 +1,6 @@
 import { PropTypes as Type } from 'react'
 
-export const TRANSITION_MS = 300
+export const TRANSITION_QUEUE_MS = 300
 
 export const TileType = Type.shape({
     type: Type.shape({
