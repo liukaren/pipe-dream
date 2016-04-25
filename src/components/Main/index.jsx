@@ -14,7 +14,6 @@ export default React.createClass({
         return {
             board,
             queue: TileHelper.generateQueue(),
-            queueStartIndex: 0, // Queue tiles have unique keys, for animation purposes
             gooPosition: null,
             startPosition: { row, col }
         }
@@ -26,8 +25,7 @@ export default React.createClass({
         this.state.queue.push(TileHelper.generateRandomTile())
         this.setState({
             board,
-            queue: this.state.queue,
-            queueStartIndex: this.state.queueStartIndex + 1
+            queue: this.state.queue
         })
     },
 
@@ -75,7 +73,7 @@ export default React.createClass({
 
     render() {
         return <div>
-            <Queue tiles={ this.state.queue } startIndex={ this.state.queueStartIndex } />
+            <Queue tiles={ this.state.queue } />
             <Board board={ this.state.board }
                    onTileClick={ this.onTileClick }
                    nextTile={ this.state.queue[0] } />

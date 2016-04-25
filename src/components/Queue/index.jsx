@@ -7,8 +7,7 @@ import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        tiles: Type.arrayOf(TileType).isRequired,
-        startIndex: Type.number.isRequired
+        tiles: Type.arrayOf(TileType).isRequired
     },
 
     render() {
@@ -16,9 +15,8 @@ export default React.createClass({
                                         transitionName="queue"
                                         transitionEnterTimeout={ TRANSITION_QUEUE_MS }
                                         transitionLeaveTimeout={ TRANSITION_QUEUE_MS }>
-            { this.props.tiles.map((tile, index) => (
-                <Tile key={ this.props.startIndex + index }
-                      tile={ tile } />
+            { this.props.tiles.map((tile) => (
+                <Tile key={ tile.animationId } tile={ tile } />
             )) }
         </ReactCSSTransitionGroup>
     }

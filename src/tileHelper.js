@@ -8,6 +8,8 @@ const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 5
 const NUM_BOARD_COLS = 6
 
+let tileIdCounter = 1 // Set globally unique IDs on tiles (for animation purposes)
+
 function getDirectionName(direction) {
     switch(direction) {
         case DIRECTIONS.UP    : return 'Up'
@@ -18,7 +20,7 @@ function getDirectionName(direction) {
 }
 
 function initTileWithType(type) {
-    return { type, gooDirections: [] }
+    return { type, gooDirections: [], animationId: tileIdCounter++ }
 }
 
 const TileHelper = {

@@ -14,9 +14,9 @@ export default React.createClass({
     render() {
         return <div className={ styles.main }>
             { this.props.board.map((rowTiles, row) => (
-                <div key={ row}>
+                <div key={ row }>
                     { rowTiles.map((tile, col) => (
-                        <Tile tile={ tile } key={ col}
+                        <Tile tile={ tile } key={ tile.animationId }
                               nextTile={ this.props.nextTile }
                               onClick={ () => { this.props.onTileClick(row, col) } } />
                     )) }
