@@ -29,24 +29,12 @@
         content: "";
         opacity: 0.5;
         z-index: @backgroundZIndex;
-
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
-    .tileGoo, .tilePreview {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        .positionFill();
     }
 
     .tileGoo {
         z-index: @gooZIndex;
+        .positionFill();
     }
 
     .tilePreview {
@@ -54,6 +42,7 @@
         border-radius: 5px;
         cursor: pointer;
         z-index: @previewZIndex;
+        .positionFill();
 
         opacity: 0;
         &:hover {

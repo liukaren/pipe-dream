@@ -1,3 +1,5 @@
+@import '~constants.less';
+
 // TODO: Remove all this boilerplate
 
 .upRight {
@@ -35,12 +37,7 @@
         background-position: center;
         background-size: contain;
         z-index: 1;
-
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        .positionFill();
     }
 }
 
