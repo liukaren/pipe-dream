@@ -1,8 +1,12 @@
 import React from 'react'
 
+import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
 import Queue from 'components/Queue'
+
+const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
+const SWAP_THROTTLE_MS = 1000 // How often the user can swap existing tiles
 
 export default React.createClass({
     getInitialState() {
@@ -14,19 +18,28 @@ export default React.createClass({
         return {
             board,
             queue: TileHelper.generateQueue(),
+            canPlaceTile: true,
             gooPosition: null,
             startPosition: { row, col }
         }
     },
 
     onTileClick(row, col) {
+        if (!this.state.canPlaceTile) { return }
+
         const board = this.state.board
+        const previousTile = board[row][col]
         board[row][col] = this.state.queue.shift()
         this.state.queue.push(TileHelper.generateRandomTile())
         this.setState({
             board,
-            queue: this.state.queue
+            queue: this.state.queue,
+            canPlaceTile: false
         })
+
+        const throttle = previousTile.type === Tiles.EMPTY ?
+            PLACE_THROTTLE_MS : SWAP_THROTTLE_MS
+        setTimeout(() => this.setState({ canPlaceTile: true }), throttle)
     },
 
     onStep() {
