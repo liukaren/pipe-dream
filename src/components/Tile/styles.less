@@ -23,14 +23,6 @@
     height: @TILE_SIZE;
 
     position: relative;
-    &::before {
-        background-image: url('../../../public/images/back-tile.svg');
-        background-size: cover;
-        content: "";
-        opacity: 0.5;
-        z-index: @backgroundZIndex;
-        .positionFill();
-    }
 
     .tileGoo {
         z-index: @gooZIndex;

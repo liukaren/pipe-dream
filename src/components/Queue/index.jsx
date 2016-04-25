@@ -2,6 +2,7 @@ import React, { PropTypes as Type } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import { TileType, TRANSITION_QUEUE_MS } from 'constants'
+import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
 import styles from './styles.less'
 
@@ -16,7 +17,10 @@ export default React.createClass({
                                         transitionEnterTimeout={ TRANSITION_QUEUE_MS }
                                         transitionLeaveTimeout={ TRANSITION_QUEUE_MS }>
             { this.props.tiles.map((tile) => (
-                <Tile key={ tile.animationId } tile={ tile } />
+                <div key={ tile.animationId }
+                     className={ tileStyles.background }>
+                    <Tile tile={ tile } />
+                </div>
             )) }
         </ReactCSSTransitionGroup>
     }

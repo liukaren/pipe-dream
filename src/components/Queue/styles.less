@@ -12,6 +12,7 @@
 :global(.queue-leave) {
     max-height: @TILE_SIZE;
     opacity: 1;
+    overflow: hidden;
     transition: max-height @TRANSITION_QUEUE, opacity @TRANSITION_QUEUE;
 }
 
@@ -19,5 +20,6 @@
 :global(.queue-leave.queue-leave-active) {
     max-height: 0;
     opacity: 0;
+    overflow: hidden;
     transition: max-height @TRANSITION_QUEUE, opacity @TRANSITION_QUEUE;
 }
