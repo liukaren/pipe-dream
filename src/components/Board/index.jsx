@@ -1,6 +1,7 @@
 import React, { PropTypes as Type } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import { TileType } from 'constants'
+import { TileType, TRANSITION_BOARD_MS } from 'constants'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
 import styles from './styles.less'
@@ -17,13 +18,17 @@ export default React.createClass({
             { this.props.board.map((rowTiles, row) => (
                 <div key={ row }>
                     { rowTiles.map((tile, col) => (
-                        <div key={ tile.animationId }
-                             className={ tileStyles.background }
-                             style={ { display: 'inline-block' } }>
-                            <Tile tile={ tile } key={ tile.animationId }
+                        <ReactCSSTransitionGroup key={ col }
+                                                 className={ tileStyles.background }
+                                                 transitionName="board"
+                                                 transitionEnterTimeout={ TRANSITION_BOARD_MS }
+                                                 transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
+                            <Tile tile={ tile }
+                                  key={ tile.animationId }
+                                  className={ styles.tile }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
-                        </div>
+                        </ReactCSSTransitionGroup>
                     )) }
                 </div>
             )) }

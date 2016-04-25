@@ -13,16 +13,9 @@
 }
 
 .tile {
-    @backgroundZIndex: -1;
     @gooZIndex: 1;
     @previewZIndex: 2;
-
-    display: inline-block;
-
-    width: @TILE_SIZE;
-    height: @TILE_SIZE;
-
-    position: relative;
+    .positionFill();
 
     .tileGoo {
         z-index: @gooZIndex;

@@ -1,3 +1,21 @@
+@import '~constants.less';
+
 .main {
     display: inline-block;
+}
+
+// -------- Animations --------
+
+:global(.board-enter.board-enter-active),
+:global(.board-leave) {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform @TRANSITION_BOARD, opacity @TRANSITION_BOARD;
+}
+
+:global(.board-enter),
+:global(.board-leave.board-leave-active) {
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform @TRANSITION_BOARD, opacity @TRANSITION_BOARD;
 }
