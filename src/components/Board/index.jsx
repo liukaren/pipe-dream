@@ -5,7 +5,6 @@ import { TileType, TRANSITION_BOARD_MS } from 'constants'
 import { Tiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
-import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
@@ -15,7 +14,7 @@ export default React.createClass({
     },
 
     render() {
-        return <div className={ styles.main }>
+        return <div>
             { this.props.board.map((rowTiles, row) => (
                 <div key={ row }>
                     { rowTiles.map((tile, col) => (

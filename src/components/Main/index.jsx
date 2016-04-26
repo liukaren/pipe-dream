@@ -4,6 +4,7 @@ import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
 import Queue from 'components/Queue'
+import styles from './styles.less'
 
 const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
 const SWAP_THROTTLE_MS = 1000 // How often the user can swap existing tiles
@@ -87,9 +88,11 @@ export default React.createClass({
     render() {
         return <div>
             <Queue tiles={ this.state.queue } />
-            <Board board={ this.state.board }
-                   onTileClick={ this.onTileClick }
-                   nextTile={ this.state.queue[0] } />
+            <div className= { styles.board }>
+                <Board board={ this.state.board }
+                       onTileClick={ this.onTileClick }
+                       nextTile={ this.state.queue[0] } />
+           </div>
             <ul>
                 <li>Current goo position:</li>
                 <li>Row: { this.state.gooPosition && this.state.gooPosition.row }</li>
