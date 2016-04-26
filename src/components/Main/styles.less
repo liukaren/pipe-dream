@@ -2,4 +2,13 @@
 
 .board {
     display: inline-block;
+    position: relative;
+
+    .gameOverOverlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: @GAME_OVER_Z_INDEX;
+        .positionFill();
+    }
 }

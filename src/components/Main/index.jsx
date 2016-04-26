@@ -3,6 +3,7 @@ import React from 'react'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
+import GameOver from 'components/GameOver'
 import Queue from 'components/Queue'
 import styles from './styles.less'
 
@@ -20,6 +21,7 @@ export default React.createClass({
             board,
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
+            isGameOver: false,
             gooPosition: null,
             startPosition: { row, col }
         }
@@ -63,6 +65,7 @@ export default React.createClass({
         // Check if the next position is on the board
         if (TileHelper.isOutOfBounds(nextGooPosition.row, nextGooPosition.col)) {
             console.log('game over, out of bounds')
+            this.setState({ isGameOver: true })
             return
         }
 
@@ -71,6 +74,7 @@ export default React.createClass({
         const enterDirection = TileHelper.getOppositeDirection(exitDirection)
         if (nextGooTile.openings.indexOf(enterDirection) === -1) {
             console.log('game over, next tile does not have opening')
+            this.setState({ isGameOver: true })
             return
         }
 
@@ -89,6 +93,8 @@ export default React.createClass({
         return <div>
             <Queue tiles={ this.state.queue } />
             <div className= { styles.board }>
+                { this.state.isGameOver &&
+                    <div className={ styles.gameOverOverlay }><GameOver /></div> }
                 <Board board={ this.state.board }
                        onTileClick={ this.onTileClick }
                        nextTile={ this.state.queue[0] } />
