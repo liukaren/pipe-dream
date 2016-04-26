@@ -1,3 +1,4 @@
+@import '~animations.less';
 @import '~constants.less';
 
 .main {
@@ -6,16 +7,21 @@
 
 // -------- Animations --------
 
-:global(.board-enter.board-enter-active),
-:global(.board-leave) {
-    transform: scale(1);
-    opacity: 1;
+:global(.board-enter) {
     transition: transform @TRANSITION_BOARD, opacity @TRANSITION_BOARD;
+
+    opacity: 0;
+    transform: scale(0.5);
+}
+:global(.board-enter.board-enter-active) {
+    opacity: 1;
+    transform: scale(1);
 }
 
-:global(.board-enter),
-:global(.board-leave.board-leave-active) {
-    transform: scale(0.5);
-    opacity: 0;
-    transition: transform @TRANSITION_BOARD, opacity @TRANSITION_BOARD;
+// Empty tiles don't go boom, so check the classname.
+:global(.is-non-empty.board-leave) {
+    background-image: url(../../../public/images/boom.svg);
+}
+:global(.is-non-empty.board-leave.board-leave-active) {
+    animation: drift @TRANSITION_BOARD;
 }

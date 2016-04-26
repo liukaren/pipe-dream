@@ -2,6 +2,7 @@ import React, { PropTypes as Type } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import { TileType, TRANSITION_BOARD_MS } from 'constants'
+import { Tiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
 import styles from './styles.less'
@@ -24,8 +25,8 @@ export default React.createClass({
                                                  transitionEnterTimeout={ TRANSITION_BOARD_MS }
                                                  transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
                             <Tile tile={ tile }
+                                  className={ tile.type === Tiles.EMPTY ? '' : 'is-non-empty' }
                                   key={ tile.animationId }
-                                  className={ styles.tile }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
                         </ReactCSSTransitionGroup>
