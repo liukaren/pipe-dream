@@ -9,6 +9,7 @@ import styles from './styles.less'
 
 const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
 const SWAP_THROTTLE_MS = 1000 // How often the user can swap existing tiles
+const TILE_SCORE = 50
 
 export default React.createClass({
     getInitialState() {
@@ -21,8 +22,9 @@ export default React.createClass({
             board,
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
-            isGameOver: false,
             gooPosition: null,
+            isGameOver: false,
+            score: 0,
             startPosition: { row, col }
         }
     },
@@ -86,7 +88,10 @@ export default React.createClass({
             [enterDirection, nextGooPosition.exitDirection]
         )
 
-        this.setState({ gooPosition: nextGooPosition })
+        this.setState({
+            gooPosition: nextGooPosition,
+            score: this.state.score + TILE_SCORE
+        })
     },
 
     render() {
@@ -98,13 +103,10 @@ export default React.createClass({
                 <Board board={ this.state.board }
                        onTileClick={ this.onTileClick }
                        nextTile={ this.state.queue[0] } />
-           </div>
-            <ul>
-                <li>Current goo position:</li>
-                <li>Row: { this.state.gooPosition && this.state.gooPosition.row }</li>
-                <li>Col: { this.state.gooPosition && this.state.gooPosition.col }</li>
-                <li>Exit Direction: { this.state.gooPosition && this.state.gooPosition.exitDirection }</li>
-            </ul>
+            </div>
+            <div>
+                Score: { this.state.score }
+            </div>
             <button onClick={ this.onStep }>Next</button>
         </div>
     }
