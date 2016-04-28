@@ -86,8 +86,12 @@
 }
 
 :global(.board-enter) {
-    transition: transform @TRANSITION_BOARD, opacity @TRANSITION_BOARD;
-
+    transition: transform @TRANSITION_PLACE, opacity @TRANSITION_PLACE;
+}
+:global(.is-replacing.board-enter) {
+    transition-delay: @TRANSITION_BOOM;
+}
+:global(.board-enter) {
     opacity: 0;
     transform: scale(0.5);
 }
@@ -100,5 +104,5 @@
     background-image: url(../public/images/boom.svg);
 }
 :global(.board-leave.board-leave-active) {
-    animation: drift @TRANSITION_BOARD;
+    animation: drift @TRANSITION_BOOM;
 }

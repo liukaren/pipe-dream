@@ -2,7 +2,7 @@ import React, { PropTypes as Type } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import cn from 'classnames'
 
-import { TileType, TRANSITION_BOARD_MS } from 'constants'
+import { TileType, BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { StartTiles, Tiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
@@ -24,24 +24,28 @@ export default React.createClass({
             { this.props.board.map((rowTiles, row) => (
                 <div key={ row }>
                     { rowTiles.map((tile, col) => {
-                        // Don't show transitions for empty tiles (whether replacing an empty
-                        // tile or restarting the board with empty tiles)
+                        // Don't show transitions for empty tiles (when
+                        // restarting the board with empty tiles)
                         const isEmptyTile = tile.type === Tiles.EMPTY
 
                         const isStartTile = START_TILES.indexOf(tile.type) !== -1
+                        const enterTimeout = this.props.isReplacingTile ?
+                            SWAP_THROTTLE_MS : PLACE_THROTTLE_MS
 
                         return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
                                                  transitionEnter={ !isEmptyTile }
                                                  transitionLeave={ this.props.isReplacingTile }
-                                                 transitionEnterTimeout={ TRANSITION_BOARD_MS }
-                                                 transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
+                                                 transitionEnterTimeout={ enterTimeout }
+                                                 transitionLeaveTimeout={ BOOM_MS }>
                             <Tile tile={ tile }
+                                  className={ this.props.isReplacingTile ? 'is-replacing' : '' }
                                   key={ tile.animationId }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
-                            { isStartTile &&
+
+                            { isStartTile && // Timer over start tile (before goo starts flowing)
                                   <img src="../../../public/images/timer.svg"
                                        className={ styles.timer }
                                        style={ { animationDuration: `${START_DELAY_MS}ms` } } /> }

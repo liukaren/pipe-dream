@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
@@ -8,8 +9,6 @@ import GameStart from 'components/GameStart'
 import Queue from 'components/Queue'
 import styles from './styles.less'
 
-const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
-const SWAP_THROTTLE_MS = 1000 // How often the user can swap existing tiles
 const TILE_SCORE = 50
 
 export default React.createClass({

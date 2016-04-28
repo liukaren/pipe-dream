@@ -1,7 +1,10 @@
 import { PropTypes as Type } from 'react'
 
 export const TRANSITION_QUEUE_MS = 300
-export const TRANSITION_BOARD_MS = 500
+
+export const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
+export const SWAP_THROTTLE_MS = 1000 // How often the user can swap existing tiles
+export const BOOM_MS = SWAP_THROTTLE_MS - PLACE_THROTTLE_MS
 
 export const TileType = Type.shape({
     type: Type.shape({
