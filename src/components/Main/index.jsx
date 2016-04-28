@@ -118,6 +118,8 @@ export default React.createClass({
         return <div className={ styles.verticalMain }>
             <div className={ styles.horizontalMain }>
                 <div className={ styles.queue }>
+                    <img src="../../../public/images/next.svg"
+                         className={ styles.next } />
                     <Queue tiles={ this.state.queue } />
                 </div>
                 <div className={ styles.board }>
