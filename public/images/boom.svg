@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg viewBox="0 0 348 251" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 3.7.1 (28215) - http://www.bohemiancoding.com/sketch -->
-    <title>explosion</title>
-    <desc>Created with Sketch.</desc>
     <defs>
         <polygon id="path-1" points="59.0234375 175.691406 76.7421875 235.050781 143.007812 179.816406 218.609375 223.460938 215.789062 169.355469 326.605469 175.648437 266.980469 114.160156 324.648438 82.5507812 221.644531 66.6132812 195.976562 0 149.859375 76.3828125 89.5 22.8828125 69.78125 82.9375 0 78.7695312 50.71875 126.015625 0.86328125 170.132812"></polygon>
         <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
