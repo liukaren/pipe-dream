@@ -1,18 +1,34 @@
 @import '~constants.less';
 
-.board, .queue {
-    display: inline-block;
-    vertical-align: bottom;
-}
+.verticalMain {
+    display: flex;
+    align-items: center;
+    height: 100%;
 
-.board {
-    position: relative;
+    .horizontalMain {
+        flex: 1;
 
-    .gameOverOverlay {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: center;
-        z-index: @GAME_OVER_Z_INDEX;
-        .positionFill();
+
+        .queue {
+            flex: none;
+            width: @TILE_SIZE;
+        }
+
+        .board {
+            flex: none;
+            width: @TILE_SIZE * @NUM_BOARD_COLS;
+            position: relative;
+
+            .gameOverOverlay {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: @GAME_OVER_Z_INDEX;
+                .positionFill();
+            }
+        }
     }
 }

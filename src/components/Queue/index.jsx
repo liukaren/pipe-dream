@@ -15,7 +15,7 @@ export default React.createClass({
         return <div>
             <img src="../../../public/images/next.svg"
                  className={ styles.next } />
-            <ReactCSSTransitionGroup className={ styles.main }
+            <ReactCSSTransitionGroup component="div"
                                      transitionName="queue"
                                      transitionEnterTimeout={ TRANSITION_QUEUE_MS }
                                      transitionLeaveTimeout={ TRANSITION_QUEUE_MS }>

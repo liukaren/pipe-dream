@@ -95,21 +95,24 @@ export default React.createClass({
     },
 
     render() {
-        return <div>
-            <div className={ styles.queue }>
-                <Queue tiles={ this.state.queue } />
+        return <div className={ styles.verticalMain }>
+            <div className={ styles.horizontalMain }>
+                <div className={ styles.queue }>
+                    <Queue tiles={ this.state.queue } />
+                </div>
+                <div className={ styles.spacer }></div>
+                <div className= { styles.board }>
+                    <div>
+                        Score: { this.state.score }
+                        <button onClick={ this.onStep }>Next</button>
+                    </div>
+                    { this.state.isGameOver &&
+                        <div className={ styles.gameOverOverlay }><GameOver /></div> }
+                    <Board board={ this.state.board }
+                           onTileClick={ this.onTileClick }
+                           nextTile={ this.state.queue[0] } />
+                </div>
             </div>
-            <div className= { styles.board }>
-                { this.state.isGameOver &&
-                    <div className={ styles.gameOverOverlay }><GameOver /></div> }
-                <Board board={ this.state.board }
-                       onTileClick={ this.onTileClick }
-                       nextTile={ this.state.queue[0] } />
-            </div>
-            <div>
-                Score: { this.state.score }
-            </div>
-            <button onClick={ this.onStep }>Next</button>
         </div>
     }
 })

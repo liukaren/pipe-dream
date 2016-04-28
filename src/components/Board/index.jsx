@@ -1,10 +1,12 @@
 import React, { PropTypes as Type } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import cn from 'classnames'
 
 import { TileType, TRANSITION_BOARD_MS } from 'constants'
 import { Tiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
+import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
@@ -19,7 +21,7 @@ export default React.createClass({
                 <div key={ row }>
                     { rowTiles.map((tile, col) => (
                         <ReactCSSTransitionGroup key={ col }
-                                                 className={ tileStyles.background }
+                                                 className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
                                                  transitionEnterTimeout={ TRANSITION_BOARD_MS }
                                                  transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
