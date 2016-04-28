@@ -14,6 +14,7 @@ const START_DELAY_MS = 5000 // TODO: this should be variable
 export default React.createClass({
     propTypes: {
         board: Type.arrayOf(Type.arrayOf(TileType)),
+        isReplacingTile: Type.bool,
         nextTile: TileType,
         onTileClick: Type.func
     },
@@ -33,11 +34,10 @@ export default React.createClass({
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
                                                  transitionEnter={ !isEmptyTile }
-                                                 transitionLeave={ !isEmptyTile }
+                                                 transitionLeave={ this.props.isReplacingTile }
                                                  transitionEnterTimeout={ TRANSITION_BOARD_MS }
                                                  transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
                             <Tile tile={ tile }
-                                  className={ isEmptyTile ? '' : 'is-non-empty' }
                                   key={ tile.animationId }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />

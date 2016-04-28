@@ -21,6 +21,7 @@ export default React.createClass({
             gooPosition: null,
             isGameStarted: false,
             isGameOver: false,
+            isReplacingTile: false,
             score: 0
         }
     },
@@ -48,18 +49,23 @@ export default React.createClass({
         if (!this.state.canPlaceTile) { return }
 
         const board = this.state.board
-        const previousTile = board[row][col]
+        const isReplacingTile = board[row][col].type !== Tiles.EMPTY
         board[row][col] = this.state.queue.shift()
         this.state.queue.push(TileHelper.generateRandomTile())
         this.setState({
             board,
             queue: this.state.queue,
-            canPlaceTile: false
+            canPlaceTile: false,
+            isReplacingTile
         })
 
-        const throttle = previousTile.type === Tiles.EMPTY ?
-            PLACE_THROTTLE_MS : SWAP_THROTTLE_MS
-        setTimeout(() => this.setState({ canPlaceTile: true }), throttle)
+        // After a delay, allow placing a tile again. Replacing a tile takes
+        // more time than placing down a new tile.
+        const throttle = isReplacingTile ? SWAP_THROTTLE_MS : PLACE_THROTTLE_MS
+        setTimeout(() => this.setState({
+            canPlaceTile: true,
+            isReplacingTile: false
+        }), throttle)
     },
 
     onStep() {
@@ -131,6 +137,7 @@ export default React.createClass({
                             <GameOver onRestartClick={ this.startGame } />
                         </div> }
                     <Board board={ this.state.board }
+                           isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] } />
                 </div>

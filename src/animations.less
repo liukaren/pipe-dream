@@ -96,10 +96,9 @@
     transform: scale(1);
 }
 
-// Empty tiles don't go boom, so check the classname.
-:global(.is-non-empty.board-leave) {
+:global(.board-leave) {
     background-image: url(../public/images/boom.svg);
 }
-:global(.is-non-empty.board-leave.board-leave-active) {
+:global(.board-leave.board-leave-active) {
     animation: drift @TRANSITION_BOARD;
 }
