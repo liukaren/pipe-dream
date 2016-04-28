@@ -102,8 +102,10 @@ export default React.createClass({
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className= { styles.board }>
-                    <div>
-                        Score: { this.state.score }
+                    <div className={ styles.score }>
+                        { this.state.score }
+                        <img src="../../../public/images/score.svg"
+                             className={ styles.scoreLabel } />
                         <button onClick={ this.onStep }>Next</button>
                     </div>
                     { this.state.isGameOver &&
