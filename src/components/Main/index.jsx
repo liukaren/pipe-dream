@@ -115,8 +115,7 @@ export default React.createClass({
                 <div className={ styles.queue }>
                     <Queue tiles={ this.state.queue } />
                 </div>
-                <div className={ styles.spacer }></div>
-                <div className= { styles.board }>
+                <div className={ styles.board }>
                     <div className={ styles.score }>
                         { this.state.score }
                         <img src="../../../public/images/score.svg"
