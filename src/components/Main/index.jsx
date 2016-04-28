@@ -4,6 +4,7 @@ import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
 import GameOver from 'components/GameOver'
+import GameStart from 'components/GameStart'
 import Queue from 'components/Queue'
 import styles from './styles.less'
 
@@ -23,6 +24,7 @@ export default React.createClass({
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
             gooPosition: null,
+            isGameStarted: false,
             isGameOver: false,
             score: 0,
             startPosition: { row, col }
@@ -108,8 +110,14 @@ export default React.createClass({
                              className={ styles.scoreLabel } />
                         <button onClick={ this.onStep }>Next</button>
                     </div>
+                    { !this.state.isGameStarted &&
+                        <div className={ styles.overlay }>
+                            <GameStart onStartClick={ () => {
+                                this.setState({ isGameStarted: true })
+                            } } />
+                        </div> }
                     { this.state.isGameOver &&
-                        <div className={ styles.gameOverOverlay }><GameOver /></div> }
+                        <div className={ styles.overlay }><GameOver /></div> }
                     <Board board={ this.state.board }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] } />

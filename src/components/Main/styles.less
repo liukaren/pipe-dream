@@ -22,11 +22,11 @@
             width: @TILE_SIZE * @NUM_BOARD_COLS;
             position: relative;
 
-            .gameOverOverlay {
+            .overlay {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                z-index: @GAME_OVER_Z_INDEX;
+                z-index: @BOARD_OVERLAY_Z_INDEX;
                 .positionFill();
             }
         }
