@@ -84,6 +84,14 @@ const TileHelper = {
         return board
     },
 
+    generateEmptyQueue() {
+        let queue = []
+        for (let i = 0; i < NUM_QUEUED_TILES; i++) {
+            queue.push(initTileWithType(Tiles.EMPTY))
+        }
+        return queue
+    },
+
     generateQueue() {
         let queue = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {

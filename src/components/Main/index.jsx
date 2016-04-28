@@ -14,21 +14,34 @@ const TILE_SCORE = 50
 
 export default React.createClass({
     getInitialState() {
+        return {
+            board: TileHelper.generateEmptyBoard(),
+            queue: TileHelper.generateEmptyQueue(),
+            canPlaceTile: false,
+            gooPosition: null,
+            isGameStarted: false,
+            isGameOver: false,
+            score: 0
+        }
+    },
+
+    startGame() {
         const board = TileHelper.generateEmptyBoard()
         const startTile = TileHelper.generateRandomStartTile()
         const { row, col } = TileHelper.generateRandomInnerPosition()
+
         board[row][col] = startTile
 
-        return {
+        this.setState({
             board,
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
             gooPosition: null,
-            isGameStarted: false,
+            isGameStarted: true,
             isGameOver: false,
             score: 0,
             startPosition: { row, col }
-        }
+        })
     },
 
     onTileClick(row, col) {
@@ -112,12 +125,12 @@ export default React.createClass({
                     </div>
                     { !this.state.isGameStarted &&
                         <div className={ styles.overlay }>
-                            <GameStart onStartClick={ () => {
-                                this.setState({ isGameStarted: true })
-                            } } />
+                            <GameStart onStartClick={ this.startGame } />
                         </div> }
                     { this.state.isGameOver &&
-                        <div className={ styles.overlay }><GameOver /></div> }
+                        <div className={ styles.overlay }>
+                            <GameOver onRestartClick={ this.startGame } />
+                        </div> }
                     <Board board={ this.state.board }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] } />

@@ -3,6 +3,10 @@ import React from 'react'
 import styles from './styles.less'
 
 export default React.createClass({
+    propTypes: {
+        onRestartClick: React.PropTypes.func
+    },
+
     render() {
         return <div className={ styles.main }>
             <div className={ styles.row }>
@@ -15,7 +19,8 @@ export default React.createClass({
 
             <div className={ styles.row }>
                 <img src="../../../public/images/restart.svg"
-                     className={ styles.restart } />
+                     className={ styles.restart }
+                     onClick={ this.props.onRestartClick } />
             </div>
         </div>
     }
