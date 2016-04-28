@@ -12,16 +12,20 @@ export default React.createClass({
     },
 
     render() {
-        return <ReactCSSTransitionGroup className={ styles.main }
-                                        transitionName="queue"
-                                        transitionEnterTimeout={ TRANSITION_QUEUE_MS }
-                                        transitionLeaveTimeout={ TRANSITION_QUEUE_MS }>
-            { this.props.tiles.map((tile) => (
-                <div key={ tile.animationId }
-                     className={ tileStyles.background }>
-                    <Tile tile={ tile } />
-                </div>
-            )) }
-        </ReactCSSTransitionGroup>
+        return <div>
+            <img src="../../../public/images/next.svg"
+                 className={ styles.next } />
+            <ReactCSSTransitionGroup className={ styles.main }
+                                     transitionName="queue"
+                                     transitionEnterTimeout={ TRANSITION_QUEUE_MS }
+                                     transitionLeaveTimeout={ TRANSITION_QUEUE_MS }>
+                { this.props.tiles.map((tile) => (
+                    <div key={ tile.animationId }
+                         className={ tileStyles.background }>
+                        <Tile tile={ tile } />
+                    </div>
+                )) }
+            </ReactCSSTransitionGroup>
+        </div>
     }
 })

@@ -96,7 +96,9 @@ export default React.createClass({
 
     render() {
         return <div>
-            <Queue tiles={ this.state.queue } />
+            <div className={ styles.queue }>
+                <Queue tiles={ this.state.queue } />
+            </div>
             <div className= { styles.board }>
                 { this.state.isGameOver &&
                     <div className={ styles.gameOverOverlay }><GameOver /></div> }
