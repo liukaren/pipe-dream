@@ -34,3 +34,10 @@
         }
     }
 }
+
+// Don't show the preview while tiles are animating in and out.
+:global(.board-enter), :global(.board-leave) {
+    .tilePreview:hover {
+        visibility: hidden;
+    }
+}
