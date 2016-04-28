@@ -9,6 +9,11 @@
     to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes fadeInScaleUp {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 @keyframes drift {
     0% { opacity: 0; transform: scale(0.5); }
     50% { opacity: 1; transform: scale(1); }
@@ -86,21 +91,13 @@
 }
 
 :global(.board-enter) {
-    transition: transform @TRANSITION_PLACE, opacity @TRANSITION_PLACE;
-}
-:global(.is-replacing.board-enter) {
-    transition-delay: @TRANSITION_BOOM;
-}
-:global(.board-enter) {
-    opacity: 0;
-    transform: scale(0.5);
-}
-:global(.board-enter.board-enter-active) {
-    opacity: 1;
-    transform: scale(1);
+    animation: fadeInScaleUp @TRANSITION_PLACE both;
+    &:global(.is-replacing.board-enter) {
+        animation-delay: @TRANSITION_BOOM;
+    }
 }
 
 :global(.board-leave) {
     background-image: url(../public/images/boom.svg);
-    animation: drift @TRANSITION_BOOM both;
+    animation: drift @TRANSITION_BOOM;
 }
