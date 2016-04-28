@@ -13,12 +13,10 @@
 }
 
 .tile {
-    @gooZIndex: 1;
-    @previewZIndex: 2;
     .positionFill();
 
     .tileGoo {
-        z-index: @gooZIndex;
+        z-index: @ZINDEX_GOO;
         .positionFill();
     }
 
@@ -26,7 +24,7 @@
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 5px;
         cursor: pointer;
-        z-index: @previewZIndex;
+        z-index: @ZINDEX_PREVIEW;
         .positionFill();
 
         opacity: 0;

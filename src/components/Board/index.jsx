@@ -3,10 +3,13 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import cn from 'classnames'
 
 import { TileType, TRANSITION_BOARD_MS } from 'constants'
-import { Tiles } from 'tiles'
+import { StartTiles, Tiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
 import styles from './styles.less'
+
+const START_TILES = Object.keys(StartTiles).map((key) => StartTiles[key])
+const START_DELAY_MS = 5000 // TODO: this should be variable
 
 export default React.createClass({
     propTypes: {
@@ -24,6 +27,8 @@ export default React.createClass({
                         // tile or restarting the board with empty tiles)
                         const isEmptyTile = tile.type === Tiles.EMPTY
 
+                        const isStartTile = START_TILES.indexOf(tile.type) !== -1
+
                         return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
@@ -36,6 +41,10 @@ export default React.createClass({
                                   key={ tile.animationId }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
+                            { isStartTile &&
+                                  <img src="../../../public/images/timer.svg"
+                                       className={ styles.timer }
+                                       style={ { animationDuration: `${START_DELAY_MS}ms` } } /> }
                         </ReactCSSTransitionGroup>
                     }) }
                 </div>
