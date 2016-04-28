@@ -5,12 +5,17 @@ import styles from './styles.less'
 export default React.createClass({
     render() {
         return <div className={ styles.main }>
-            <div className={ styles.word1 }>
-                <img src="../../../public/images/gameover1.svg" />
+            <div className={ styles.row }>
+                <img src="../../../public/images/gameover1.svg"
+                     className={ styles.word1 } />
+                <div className={ styles.space }></div>
+                <img src="../../../public/images/gameover2.svg"
+                     className={ styles.word2 } />
             </div>
-            <div className={ styles.space }></div>
-            <div className={ styles.word2 }>
-                <img src="../../../public/images/gameover2.svg" />
+
+            <div className={ styles.row }>
+                <img src="../../../public/images/restart.svg"
+                     className={ styles.restart } />
             </div>
         </div>
     }

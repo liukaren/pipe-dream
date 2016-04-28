@@ -9,24 +9,32 @@
     padding: 2rem;
     width: 70%;
 
-    display: flex;
-    align-items: center;
+    .row {
+        display: flex;
+        align-items: center;
 
-    .word1, .word2 {
-        flex: 1;
-        animation: fadeInScaleDown @TRANSITION_GAME_OVER both;
-    }
+        margin-bottom: @GUTTER;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
 
-    .space {
-        flex: none;
-        width: 1rem;
-    }
+        .word1, .word2 {
+            flex: 1;
+            animation: fadeInScaleDown @TRANSITION_GAME_OVER both;
+        }
 
-    .word1 {
-        text-align: right;
-    }
+        .space {
+            flex: none;
+            width: 1rem;
+        }
 
-    .word2 {
-        animation-delay: @TRANSITION_GAME_OVER;
+        .word2 {
+            animation-delay: @TRANSITION_GAME_OVER;
+        }
+
+        .restart {
+            margin: auto;
+            width: 50%;
+        }
     }
 }
