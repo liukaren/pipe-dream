@@ -19,19 +19,25 @@ export default React.createClass({
         return <div>
             { this.props.board.map((rowTiles, row) => (
                 <div key={ row }>
-                    { rowTiles.map((tile, col) => (
-                        <ReactCSSTransitionGroup key={ col }
+                    { rowTiles.map((tile, col) => {
+                        // Don't show transitions for empty tiles (whether replacing an empty
+                        // tile or restarting the board with empty tiles)
+                        const isEmptyTile = tile.type === Tiles.EMPTY
+
+                        return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
+                                                 transitionEnter={ !isEmptyTile }
+                                                 transitionLeave={ !isEmptyTile }
                                                  transitionEnterTimeout={ TRANSITION_BOARD_MS }
                                                  transitionLeaveTimeout={ TRANSITION_BOARD_MS }>
                             <Tile tile={ tile }
-                                  className={ tile.type === Tiles.EMPTY ? '' : 'is-non-empty' }
+                                  className={ isEmptyTile ? '' : 'is-non-empty' }
                                   key={ tile.animationId }
                                   nextTile={ this.props.nextTile }
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
                         </ReactCSSTransitionGroup>
-                    )) }
+                    }) }
                 </div>
             )) }
         </div>
