@@ -10,11 +10,13 @@ export default React.createClass({
     render() {
         return <div className={ styles.main }>
             <div className={ styles.row }>
-                <img src="../../../public/images/gameover1.svg"
-                     className={ styles.word1 } />
+                <div className={ styles.word1 }>
+                    <img src="../../../public/images/gameover1.svg" />
+                 </div>
                 <div className={ styles.space }></div>
-                <img src="../../../public/images/gameover2.svg"
-                     className={ styles.word2 } />
+                <div className={ styles.word2 }>
+                    <img src="../../../public/images/gameover2.svg" />
+                </div>
             </div>
 
             <div className={ styles.row }>
