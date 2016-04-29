@@ -10,6 +10,7 @@ import Queue from 'components/Queue'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
+const START_DELAY_MS = 5000 // TODO: this should be variable
 
 export default React.createClass({
     componentDidMount() {
@@ -41,12 +42,18 @@ export default React.createClass({
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
             gooPosition: null,
+            isFlowing: false,
             isGameStarted: true,
             isGameOver: false,
             isReplacingTile: false,
             score: 0,
             startPosition: { row, col }
         })
+
+        setTimeout(() => {
+            this.setState({ isFlowing: true })
+            console.log('now flowing')
+        }, START_DELAY_MS)
     },
 
     onTileClick(row, col) {
@@ -148,7 +155,8 @@ export default React.createClass({
                     <Board board={ this.state.board }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
-                           nextTile={ this.state.queue[0] } />
+                           nextTile={ this.state.queue[0] }
+                           startDelayMs={ START_DELAY_MS } />
                 </div>
             </div>
         </div>

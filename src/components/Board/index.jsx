@@ -9,14 +9,14 @@ import Tile from 'components/Tile'
 import styles from './styles.less'
 
 const START_TILES = Object.keys(StartTiles).map((key) => StartTiles[key])
-const START_DELAY_MS = 5000 // TODO: this should be variable
 
 export default React.createClass({
     propTypes: {
         board: Type.arrayOf(Type.arrayOf(TileType)),
         isReplacingTile: Type.bool,
         nextTile: TileType,
-        onTileClick: Type.func
+        onTileClick: Type.func,
+        startDelayMs: Type.number
     },
 
     render() {
@@ -31,6 +31,8 @@ export default React.createClass({
                         const isStartTile = START_TILES.indexOf(tile.type) !== -1
                         const enterTimeout = this.props.isReplacingTile ?
                             SWAP_THROTTLE_MS : PLACE_THROTTLE_MS
+
+                        const timerStyle = { animationDuration: `${this.props.startDelayMs}ms` }
 
                         return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
@@ -48,7 +50,7 @@ export default React.createClass({
                             { isStartTile && // Timer over start tile (before goo starts flowing)
                                   <img src="../../../public/images/timer.svg"
                                        className={ styles.timer }
-                                       style={ { animationDuration: `${START_DELAY_MS}ms` } } /> }
+                                       style={ timerStyle } /> }
                         </ReactCSSTransitionGroup>
                     }) }
                 </div>
