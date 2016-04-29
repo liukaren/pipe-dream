@@ -35,7 +35,7 @@ export default React.createClass({
                         return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
-                                                 transitionEnter={ !isEmptyTile }
+                                                 transitionEnter={ !isEmptyTile && !isStartTile }
                                                  transitionLeave={ this.props.isReplacingTile }
                                                  transitionEnterTimeout={ enterTimeout }
                                                  transitionLeaveTimeout={ BOOM_MS }>
