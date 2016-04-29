@@ -25,7 +25,6 @@ export default React.createClass({
             gooPosition: null,
             isGameStarted: false,
             isGameOver: false,
-            isReplacingTile: false,
             score: 0
         }
     },
@@ -44,6 +43,7 @@ export default React.createClass({
             gooPosition: null,
             isGameStarted: true,
             isGameOver: false,
+            isReplacingTile: false,
             score: 0,
             startPosition: { row, col }
         })
