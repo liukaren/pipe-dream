@@ -1,11 +1,12 @@
 @GUTTER: 1rem;
 
 @NUM_QUEUE_TILES: 5;
-@NUM_BOARD_COLS: 6;
+@NUM_BOARD_ROWS: 7;
+@NUM_BOARD_COLS: 10;
 
 // NOTE: Using vmin means sometimes we'll be sizing all the cols to fit in the
 // vertical height. Ideally, this should be min(100vw / num_cols, 100vh / num_rows)
-@TILE_SIZE: floor(100vmin / (@NUM_BOARD_COLS + 1)); // + 1 for queue column
+@TILE_SIZE: floor(100vmin / (@NUM_BOARD_COLS + 2)); // +2 for queue and spacer
 
 @TRANSITION_QUEUE: 300ms;
 @TRANSITION_HOVER: 500ms;

@@ -5,8 +5,8 @@ import { StartTiles, Tiles } from 'tiles'
 const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY tile
 const NUM_START_TILES = 4
 const NUM_QUEUED_TILES = 5
-const NUM_BOARD_ROWS = 5
-const NUM_BOARD_COLS = 6
+const NUM_BOARD_ROWS = 7
+const NUM_BOARD_COLS = 10
 
 let tileIdCounter = 1 // Set globally unique IDs on tiles (for animation purposes)
 

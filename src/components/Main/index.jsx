@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 
 import { PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
@@ -141,19 +142,25 @@ export default React.createClass({
     },
 
     render() {
-        return <div className={ styles.verticalMain }>
-            <div className={ styles.horizontalMain }>
-                <div className={ styles.queue }>
+        return <div className={ styles.main }>
+            <div className={ cn(styles.row, styles.titleRow) }>
+                <div className={ styles.leftTitle }>
                     <img src="../../../public/images/next.svg"
-                         className={ styles.next } />
+                         className={ styles.svgLabel } />
+                </div>
+                <div className={ styles.rightTitle }>
+                    <span className={ styles.score }>{ this.state.score }</span>
+                    <img src="../../../public/images/score.svg"
+                         className={ styles.svgLabel } />
+                </div>
+            </div>
+
+            <div className={ styles.row }>
+                <div className={ styles.queue }>
                     <Queue tiles={ this.state.queue } />
                 </div>
+                <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
-                    <div className={ styles.score }>
-                        { this.state.score }
-                        <img src="../../../public/images/score.svg"
-                             className={ styles.scoreLabel } />
-                    </div>
                     { !this.state.isGameStarted &&
                         <div className={ styles.overlay }>
                             <GameStart onStartClick={ this.startGame } />

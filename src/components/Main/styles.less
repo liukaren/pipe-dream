@@ -1,54 +1,64 @@
 @import '~constants.less';
 
-.verticalMain {
+@titleHeight: @TILE_SIZE / 2;
+
+.main {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     height: 100%;
 
-    .horizontalMain {
-        flex: 1;
+    .row {
+        @spacerRatio: 0.5;
+        @queueRatio: 1;
 
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: @TILE_SIZE * (@NUM_BOARD_COLS + @spacerRatio + @queueRatio);
+
+        .queue { flex: @queueRatio; }
+        .spacer { flex: @spacerRatio; }
+        .board { flex: @NUM_BOARD_COLS; }
+
+        .leftTitle { flex: 1; }
+        .rightTitle { flex: 1; }
+    }
+}
+
+.titleRow {
+    height: @titleHeight;
+
+    .rightTitle {
+        text-align: right;
+    }
+
+    .svgLabel {
+        display: inline-block;
+        height: 100%;
+        vertical-align: top;
+    }
+}
+
+.board {
+    position: relative;
+
+    .overlay {
+        display: flex;
+        align-items: center;
         justify-content: center;
-
-        .queue {
-            flex: none;
-            width: @TILE_SIZE;
-
-            .next {
-                display: block;
-                width: @TILE_SIZE;
-            }
-        }
-
-        .board {
-            flex: none;
-            width: @TILE_SIZE * @NUM_BOARD_COLS;
-            position: relative;
-
-            .overlay {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: @ZINDEX_BOARD_OVERLAY;
-                .positionFill();
-            }
-        }
+        z-index: @ZINDEX_BOARD_OVERLAY;
+        .positionFill();
     }
 }
 
 .score {
     color: @DARK_GRAY;
+    display: inline-block;
     font-family: 'Alegreya Sans SC', sans-serif;
-    font-size: @TILE_SIZE / 2;
-    line-height: @TILE_SIZE / 3;
+    font-size: @titleHeight;
     font-weight: 700;
-    text-align: right;
-
-    .scoreLabel {
-        height: @TILE_SIZE / 3;
-        margin-left: 0.25em;
-        vertical-align: bottom;
-    }
+    line-height: @titleHeight;
+    margin-right: 0.25em;
 }
