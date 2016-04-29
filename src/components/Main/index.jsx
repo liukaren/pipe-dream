@@ -10,7 +10,10 @@ import Queue from 'components/Queue'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
-const START_DELAY_MS = 5000 // TODO: this should be variable
+
+// TODO: These should be variable
+const START_DELAY_MS = 10000
+const FLOW_SPEED_MS = 5000
 
 export default React.createClass({
     componentDidMount() {
@@ -51,9 +54,19 @@ export default React.createClass({
         })
 
         setTimeout(() => {
-            this.setState({ isFlowing: true })
-            console.log('now flowing')
+            this.onStep()
+            this.stepIntervalId = setInterval(this.onStep, FLOW_SPEED_MS)
         }, START_DELAY_MS)
+    },
+
+    endGame() {
+        clearInterval(this.stepIntervalId)
+        this.stepIntervalId = null
+
+        this.setState({
+            isFlowing: false,
+            isGameOver: true
+        })
     },
 
     onTileClick(row, col) {
@@ -91,7 +104,7 @@ export default React.createClass({
             const enterDirection = TileHelper.getOppositeDirection(exitDirection)
             const gooPosition = { row, col, exitDirection }
             this.state.board[row][col].gooDirections = [[enterDirection, exitDirection]]
-            this.setState({ gooPosition, board: this.state.board })
+            this.setState({ gooPosition, board: this.state.board, isFlowing: true })
             return
         }
 
@@ -101,8 +114,7 @@ export default React.createClass({
 
         // Check if the next position is on the board
         if (TileHelper.isOutOfBounds(nextGooPosition.row, nextGooPosition.col)) {
-            console.log('game over, out of bounds')
-            this.setState({ isGameOver: true })
+            this.endGame()
             return
         }
 
@@ -110,8 +122,7 @@ export default React.createClass({
         const nextGooTile = this.state.board[nextGooPosition.row][nextGooPosition.col].type
         const enterDirection = TileHelper.getOppositeDirection(exitDirection)
         if (nextGooTile.openings.indexOf(enterDirection) === -1) {
-            console.log('game over, next tile does not have opening')
-            this.setState({ isGameOver: true })
+            this.endGame()
             return
         }
 
@@ -153,6 +164,7 @@ export default React.createClass({
                             <GameOver onRestartClick={ this.startGame } />
                         </div> }
                     <Board board={ this.state.board }
+                           flowSpeedMs={ FLOW_SPEED_MS }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] }

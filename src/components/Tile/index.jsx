@@ -14,7 +14,8 @@ export default React.createClass({
         tile: TileType.isRequired,
         nextTile: TileType,
         onClick: Type.func,
-        className: Type.string
+        className: Type.string,
+        flowSpeedMs: Type.number
     },
 
     render() {
@@ -27,7 +28,7 @@ export default React.createClass({
         const gooTiles = tile.gooDirections.map(([enter, exit], index) => {
             let gooStyle = {}
 
-            const transitionTime = '1s' // TODO: Set transition time
+            const transitionTime = `${this.props.flowSpeedMs}ms`
             const transitionName = TileHelper.getGooAnimation(enter, exit)
             gooStyle.animation = [
                 `${transitionName} ${transitionTime} both`,
