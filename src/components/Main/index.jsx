@@ -12,6 +12,11 @@ import styles from './styles.less'
 const TILE_SCORE = 50
 
 export default React.createClass({
+    componentDidMount() {
+        this.soundPlace = document.getElementById('sound-place')
+        this.soundSwap = document.getElementById('sound-swap')
+    },
+
     getInitialState() {
         return {
             board: TileHelper.generateEmptyBoard(),
@@ -57,6 +62,9 @@ export default React.createClass({
             canPlaceTile: false,
             isReplacingTile
         })
+
+        // Play a sound
+        isReplacingTile ? this.soundSwap.play() : this.soundPlace.play()
 
         // After a delay, allow placing a tile again. Replacing a tile takes
         // more time than placing down a new tile.
