@@ -153,7 +153,6 @@ export default React.createClass({
                         { this.state.score }
                         <img src="../../../public/images/score.svg"
                              className={ styles.scoreLabel } />
-                        <button onClick={ this.onStep }>Next</button>
                     </div>
                     { !this.state.isGameStarted &&
                         <div className={ styles.overlay }>
