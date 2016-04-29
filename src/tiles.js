@@ -4,43 +4,35 @@ import styles from 'tiles.less'
 export const Tiles = {
     UP_RIGHT: {
         id: 1,
-        openings: [DIRECTIONS.UP, DIRECTIONS.RIGHT],
-        className: styles.upRight
+        openings: [DIRECTIONS.UP, DIRECTIONS.RIGHT]
     },
     UP_DOWN: {
         id: 2,
-        openings: [DIRECTIONS.UP, DIRECTIONS.DOWN],
-        className: styles.upDown
+        openings: [DIRECTIONS.UP, DIRECTIONS.DOWN]
     },
     UP_LEFT: {
         id: 3,
-        openings: [DIRECTIONS.UP, DIRECTIONS.LEFT],
-        className: styles.upLeft
+        openings: [DIRECTIONS.UP, DIRECTIONS.LEFT]
     },
     RIGHT_DOWN: {
         id: 4,
-        openings: [DIRECTIONS.RIGHT, DIRECTIONS.DOWN],
-        className: styles.rightDown
+        openings: [DIRECTIONS.RIGHT, DIRECTIONS.DOWN]
     },
     RIGHT_LEFT: {
         id: 5,
-        openings: [DIRECTIONS.RIGHT, DIRECTIONS.LEFT],
-        className: styles.rightLeft
+        openings: [DIRECTIONS.RIGHT, DIRECTIONS.LEFT]
     },
     DOWN_LEFT: {
         id: 6,
-        openings: [DIRECTIONS.DOWN, DIRECTIONS.LEFT],
-        className: styles.downLeft
+        openings: [DIRECTIONS.DOWN, DIRECTIONS.LEFT]
     },
     CROSS: {
         id: 7,
-        openings: [DIRECTIONS.UP, DIRECTIONS.RIGHT, DIRECTIONS.DOWN, DIRECTIONS.LEFT],
-        className: styles.cross
+        openings: [DIRECTIONS.UP, DIRECTIONS.RIGHT, DIRECTIONS.DOWN, DIRECTIONS.LEFT]
     },
     EMPTY: {
         id: 8,
-        openings: [],
-        className: ''
+        openings: []
     }
 }
 export const StartTiles = {

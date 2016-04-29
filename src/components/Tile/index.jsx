@@ -44,10 +44,12 @@ export default React.createClass({
 
         // Show the current tile, with an optional ghost preview of the next tile.
         return <div onClick={ () => { isChangeableTile && this.props.onClick() } }
-                    className={ cn(styles.tile, tile.type.className, this.props.className) }>
+                    className={ cn(styles.tile, tile.type.className, this.props.className) }
+                    style={ TileHelper.getTileStyle(tile.type) }>
             { gooTiles }
             { nextTile && isChangeableTile &&
-                 <div className={ cn(styles.tilePreview, nextTile.type.className) }></div> }
+                <div className={ cn(styles.tilePreview, nextTile.type.className) }
+                     style={ TileHelper.getTileStyle(nextTile.type) }></div> }
         </div>
     }
 })

@@ -116,6 +116,30 @@ const TileHelper = {
         const dirName1 = getDirectionName(dir1).toLowerCase()
         const dirName2 = getDirectionName(dir2).toLowerCase()
         return `${dirName1}-${dirName2}-fill`
+    },
+
+    getTileStyle(tileType) {
+        let backgroundImage
+        switch(tileType) {
+            case Tiles.EMPTY: return {}
+            case StartTiles.UP:
+            case StartTiles.DOWN:
+                backgroundImage = 'up-down'
+                break
+            case StartTiles.RIGHT:
+            case StartTiles.LEFT:
+                backgroundImage = 'right-left'
+                break
+            default:
+                backgroundImage = tileType.openings
+                    .sort()
+                    .map((opening) => getDirectionName(opening).toLowerCase())
+                    .join('-')
+        }
+
+        return {
+            backgroundImage: `url(public/images/${backgroundImage}.svg)`
+        }
     }
 }
 
