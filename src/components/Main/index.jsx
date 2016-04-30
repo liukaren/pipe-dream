@@ -26,15 +26,20 @@ export default React.createClass({
         return {
             board: TileHelper.generateEmptyBoard(),
             queue: TileHelper.generateEmptyQueue(),
-            gameState: GAME_STATES.START_SCREEN,
             canPlaceTile: false,
+            gameState: GAME_STATES.START_SCREEN,
             gooPosition: null,
+            isReplacingTile: false,
             score: 0
         }
     },
 
+    restartGame() {
+        this.setState(this.getInitialState())
+    },
+
     startGame() {
-        const board = TileHelper.generateEmptyBoard()
+        const board = this.state.board
         const startTile = TileHelper.generateRandomStartTile()
         const { row, col } = TileHelper.generateRandomInnerPosition()
 
@@ -44,10 +49,7 @@ export default React.createClass({
             board,
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
-            gooPosition: null,
             gameState: GAME_STATES.FLOW_NOT_STARTED,
-            isReplacingTile: false,
-            score: 0,
             startPosition: { row, col }
         })
 
@@ -164,7 +166,7 @@ export default React.createClass({
                         </div> }
                     { this.state.gameState === GAME_STATES.GAME_OVER_SCREEN &&
                         <div className={ styles.overlay }>
-                            <GameOver onRestartClick={ this.startGame } />
+                            <GameOver onRestartClick={ this.restartGame } />
                         </div> }
                     <Board board={ this.state.board }
                            flowSpeedMs={ FLOW_SPEED_MS }
