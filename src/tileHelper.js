@@ -24,6 +24,8 @@ function initTileWithType(type) {
 }
 
 const TileHelper = {
+    initTileWithType: initTileWithType,
+
     generateRandomTile() {
         const randomId = Math.floor(Math.random() * NUM_PLAYABLE_TILES) + 1
         const tileType = Object.keys(Tiles)

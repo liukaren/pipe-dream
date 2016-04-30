@@ -8,6 +8,7 @@ import Board from 'components/Board'
 import GameOver from 'components/GameOver'
 import GameStart from 'components/GameStart'
 import Queue from 'components/Queue'
+import Rules from 'components/Rules'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
@@ -57,6 +58,10 @@ export default React.createClass({
             this.onStep()
             this.stepIntervalId = setInterval(this.onStep, FLOW_SPEED_MS)
         }, START_DELAY_MS)
+    },
+
+    showRules() {
+        this.setState({ gameState: GAME_STATES.RULES_SCREEN })
     },
 
     endGame() {
@@ -165,7 +170,12 @@ export default React.createClass({
                 <div className={ styles.board }>
                     { this.state.gameState === GAME_STATES.START_SCREEN &&
                         <div className={ styles.overlay }>
-                            <GameStart onStartClick={ this.startGame } />
+                            <GameStart onStartClick={ this.startGame }
+                                       onRulesClick={ this.showRules } />
+                        </div> }
+                    { this.state.gameState === GAME_STATES.RULES_SCREEN &&
+                        <div className={ styles.overlay }>
+                            <Rules />
                         </div> }
                     { this.state.gameState === GAME_STATES.GAME_OVER_SCREEN &&
                         <div className={ styles.overlay }>
