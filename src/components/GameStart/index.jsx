@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Button from 'components/Button'
 import styles from './styles.less'
 
 export default React.createClass({
@@ -11,17 +12,15 @@ export default React.createClass({
     render() {
         return <div className={ styles.main }>
             <div className={ styles.row }>
-                <div className={ styles.col }>
-                    <img src="../../../public/images/start.svg"
-                         className={ styles.button }
-                         onClick={ this.props.onStartClick } />
-                </div>
+                <Button className={ styles.col }
+                        onClick={ this.props.onStartClick }>
+                    <img src="../../../public/images/start.svg" />
+                </Button>
                 <div className={ styles.spacer }></div>
-                <div className={ styles.col }>
-                    <img src="../../../public/images/rules.svg"
-                         className={ styles.button }
-                         onClick={ this.props.onRulesClick } />
-                </div>
+                <Button className={ styles.col }
+                        onClick={ this.props.onRulesClick }>
+                    <img src="../../../public/images/rules.svg" />
+                </Button>
             </div>
         </div>
     }

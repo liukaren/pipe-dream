@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Button from 'components/Button'
 import styles from './styles.less'
 
 export default React.createClass({
@@ -20,9 +21,10 @@ export default React.createClass({
             </div>
 
             <div className={ styles.row }>
-                <img src="../../../public/images/restart.svg"
-                     className={ styles.restart }
-                     onClick={ this.props.onRestartClick } />
+                <Button onClick={ this.props.onRestartClick }
+                        className={ styles.restart }>
+                    <img src="../../../public/images/restart.svg" />
+                </Button>
             </div>
         </div>
     }
