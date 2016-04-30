@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
+import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
@@ -26,10 +26,9 @@ export default React.createClass({
         return {
             board: TileHelper.generateEmptyBoard(),
             queue: TileHelper.generateEmptyQueue(),
+            gameState: GAME_STATES.START_SCREEN,
             canPlaceTile: false,
             gooPosition: null,
-            isGameStarted: false,
-            isGameOver: false,
             score: 0
         }
     },
@@ -46,9 +45,7 @@ export default React.createClass({
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
             gooPosition: null,
-            isFlowing: false,
-            isGameStarted: true,
-            isGameOver: false,
+            gameState: GAME_STATES.FLOW_NOT_STARTED,
             isReplacingTile: false,
             score: 0,
             startPosition: { row, col }
@@ -63,11 +60,7 @@ export default React.createClass({
     endGame() {
         clearInterval(this.stepIntervalId)
         this.stepIntervalId = null
-
-        this.setState({
-            isFlowing: false,
-            isGameOver: true
-        })
+        this.setState({ gameState: GAME_STATES.GAME_OVER_SCREEN })
     },
 
     onTileClick(row, col) {
@@ -105,7 +98,11 @@ export default React.createClass({
             const enterDirection = TileHelper.getOppositeDirection(exitDirection)
             const gooPosition = { row, col, exitDirection }
             this.state.board[row][col].gooDirections = [[enterDirection, exitDirection]]
-            this.setState({ gooPosition, board: this.state.board, isFlowing: true })
+            this.setState({
+                gooPosition,
+                board: this.state.board,
+                gameState: GAME_STATES.FLOW_STARTED
+            })
             return
         }
 
@@ -161,11 +158,11 @@ export default React.createClass({
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
-                    { !this.state.isGameStarted &&
+                    { this.state.gameState === GAME_STATES.START_SCREEN &&
                         <div className={ styles.overlay }>
                             <GameStart onStartClick={ this.startGame } />
                         </div> }
-                    { this.state.isGameOver &&
+                    { this.state.gameState === GAME_STATES.GAME_OVER_SCREEN &&
                         <div className={ styles.overlay }>
                             <GameOver onRestartClick={ this.startGame } />
                         </div> }

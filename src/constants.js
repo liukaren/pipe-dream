@@ -20,3 +20,12 @@ export const TileType = Type.shape({
 })
 
 export const DIRECTIONS = { UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4 }
+
+export const GAME_STATES = {
+    START_SCREEN: 1,
+    RULES_SCREEN: 2,
+    FLOW_NOT_STARTED: 3,
+    FLOW_STARTED: 4,
+    NEXT_LEVEL_SCREEN: 5,
+    GAME_OVER_SCREEN: 6
+}
