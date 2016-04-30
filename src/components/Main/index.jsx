@@ -62,7 +62,10 @@ export default React.createClass({
     endGame() {
         clearInterval(this.stepIntervalId)
         this.stepIntervalId = null
-        this.setState({ gameState: GAME_STATES.GAME_OVER_SCREEN })
+        this.setState({
+            gameState: GAME_STATES.GAME_OVER_SCREEN,
+            canPlaceTile: false
+        })
     },
 
     onTileClick(row, col) {
