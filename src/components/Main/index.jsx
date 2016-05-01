@@ -74,6 +74,10 @@ export default React.createClass({
         this.setState({ gameState: GAME_STATES.RULES_SCREEN })
     },
 
+    hideRules() {
+        this.setState({ gameState: GAME_STATES.START_SCREEN })
+    },
+
     endLevel() {
         clearInterval(this.stepIntervalId)
         this.stepIntervalId = null
@@ -174,7 +178,7 @@ export default React.createClass({
                 return <GameStart onStartClick={ () => { this.startLevel(0) } }
                                   onRulesClick={ this.showRules } />
             case GAME_STATES.RULES_SCREEN:
-                return <Rules />
+                return <Rules onExit={ this.hideRules } />
             case GAME_STATES.NEXT_LEVEL_SCREEN:
                 return <div>
                     next level!
