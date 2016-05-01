@@ -18,6 +18,10 @@ export default React.createClass({
         flowSpeedMs: Type.number
     },
 
+    getDefaultProps() {
+        return { onTileClick: () => {} }
+    },
+
     render() {
         const tile = this.props.tile
         const nextTile = this.props.nextTile
