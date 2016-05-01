@@ -3,7 +3,10 @@
 @titleHeight: @TILE_SIZE / 2;
 
 .main {
-    font-family: 'Alegreya Sans SC', sans-serif;
+    color: #555;
+    font-family: 'Candal', sans-serif;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px #DDD;
 
     display: flex;
     flex-direction: column;
@@ -23,24 +26,16 @@
         .queue { flex: @queueRatio; }
         .spacer { flex: @spacerRatio; }
         .board { flex: @NUM_BOARD_COLS; }
-
-        .leftTitle { flex: 1; }
-        .rightTitle { flex: 1; }
     }
 }
 
-.titleRow {
-    height: @titleHeight;
+.scoreRow {
+    display: flex;
+    .scoreCol { flex: 1; }
+}
 
-    .rightTitle {
-        text-align: right;
-    }
-
-    .svgLabel {
-        display: inline-block;
-        height: 100%;
-        vertical-align: top;
-    }
+.titleText {
+    margin-bottom: 0.5rem;
 }
 
 .board {
@@ -53,13 +48,4 @@
         z-index: @ZINDEX_BOARD_OVERLAY;
         .positionFill();
     }
-}
-
-.score {
-    color: @DARK_GRAY;
-    display: inline-block;
-    font-size: @titleHeight;
-    font-weight: 700;
-    line-height: @titleHeight;
-    margin-right: 0.25em;
 }

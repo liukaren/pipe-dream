@@ -195,25 +195,21 @@ export default React.createClass({
         const overlay = this.getOverlay()
 
         return <div className={ styles.main }>
-            <div className={ cn(styles.row, styles.titleRow) }>
-                <div className={ styles.leftTitle }>
-                    <img src="../../../public/images/next.svg"
-                         className={ styles.svgLabel } />
-                </div>
-                <div className={ styles.rightTitle }>
-                    Target Score: { levelInfo.targetScore }
-                    <span className={ styles.score }>{ this.state.score }</span>
-                    <img src="../../../public/images/score.svg"
-                         className={ styles.svgLabel } />
-                </div>
-            </div>
-
             <div className={ styles.row }>
                 <div className={ styles.queue }>
+                    <div className={ styles.titleText }>Next</div>
                     <Queue tiles={ this.state.queue } />
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
+                    <div className={ styles.scoreRow }>
+                        <div className={ cn(styles.titleText, styles.scoreCol) }>
+                            Target Score: { levelInfo.targetScore }
+                        </div>
+                        <div className={ cn(styles.titleText, styles.scoreCol) }>
+                            Score: { this.state.score }
+                        </div>
+                    </div>
                     { overlay && <div className={ styles.overlay }>{ overlay }</div> }
                     <Board board={ this.state.board }
                            flowSpeedMs={ levelInfo.flowSpeedMs }
