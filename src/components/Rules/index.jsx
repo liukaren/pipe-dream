@@ -75,10 +75,8 @@ export default React.createClass({
         return <div>
             { contents }
             <div className={ styles.demoRow }>
-                <Button className={ styles.arrow }
-                        onClick={ this.goBack }>&larr;</Button>
-                <Button className={ styles.arrow }
-                        onClick={ this.goForward }>&rarr;</Button>
+                <Button onClick={ this.goBack }>&larr;</Button>&nbsp;
+                <Button onClick={ this.goForward }>&rarr;</Button>
             </div>
         </div>
     }

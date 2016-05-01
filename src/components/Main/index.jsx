@@ -6,6 +6,7 @@ import TileHelper from 'tileHelper'
 import Board from 'components/Board'
 import GameOver from 'components/GameOver'
 import GameStart from 'components/GameStart'
+import NextLevel from 'components/NextLevel'
 import Queue from 'components/Queue'
 import Rules from 'components/Rules'
 import styles from './styles.less'
@@ -180,10 +181,8 @@ export default React.createClass({
             case GAME_STATES.RULES_SCREEN:
                 return <Rules onExit={ this.hideRules } />
             case GAME_STATES.NEXT_LEVEL_SCREEN:
-                return <div>
-                    next level!
-                    <button onClick={ this.onNextClick }>next</button>
-                </div>
+                return <NextLevel onNextClick={ this.onNextClick }
+                                  level={ this.state.level + 2 } />
             case GAME_STATES.GAME_OVER_SCREEN:
                 return <GameOver onRestartClick={ this.restartGame } />
             case GAME_STATES.WIN_SCREEN:
