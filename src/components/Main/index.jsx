@@ -169,8 +169,30 @@ export default React.createClass({
         })
     },
 
+    getOverlay() {
+        switch(this.state.gameState) {
+            case GAME_STATES.START_SCREEN:
+                return <GameStart onStartClick={ () => { this.startLevel(0) } }
+                                  onRulesClick={ this.showRules } />
+            case GAME_STATES.RULES_SCREEN:
+                return <Rules />
+            case GAME_STATES.NEXT_LEVEL_SCREEN:
+                return <div>
+                    next level!
+                    <button onClick={ this.onNextClick }>next</button>
+                </div>
+            case GAME_STATES.GAME_OVER_SCREEN:
+                return <GameOver onRestartClick={ this.restartGame } />
+            case GAME_STATES.WIN_SCREEN:
+                return <div>you won!!</div>
+            default:
+                return null
+        }
+    },
+
     render() {
         const levelInfo = LEVELS[this.state.level]
+        const overlay = this.getOverlay()
 
         return <div className={ styles.main }>
             <div className={ cn(styles.row, styles.titleRow) }>
@@ -192,28 +214,7 @@ export default React.createClass({
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
-                    { this.state.gameState === GAME_STATES.START_SCREEN &&
-                        <div className={ styles.overlay }>
-                            <GameStart onStartClick={ () => { this.startLevel(0) } }
-                                       onRulesClick={ this.showRules } />
-                        </div> }
-                    { this.state.gameState === GAME_STATES.RULES_SCREEN &&
-                        <div className={ styles.overlay }>
-                            <Rules />
-                        </div> }
-                    { this.state.gameState === GAME_STATES.NEXT_LEVEL_SCREEN &&
-                        <div className={ styles.overlay }>
-                            next level!
-                            <button onClick={ this.onNextClick }>next</button>
-                        </div> }
-                    { this.state.gameState === GAME_STATES.GAME_OVER_SCREEN &&
-                        <div className={ styles.overlay }>
-                            <GameOver onRestartClick={ this.restartGame } />
-                        </div> }
-                    { this.state.gameState === GAME_STATES.WIN_SCREEN &&
-                        <div className={ styles.overlay }>
-                            you won!!
-                        </div> }
+                    { overlay && <div className={ styles.overlay }>{ overlay }</div> }
                     <Board board={ this.state.board }
                            flowSpeedMs={ levelInfo.flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }
