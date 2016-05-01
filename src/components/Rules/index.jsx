@@ -6,6 +6,9 @@ import TileHelper from 'tileHelper'
 import tileStyles from 'tiles.less'
 import Button from 'components/Button'
 import Tile from 'components/Tile'
+
+import PlaceTile from './placeTile'
+import SwapTile from './swapTile'
 import styles from './styles.less'
 
 const PAGES = {
@@ -43,38 +46,13 @@ export default React.createClass({
     render() {
         let contents
         if (this.state.page === PAGES.PLACE_TILE) {
-            contents = <div>
-                To place a pipe, click an empty square. The pipe cannot be
-                rotated, only placed.
-
-                <div className={ styles.demoRow }>
-                    <div className={ styles.demoTile }>
-                        <div className={ tileStyles.background }>
-                            <Tile tile={ TileHelper.initTileWithType(Tiles.EMPTY) }
-                                  nextTile={ TileHelper.initTileWithType(Tiles.UP_RIGHT) }
-                                  onClick={ () => { this.setState({ page: PAGES.REPLACE_TILE }) } } />
-                        </div>
-                    </div>
-                    <img src="public/images/click-hand.svg"
-                         className={ styles.demoHand } />
-                </div>
-            </div>
+            contents = <PlaceTile onTileClick={ () => {
+                this.setState({ page: PAGES.REPLACE_TILE })
+            } } />
         } else if (this.state.page === PAGES.REPLACE_TILE) {
-            contents = <div>
-                To replace a tile, just click the occupied square.
-
-                <div className={ styles.demoRow }>
-                    <div className={ styles.demoTile }>
-                        <div className={ tileStyles.background }>
-                            <Tile tile={ TileHelper.initTileWithType(Tiles.UP_RIGHT) }
-                                  nextTile={ TileHelper.initTileWithType(Tiles.DOWN_LEFT) }
-                                  onClick={ () => { this.setState({ page: PAGES.QUEUE }) } } />
-                        </div>
-                    </div>
-                    <img src="public/images/click-hand.svg"
-                         className={ styles.demoHand } />
-                </div>
-            </div>
+            contents = <SwapTile onTileClick={ () => {
+                this.setState({ page: PAGES.QUEUE })
+            } } />
         } else if (this.state.page === PAGES.QUEUE) {
             contents = <div>
                 The queue shows upcoming tiles.
