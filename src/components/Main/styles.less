@@ -45,7 +45,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        background-image: url('../../../public/images/splat.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+
         z-index: @ZINDEX_BOARD_OVERLAY;
         .positionFill();
+
+        .splat {
+            width: 70%;
+        }
     }
 }

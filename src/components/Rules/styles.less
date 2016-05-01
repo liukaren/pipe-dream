@@ -1,25 +1,16 @@
 @import '~animations.less';
 @import '~constants.less';
 
-.main {
-    background-color: @GRAY;
-    border: 5px solid @DARK_GRAY;
-    border-radius: 5px;
-    box-shadow: inset 3px 3px 0 white;
-    padding: 2rem;
-    width: 70%;
+.demoRow {
+    margin-top: 1rem;
+    text-align: center;
 
-    .demoRow {
-        margin-top: 1rem;
-        text-align: center;
+    .demoTile {
+        display: inline-block;
+    }
 
-        .demoTile {
-            display: inline-block;
-        }
-
-        .demoHand {
-            width: @TILE_SIZE / 2;
-        }
+    .demoHand {
+        width: @TILE_SIZE / 2;
     }
 }
 

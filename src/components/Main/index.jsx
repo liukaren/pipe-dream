@@ -1,5 +1,4 @@
 import React from 'react'
-import cn from 'classnames'
 
 import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
@@ -210,7 +209,11 @@ export default React.createClass({
                             Score: { this.state.score }
                         </p>
                     </div>
-                    { overlay && <div className={ styles.overlay }>{ overlay }</div> }
+                    { overlay && <div className={ styles.overlay }>
+                        <div className={ styles.splat }>
+                            { overlay }
+                        </div>
+                    </div> }
                     <Board board={ this.state.board }
                            flowSpeedMs={ levelInfo.flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }

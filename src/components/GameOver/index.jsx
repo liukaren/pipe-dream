@@ -9,7 +9,7 @@ export default React.createClass({
     },
 
     render() {
-        return <div className={ styles.main }>
+        return <div>
             <div className={ styles.row }>
                 <div className={ styles.word1 }>
                     <img src="../../../public/images/gameover1.svg" />

@@ -21,7 +21,7 @@ export default React.createClass({
 
     render() {
         if (this.state.page === PAGES.PLACE_TILE) {
-            return <div className={ styles.main }>
+            return <div>
                 To place a pipe, click an empty square. The pipe cannot be
                 rotated, only placed.
 
@@ -38,7 +38,7 @@ export default React.createClass({
                 </div>
             </div>
         } else if (this.state.page === PAGES.REPLACE_TILE) {
-            return <div className={ styles.main }>
+            return <div>
                 To replace a tile, just click the occupied square.
 
                 <div className={ styles.demoRow }>
@@ -54,7 +54,7 @@ export default React.createClass({
                 </div>
             </div>
         } else if (this.state.page === PAGES.QUEUE) {
-            return <div className={ styles.main }>
+            return <div>
                 The queue shows the upcoming tiles.
 
                 <div className={ styles.demoRow }>
