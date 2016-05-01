@@ -13,9 +13,15 @@ import styles from './styles.less'
 
 const TILE_SCORE = 50
 
-// TODO: These should be variable
-const START_DELAY_MS = 10000
-const FLOW_SPEED_MS = 5000
+const LEVELS = [{
+    startDelayMs: 2000,
+    flowSpeedMs: 1000,
+    targetScore: 50
+}, {
+    startDelayMs: 1000,
+    flowSpeedMs: 1000,
+    targetScore: 100
+}]
 
 export default React.createClass({
     componentDidMount() {
@@ -31,6 +37,7 @@ export default React.createClass({
             gameState: GAME_STATES.START_SCREEN,
             gooPosition: null,
             isReplacingTile: false,
+            level: 0,
             score: 0
         }
     },
@@ -39,8 +46,8 @@ export default React.createClass({
         this.setState(this.getInitialState())
     },
 
-    startGame() {
-        const board = this.state.board
+    startLevel(level) {
+        const board = TileHelper.generateEmptyBoard()
         const startTile = TileHelper.generateRandomStartTile()
         const { row, col } = TileHelper.generateRandomInnerPosition()
 
@@ -51,26 +58,40 @@ export default React.createClass({
             queue: TileHelper.generateQueue(),
             canPlaceTile: true,
             gameState: GAME_STATES.FLOW_NOT_STARTED,
+            gooPosition: null,
+            isReplacingTile: false,
+            level: level,
             startPosition: { row, col }
         })
 
+        const levelInfo = LEVELS[this.state.level]
         setTimeout(() => {
             this.onStep()
-            this.stepIntervalId = setInterval(this.onStep, FLOW_SPEED_MS)
-        }, START_DELAY_MS)
+            this.stepIntervalId = setInterval(this.onStep, levelInfo.flowSpeedMs)
+        }, levelInfo.startDelayMs)
     },
 
     showRules() {
         this.setState({ gameState: GAME_STATES.RULES_SCREEN })
     },
 
-    endGame() {
+    endLevel() {
         clearInterval(this.stepIntervalId)
         this.stepIntervalId = null
-        this.setState({
-            gameState: GAME_STATES.GAME_OVER_SCREEN,
-            canPlaceTile: false
-        })
+        if (this.state.score < LEVELS[this.state.level].targetScore) {
+            this.setState({
+                gameState: GAME_STATES.GAME_OVER_SCREEN,
+                canPlaceTile: false
+            })
+        } else if (this.state.level < LEVELS.length - 1) {
+            this.setState({ gameState: GAME_STATES.NEXT_LEVEL_SCREEN })
+        } else {
+            this.setState({ gameState: GAME_STATES.WIN_SCREEN })
+        }
+    },
+
+    onNextClick() {
+        this.startLevel(this.state.level + 1)
     },
 
     onTileClick(row, col) {
@@ -122,7 +143,7 @@ export default React.createClass({
 
         // Check if the next position is on the board
         if (TileHelper.isOutOfBounds(nextGooPosition.row, nextGooPosition.col)) {
-            this.endGame()
+            this.endLevel()
             return
         }
 
@@ -130,7 +151,7 @@ export default React.createClass({
         const nextGooTile = this.state.board[nextGooPosition.row][nextGooPosition.col].type
         const enterDirection = TileHelper.getOppositeDirection(exitDirection)
         if (nextGooTile.openings.indexOf(enterDirection) === -1) {
-            this.endGame()
+            this.endLevel()
             return
         }
 
@@ -149,6 +170,8 @@ export default React.createClass({
     },
 
     render() {
+        const levelInfo = LEVELS[this.state.level]
+
         return <div className={ styles.main }>
             <div className={ cn(styles.row, styles.titleRow) }>
                 <div className={ styles.leftTitle }>
@@ -156,6 +179,7 @@ export default React.createClass({
                          className={ styles.svgLabel } />
                 </div>
                 <div className={ styles.rightTitle }>
+                    Target Score: { levelInfo.targetScore }
                     <span className={ styles.score }>{ this.state.score }</span>
                     <img src="../../../public/images/score.svg"
                          className={ styles.svgLabel } />
@@ -170,23 +194,32 @@ export default React.createClass({
                 <div className={ styles.board }>
                     { this.state.gameState === GAME_STATES.START_SCREEN &&
                         <div className={ styles.overlay }>
-                            <GameStart onStartClick={ this.startGame }
+                            <GameStart onStartClick={ () => { this.startLevel(0) } }
                                        onRulesClick={ this.showRules } />
                         </div> }
                     { this.state.gameState === GAME_STATES.RULES_SCREEN &&
                         <div className={ styles.overlay }>
                             <Rules />
                         </div> }
+                    { this.state.gameState === GAME_STATES.NEXT_LEVEL_SCREEN &&
+                        <div className={ styles.overlay }>
+                            next level!
+                            <button onClick={ this.onNextClick }>next</button>
+                        </div> }
                     { this.state.gameState === GAME_STATES.GAME_OVER_SCREEN &&
                         <div className={ styles.overlay }>
                             <GameOver onRestartClick={ this.restartGame } />
                         </div> }
+                    { this.state.gameState === GAME_STATES.WIN_SCREEN &&
+                        <div className={ styles.overlay }>
+                            you won!!
+                        </div> }
                     <Board board={ this.state.board }
-                           flowSpeedMs={ FLOW_SPEED_MS }
+                           flowSpeedMs={ levelInfo.flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] }
-                           startDelayMs={ START_DELAY_MS } />
+                           startDelayMs={ levelInfo.startDelayMs } />
                 </div>
             </div>
         </div>
