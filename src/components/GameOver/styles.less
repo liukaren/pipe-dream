@@ -2,30 +2,14 @@
 @import '~constants.less';
 
 .row {
-    display: flex;
-    align-items: center;
-
-    margin-bottom: @GUTTER;
-    &:last-of-type {
-        margin-bottom: 0;
-    }
+    text-align: center;
 
     .word1, .word2 {
-        flex: 1;
         animation: fadeInScaleDown @TRANSITION_GAME_OVER both;
-    }
-
-    .space {
-        flex: none;
-        width: 1rem;
+        display: inline-block;
     }
 
     .word2 {
         animation-delay: @TRANSITION_GAME_OVER;
-    }
-
-    .restart {
-        margin: auto;
-        width: 50%;
     }
 }

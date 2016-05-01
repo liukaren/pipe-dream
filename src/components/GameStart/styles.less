@@ -1,25 +1,14 @@
-@import '~animations.less';
 @import '~constants.less';
 
 .row {
-    display: flex;
-    align-items: center;
+    text-align: center;
+}
 
-    margin-bottom: @GUTTER;
+.button {
+    display: inline-block;
+
+    margin-right: @GUTTER;
     &:last-of-type {
-        margin-bottom: 0;
-    }
-
-    .col {
-        flex: 1;
-    }
-
-    .spacer {
-        flex: none;
-        width: 1rem;
-    }
-
-    .button {
-        cursor: pointer;
+        margin-right: 0;
     }
 }

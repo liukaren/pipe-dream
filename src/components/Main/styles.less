@@ -57,3 +57,45 @@
         }
     }
 }
+
+// Adapted from
+// https://designshack.net/articles/css/12-fun-css-text-shadows-you-can-copy-and-paste/
+.funkyTextShadow(@color) {
+    text-shadow: 0 1px 0 darken(@color, 10%),
+                 0 2px 0 darken(@color, 20%),
+                 0 3px 0 darken(@color, 30%),
+                 0 -1px 1px rgba(0,0,0,.1),
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.3),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25);
+}
+
+:global(.funky-text) {
+    color: #eee;
+    font-family: "Slackey";
+    font-variant: small-caps;
+    font-size: @FONT_SIZE_LG;
+    letter-spacing: 2px;
+    .funkyTextShadow(#eee);
+
+    &:global(.is-title) {
+        font-size: @FONT_SIZE_XL;
+    }
+
+    &:global(.is-green) {
+        color: #ACDD46;
+        .funkyTextShadow(#ACDD46);
+    }
+
+    &:global(.is-red) {
+        color: #FF5959;
+        .funkyTextShadow(#FF5959);
+    }
+
+    &:global(.is-yellow) {
+        color: #FFCC00;
+        .funkyTextShadow(#FFCC00);
+    }
+}

@@ -10,19 +10,11 @@ export default React.createClass({
     },
 
     render() {
-        // TODO: Replace SVGs with "get ready"
-
         return <div className={ styles.main }>
             <div className={ styles.row }>
-                <div className={ styles.word1 }>
-                    <img src="../../../public/images/gameover1.svg" />
-                 </div>
-                <div className={ styles.space }></div>
-                <div className={ styles.word2 }>
-                    <img src="../../../public/images/gameover2.svg" />
-                </div>
+                <span className="funky-text is-yellow is-title">Get Ready</span>
+                <div className={ styles.row }>Level { this.props.level }</div>
             </div>
-            <p>Level { this.props.level }</p>
             <Button onClick={ this.props.onNextClick }>
                 &rarr;
             </Button>

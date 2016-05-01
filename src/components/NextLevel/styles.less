@@ -2,25 +2,10 @@
 @import '~constants.less';
 
 .main {
-    font-size: @TILE_SIZE * 0.75;
+    font-size: @FONT_SIZE_MD;
     text-align: center;
 }
 
 .row {
-    display: flex;
-    align-items: center;
-
-    .word1, .word2 {
-        flex: 1;
-        animation: fadeInScaleDown @TRANSITION_GAME_OVER both;
-    }
-
-    .space {
-        flex: none;
-        width: 1rem;
-    }
-
-    .word2 {
-        animation-delay: @TRANSITION_GAME_OVER;
-    }
+    margin-bottom: @GUTTER;
 }

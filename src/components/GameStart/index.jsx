@@ -12,14 +12,16 @@ export default React.createClass({
     render() {
         return <div className={ styles.main }>
             <div className={ styles.row }>
-                <Button className={ styles.col }
+                <span className="funky-text is-title">Pipe Dream</span>
+            </div>
+            <div className={ styles.row }>
+                <Button className={ styles.button }
                         onClick={ this.props.onStartClick }>
-                    <img src="../../../public/images/start.svg" />
+                    <span className="funky-text is-green">Start</span>
                 </Button>
-                <div className={ styles.spacer }></div>
-                <Button className={ styles.col }
+                <Button className={ styles.button }
                         onClick={ this.props.onRulesClick }>
-                    <img src="../../../public/images/rules.svg" />
+                    <span className="funky-text is-red">Rules</span>
                 </Button>
             </div>
         </div>

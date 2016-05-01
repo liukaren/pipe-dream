@@ -8,6 +8,10 @@
 // vertical height. Ideally, this should be min(100vw / num_cols, 100vh / num_rows)
 @TILE_SIZE: floor(100vmin / (@NUM_BOARD_COLS + 2)); // +2 for queue and spacer
 
+@FONT_SIZE_MD: @TILE_SIZE / 2;
+@FONT_SIZE_LG: @TILE_SIZE * 0.75;
+@FONT_SIZE_XL: @TILE_SIZE;
+
 @TRANSITION_QUEUE: 300ms;
 @TRANSITION_HOVER: 500ms;
 @TRANSITION_PLACE: 300ms; // Animation time when placing new tiles
