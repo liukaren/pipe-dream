@@ -20,6 +20,10 @@ export default React.createClass({
         startDelayMs: Type.number
     },
 
+    getDefaultProps() {
+        return { onTileClick: () => {} }
+    },
+
     render() {
         return <div>
             { this.props.board.map((rowTiles, row) => (

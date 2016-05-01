@@ -9,6 +9,7 @@ import Tile from 'components/Tile'
 
 import PlaceTile from './placeTile'
 import SwapTile from './swapTile'
+import StartTile from './startTile'
 import styles from './styles.less'
 
 const PAGES = {
@@ -67,8 +68,8 @@ export default React.createClass({
                     </div>
                 </div>
             </div>
-        } else {
-            contents = <div>moar rules</div>
+        } else if (this.state.page === PAGES.START_TILE) {
+            contents = <StartTile />
         }
 
         return <div>
