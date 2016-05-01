@@ -197,18 +197,18 @@ export default React.createClass({
         return <div className={ styles.main }>
             <div className={ styles.row }>
                 <div className={ styles.queue }>
-                    <div className={ styles.titleText }>Next</div>
+                    <p>Next</p>
                     <Queue tiles={ this.state.queue } />
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
                     <div className={ styles.scoreRow }>
-                        <div className={ cn(styles.titleText, styles.scoreCol) }>
+                        <p className={ styles.scoreCol }>
                             Target Score: { levelInfo.targetScore }
-                        </div>
-                        <div className={ cn(styles.titleText, styles.scoreCol) }>
+                        </p>
+                        <p className={ styles.scoreCol }>
                             Score: { this.state.score }
-                        </div>
+                        </p>
                     </div>
                     { overlay && <div className={ styles.overlay }>{ overlay }</div> }
                     <Board board={ this.state.board }

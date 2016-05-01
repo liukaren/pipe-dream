@@ -24,16 +24,15 @@
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 5px;
         cursor: pointer;
-        opacity: 0;
         z-index: @ZINDEX_PREVIEW;
         .positionFill();
-    }
-}
 
-.tile.demoHover .tilePreview,
-.tilePreview:hover {
-    opacity: 1;
-    animation: pulse @TRANSITION_HOVER ease-in-out infinite alternate;
+        opacity: 0;
+        &:hover {
+            opacity: 1;
+            animation: pulse @TRANSITION_HOVER ease-in-out infinite alternate;
+        }
+    }
 }
 
 // Don't show the preview while tiles are animating in and out.
