@@ -7,7 +7,6 @@
 .main {
     color: @TEXT_COLOR;
     font-family: 'Candal', sans-serif;
-    font-size: 1.2rem;
     text-shadow: 1px 1px #DDD;
 
     display: flex;
@@ -23,7 +22,7 @@
         align-items: flex-start;
         justify-content: space-between;
         margin: 0 auto;
-        width: @TILE_SIZE * (@NUM_BOARD_COLS + @spacerRatio + @queueRatio);
+        width: ceil(@TILE_SIZE * (@NUM_BOARD_COLS + @spacerRatio + @queueRatio));
 
         .queue { flex: @queueRatio; }
         .spacer { flex: @spacerRatio; }

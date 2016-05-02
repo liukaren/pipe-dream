@@ -27,7 +27,7 @@ export default React.createClass({
     render() {
         return <div>
             { this.props.board.map((rowTiles, row) => (
-                <div key={ row }>
+                <div key={ row } className={ styles.row }>
                     { rowTiles.map((tile, col) => {
                         // Don't show transitions for empty tiles (when
                         // restarting the board with empty tiles)
