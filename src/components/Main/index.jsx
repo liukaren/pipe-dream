@@ -36,7 +36,7 @@ export default React.createClass({
             board: TileHelper.generateEmptyBoard(),
             queue: TileHelper.generateEmptyQueue(),
             canPlaceTile: false,
-            gameState: GAME_STATES.START_SCREEN,
+            gameState: GAME_STATES.SCREEN_START,
             gooPosition: null,
             isReplacingTile: false,
             level: 0,
@@ -74,11 +74,11 @@ export default React.createClass({
     },
 
     showRules() {
-        this.setState({ gameState: GAME_STATES.RULES_SCREEN })
+        this.setState({ gameState: GAME_STATES.SCREEN_RULES })
     },
 
     hideRules() {
-        this.setState({ gameState: GAME_STATES.START_SCREEN })
+        this.setState({ gameState: GAME_STATES.SCREEN_START })
     },
 
     endLevel() {
@@ -86,13 +86,13 @@ export default React.createClass({
         this.stepIntervalId = null
         if (this.state.score < LEVELS[this.state.level].targetScore) {
             this.setState({
-                gameState: GAME_STATES.GAME_OVER_SCREEN,
+                gameState: GAME_STATES.SCREEN_LOSE,
                 canPlaceTile: false
             })
         } else if (this.state.level < LEVELS.length - 1) {
-            this.setState({ gameState: GAME_STATES.NEXT_LEVEL_SCREEN })
+            this.setState({ gameState: GAME_STATES.SCREEN_NEXT })
         } else {
-            this.setState({ gameState: GAME_STATES.WIN_SCREEN })
+            this.setState({ gameState: GAME_STATES.SCREEN_WIN })
         }
     },
 
@@ -176,17 +176,17 @@ export default React.createClass({
 
     getOverlay() {
         switch(this.state.gameState) {
-            case GAME_STATES.START_SCREEN:
+            case GAME_STATES.SCREEN_START:
                 return <ScreenStart onStartClick={ () => { this.startLevel(0) } }
                                     onRulesClick={ this.showRules } />
-            case GAME_STATES.RULES_SCREEN:
+            case GAME_STATES.SCREEN_RULES:
                 return <Rules onExit={ this.hideRules } />
-            case GAME_STATES.NEXT_LEVEL_SCREEN:
+            case GAME_STATES.SCREEN_NEXT:
                 return <ScreenNext onNextClick={ this.onNextClick }
                                    level={ this.state.level + 2 } />
-            case GAME_STATES.GAME_OVER_SCREEN:
+            case GAME_STATES.SCREEN_LOSE:
                 return <ScreenLose onRestartClick={ this.restartGame } />
-            case GAME_STATES.WIN_SCREEN:
+            case GAME_STATES.SCREEN_WIN:
                 return <ScreenWin onRestartClick={ this.restartGame }
                                   score={ this.state.score } />
             default:
