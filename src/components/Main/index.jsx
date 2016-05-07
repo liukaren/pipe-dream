@@ -174,7 +174,7 @@ export default React.createClass({
         })
     },
 
-    getOverlay() {
+    getScreen() {
         switch(this.state.gameState) {
             case GAME_STATES.SCREEN_START:
                 return <ScreenStart onStartClick={ () => { this.startLevel(0) } }
@@ -196,7 +196,7 @@ export default React.createClass({
 
     render() {
         const levelInfo = LEVELS[this.state.level]
-        const overlay = this.getOverlay()
+        const screen = this.getScreen()
 
         return <div className={ styles.main }>
             <div className={ styles.row }>
@@ -214,14 +214,14 @@ export default React.createClass({
                             Score: { this.state.score }
                         </p>
                     </div>
-                    <ReactCSSTransitionGroup transitionName="overlay"
+                    <ReactCSSTransitionGroup transitionName="screen"
                                              transitionAppear
                                              transitionAppearTimeout={ TRANSITION_SCREEN_MS }
                                              transitionEnterTimeout={ TRANSITION_SCREEN_MS }
                                              transitionLeaveTimeout={ TRANSITION_SCREEN_MS }>
-                        { overlay && <div className={ styles.overlay } key="screen">
+                        { screen && <div className={ styles.screen } key="screen">
                             <div className={ styles.splat }>
-                                { overlay }
+                                { screen }
                             </div>
                         </div> }
                     </ReactCSSTransitionGroup>
