@@ -6,6 +6,7 @@ import TileHelper from 'tileHelper'
 import Board from 'components/Board'
 import GameOver from 'components/GameOver'
 import GameStart from 'components/GameStart'
+import GameWin from 'components/GameWin'
 import NextLevel from 'components/NextLevel'
 import Queue from 'components/Queue'
 import Rules from 'components/Rules'
@@ -185,7 +186,8 @@ export default React.createClass({
             case GAME_STATES.GAME_OVER_SCREEN:
                 return <GameOver onRestartClick={ this.restartGame } />
             case GAME_STATES.WIN_SCREEN:
-                return <div>you won!!</div>
+                return <GameWin onRestartClick={ this.restartGame }
+                                score={ this.state.score } />
             default:
                 return null
         }
