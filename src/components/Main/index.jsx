@@ -104,10 +104,9 @@ export default React.createClass({
         const board = this.state.board
         const isReplacingTile = board[row][col].type !== Tiles.EMPTY
         board[row][col] = this.state.queue.shift()
-        this.state.queue.push(TileHelper.generateRandomTile())
         this.setState({
             board,
-            queue: this.state.queue,
+            queue: this.state.queue.concat([TileHelper.generateRandomTile()]),
             canPlaceTile: false,
             isReplacingTile
         })
