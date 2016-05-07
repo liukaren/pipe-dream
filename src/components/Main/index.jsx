@@ -1,6 +1,7 @@
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
+import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS, TRANSITION_SCREEN_MS } from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
@@ -213,11 +214,17 @@ export default React.createClass({
                             Score: { this.state.score }
                         </p>
                     </div>
-                    { overlay && <div className={ styles.overlay }>
-                        <div className={ styles.splat }>
-                            { overlay }
-                        </div>
-                    </div> }
+                    <ReactCSSTransitionGroup transitionName="overlay"
+                                             transitionAppear
+                                             transitionAppearTimeout={ TRANSITION_SCREEN_MS }
+                                             transitionEnterTimeout={ TRANSITION_SCREEN_MS }
+                                             transitionLeaveTimeout={ TRANSITION_SCREEN_MS }>
+                        { overlay && <div className={ styles.overlay } key="screen">
+                            <div className={ styles.splat }>
+                                { overlay }
+                            </div>
+                        </div> }
+                    </ReactCSSTransitionGroup>
                     <Board board={ this.state.board }
                            flowSpeedMs={ levelInfo.flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }

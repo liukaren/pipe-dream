@@ -123,3 +123,14 @@
     overflow: hidden;
     transition: max-height @TRANSITION_QUEUE, opacity @TRANSITION_QUEUE;
 }
+
+// -------- Overlay screens appearing/disappearing --------
+
+:global(.overlay-appear),
+:global(.overlay-enter) {
+    animation: fadeInScaleUp @TRANSITION_SCREEN;
+}
+
+:global(.overlay-leave) {
+    animation: fadeInScaleUp @TRANSITION_SCREEN reverse;
+}

@@ -18,6 +18,10 @@
     display: inline-block;
 }
 
+.word1 {
+    animation-delay: @TRANSITION_SCREEN;
+}
+
 .word2 {
-    animation-delay: @TRANSITION_GAME_OVER;
+    animation-delay: @TRANSITION_SCREEN + @TRANSITION_GAME_OVER;
 }
