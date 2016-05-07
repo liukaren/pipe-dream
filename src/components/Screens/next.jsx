@@ -11,12 +11,10 @@ export default React.createClass({
 
     render() {
         return <div className={ styles.main }>
-            <div className={ styles.row }>
-                <span className="funky-text is-yellow is-title">Get Ready</span>
-                <div className={ styles.row }>Level { this.props.level }</div>
-            </div>
+            <div className="funky-text is-yellow is-title">Get Ready</div>
+            <div className={ styles.subtitle }>Level { this.props.level }</div>
             <Button onClick={ this.props.onNextClick }>
-                &rarr;
+                <span className="funky-text is-green">Next</span>
             </Button>
         </div>
     }

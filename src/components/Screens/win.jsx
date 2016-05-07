@@ -1,5 +1,4 @@
 import React from 'react'
-import cn from 'classnames'
 
 import Button from 'components/Button'
 import styles from './styles.less'
@@ -11,16 +10,16 @@ export default React.createClass({
     },
 
     render() {
-        return <div>
-            <div className={ cn(styles.row, 'funky-text', 'is-green', 'is-title') }>
+        return <div className={ styles.main }>
+            <div className="funky-text is-green is-title">
                 You Win!
             </div>
 
-            <div className={ cn(styles.row, 'funky-text', 'is-yellow') }>
+            <div className={ styles.subtitle }>
                 Score: { this.props.score }
             </div>
 
-            <div className={ styles.row }>
+            <div>
                 <Button onClick={ this.props.onRestartClick }>
                     <span className="funky-text is-green">Restart</span>
                 </Button>

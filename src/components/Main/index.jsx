@@ -4,12 +4,12 @@ import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
-import GameOver from 'components/GameOver'
-import GameStart from 'components/GameStart'
-import GameWin from 'components/GameWin'
-import NextLevel from 'components/NextLevel'
 import Queue from 'components/Queue'
 import Rules from 'components/Rules'
+import ScreenLose from 'components/Screens/lose'
+import ScreenNext from 'components/Screens/next'
+import ScreenStart from 'components/Screens/start'
+import ScreenWin from 'components/Screens/win'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
@@ -176,18 +176,18 @@ export default React.createClass({
     getOverlay() {
         switch(this.state.gameState) {
             case GAME_STATES.START_SCREEN:
-                return <GameStart onStartClick={ () => { this.startLevel(0) } }
-                                  onRulesClick={ this.showRules } />
+                return <ScreenStart onStartClick={ () => { this.startLevel(0) } }
+                                    onRulesClick={ this.showRules } />
             case GAME_STATES.RULES_SCREEN:
                 return <Rules onExit={ this.hideRules } />
             case GAME_STATES.NEXT_LEVEL_SCREEN:
-                return <NextLevel onNextClick={ this.onNextClick }
-                                  level={ this.state.level + 2 } />
+                return <ScreenNext onNextClick={ this.onNextClick }
+                                   level={ this.state.level + 2 } />
             case GAME_STATES.GAME_OVER_SCREEN:
-                return <GameOver onRestartClick={ this.restartGame } />
+                return <ScreenLose onRestartClick={ this.restartGame } />
             case GAME_STATES.WIN_SCREEN:
-                return <GameWin onRestartClick={ this.restartGame }
-                                score={ this.state.score } />
+                return <ScreenWin onRestartClick={ this.restartGame }
+                                  score={ this.state.score } />
             default:
                 return null
         }
