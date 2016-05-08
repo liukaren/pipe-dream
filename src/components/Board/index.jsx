@@ -3,7 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import cn from 'classnames'
 
 import { TileType, BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
-import { StartTiles, Tiles } from 'tiles'
+import { StartTiles } from 'tiles'
 import tileStyles from 'tiles.less'
 import Tile from 'components/Tile'
 import styles from './styles.less'
@@ -29,10 +29,6 @@ export default React.createClass({
             { this.props.board.map((rowTiles, row) => (
                 <div key={ row } className={ styles.row }>
                     { rowTiles.map((tile, col) => {
-                        // Don't show transitions for empty tiles (when
-                        // restarting the board with empty tiles)
-                        const isEmptyTile = tile.type === Tiles.EMPTY
-
                         const isStartTile = START_TILES.indexOf(tile.type) !== -1
                         const enterTimeout = this.props.isReplacingTile ?
                             SWAP_THROTTLE_MS : PLACE_THROTTLE_MS
@@ -42,7 +38,7 @@ export default React.createClass({
                         return <ReactCSSTransitionGroup key={ col }
                                                  className={ cn(tileStyles.background, styles.col) }
                                                  transitionName="board"
-                                                 transitionEnter={ !isEmptyTile && !isStartTile }
+                                                 transitionEnter={ !isStartTile }
                                                  transitionLeave={ this.props.isReplacingTile }
                                                  transitionEnterTimeout={ enterTimeout }
                                                  transitionLeaveTimeout={ BOOM_MS }>
