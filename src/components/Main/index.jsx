@@ -13,6 +13,7 @@ import ScreenWin from 'components/Screens/win'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
+const TILE_SCORE_FAST = 70
 const UNUSED_TILE_PENALTY = 10
 
 const KEYCODE_SPACE = 32
@@ -219,9 +220,11 @@ export default React.createClass({
             [enterDirection, nextGooPosition.exitDirection]
         )
 
+        const scoreAdded = this.state.gameState === GAME_STATES.FLOW_FAST ?
+            TILE_SCORE_FAST : TILE_SCORE
         this.setState({
             gooPosition: nextGooPosition,
-            score: this.state.score + TILE_SCORE
+            score: this.state.score + scoreAdded
         })
     },
 
