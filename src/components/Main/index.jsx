@@ -102,6 +102,7 @@ export default React.createClass({
                 isReplacingTile: true,
                 score: this.state.score - UNUSED_TILE_PENALTY
             })
+            this.soundSwap.currentTime = 0
             this.soundSwap.play()
             setTimeout(() => { this.clearUnusedTile(resolve, row, col + 1) }, BOOM_MS)
             return
@@ -150,7 +151,13 @@ export default React.createClass({
         })
 
         // Play a sound
-        isReplacingTile ? this.soundSwap.play() : this.soundPlace.play()
+        if (isReplacingTile) {
+            this.soundSwap.currentTime = 0
+            this.soundSwap.play()
+        } else {
+            this.soundPlace.currentTime = 0
+            this.soundPlace.play()
+        }
 
         // After a delay, allow placing a tile again. Replacing a tile takes
         // more time than placing down a new tile.
