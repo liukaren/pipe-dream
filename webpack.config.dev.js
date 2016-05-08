@@ -5,6 +5,7 @@ var baseConfig = require('./webpack.config.common.js');
 
 module.exports = Object.assign(baseConfig, {
     entry: [
+        'babel-polyfill',
         'webpack-dev-server/client?http://0.0.0.0:3000',
         'webpack/hot/only-dev-server',
         './src/index.jsx'
