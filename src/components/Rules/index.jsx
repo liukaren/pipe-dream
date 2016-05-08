@@ -7,6 +7,7 @@ import tileStyles from 'tiles.less'
 import Button from 'components/Button'
 import Tile from 'components/Tile'
 
+import FastFlow from './fastFlow'
 import PlaceTile from './placeTile'
 import SwapTile from './swapTile'
 import StartTile from './startTile'
@@ -16,7 +17,8 @@ const PAGES = {
     PLACE_TILE: 1,
     REPLACE_TILE: 2,
     QUEUE: 3,
-    START_TILE: 4
+    START_TILE: 4,
+    FAST_FLOW: 5
 }
 
 export default React.createClass({
@@ -28,19 +30,27 @@ export default React.createClass({
         return { page: PAGES.PLACE_TILE }
     },
 
+    isFirstPage() {
+        return this.state.page === PAGES.PLACE_TILE
+    },
+
+    isLastPage() {
+        return this.state.page === PAGES.FAST_FLOW
+    },
+
     goBack() {
-        if (this.state.page > PAGES.PLACE_TILE) {
-            this.setState({ page: this.state.page - 1 })
-        } else {
+        if (this.isFirstPage()) {
             this.props.onExit()
+        } else {
+            this.setState({ page: this.state.page - 1 })
         }
     },
 
     goForward() {
-        if (this.state.page < PAGES.START_TILE) {
-            this.setState({ page: this.state.page + 1 })
-        } else {
+        if (this.isLastPage()) {
             this.props.onExit()
+        } else {
+            this.setState({ page: this.state.page + 1 })
         }
     },
 
@@ -70,6 +80,8 @@ export default React.createClass({
             </div>
         } else if (this.state.page === PAGES.START_TILE) {
             contents = <StartTile />
+        } else if (this.state.page === PAGES.FAST_FLOW) {
+            contents = <FastFlow />
         }
 
         return <div>
@@ -78,7 +90,9 @@ export default React.createClass({
                 <Button className="funky-text is-red"
                         onClick={ this.goBack }>Back</Button>
                 <Button className="funky-text is-green"
-                        onClick={ this.goForward }>Next</Button>
+                        onClick={ this.goForward }>
+                    { this.isLastPage() ? 'To Game' : 'Next' }
+                </Button>
             </div>
         </div>
     }
