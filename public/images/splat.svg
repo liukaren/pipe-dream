@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 295 229" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path d="M55.332998,0 C79.5459079,0 78.285967,13.0441066 103.415713,13.0441066 C128.545459,13.0441066 144.25593,-1.82804475 165.697927,0.416666314 C187.139924,2.66137738 199.402054,14.5171446 216.385539,20.573512 C233.369024,26.6298794 262.03649,15.4632208 280.783783,33.5808525 C299.531077,51.6984844 286.160262,80.2254225 278.055053,110.965592 C269.949844,141.705763 297.557657,167.234056 280.783792,195.632187 C264.009927,224.030319 234.629567,207.582266 207.69757,207.582266 C180.765573,207.582266 163.445383,221.433258 133.430548,224.030319 C103.415712,226.627379 78.7504329,202.388144 60.7957682,207.582266 C42.8411036,212.776388 23.5340249,216.338052 12.8215607,186.22043 C2.10909643,156.102809 31.2042313,134.289103 12.8215607,99.6322685 C-5.56110978,64.9754345 -0.450482508,50.404369 5.3835846,33.5808539 C11.2176517,16.7573387 31.1200879,0 55.332998,0 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-2" y="-2" width="294.296362" height="228.225731">
+            <rect x="-2" y="-2" width="294.296362" height="228.225731" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+        <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="290.296362" height="224.225731" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="splat" transform="translate(2.000000, 2.000000)">
+            <use fill="#87D7F4" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <use stroke="#34B0DD" mask="url(#mask-2)" stroke-width="4" xlink:href="#path-1"></use>
+            <use stroke="#D2F0FB" mask="url(#mask-3)" stroke-width="4" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
