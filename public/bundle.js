@@ -28056,7 +28056,8 @@
 	                return _react2.default.createElement(_Rules2.default, { onExit: this.hideRules });
 	            case _constants.GAME_STATES.SCREEN_NEXT:
 	                return _react2.default.createElement(_next2.default, { onNextClick: this.onNextClick,
-	                    level: this.state.level + 2 });
+	                    level: this.state.level + 2,
+	                    score: this.state.score });
 	            case _constants.GAME_STATES.SCREEN_LOSE:
 	                return _react2.default.createElement(_lose2.default, { onRestartClick: this.restartGame,
 	                    score: this.state.score,
@@ -28983,7 +28984,7 @@
 	                                    _this.props.onTileClick(row, col);
 	                                } }),
 	                            isStartTile && // Timer over start tile (before goo starts flowing)
-	                            _react2.default.createElement('img', { src: '../../../public/images/timer.svg',
+	                            _react2.default.createElement('img', { src: 'public/images/timer.svg',
 	                                className: _styles2.default.timer,
 	                                style: timerStyle })
 	                        );
@@ -30811,7 +30812,8 @@
 
 	    propTypes: {
 	        level: _react2.default.PropTypes.number,
-	        onNextClick: _react2.default.PropTypes.func
+	        onNextClick: _react2.default.PropTypes.func,
+	        score: _react2.default.PropTypes.number
 	    },
 
 	    render: function render() {
@@ -30828,6 +30830,12 @@
 	                { className: _styles2.default.subtitle },
 	                'Level ',
 	                this.props.level
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: _styles2.default.subtitle },
+	                'Previous Score: ',
+	                this.props.score
 	            ),
 	            _react2.default.createElement(
 	                _Button2.default,
