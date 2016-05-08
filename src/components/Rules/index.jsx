@@ -30,20 +30,8 @@ export default React.createClass({
         return { page: PAGES.PLACE_TILE }
     },
 
-    isFirstPage() {
-        return this.state.page === PAGES.PLACE_TILE
-    },
-
     isLastPage() {
         return this.state.page === PAGES.FAST_FLOW
-    },
-
-    goBack() {
-        if (this.isFirstPage()) {
-            this.props.onExit()
-        } else {
-            this.setState({ page: this.state.page - 1 })
-        }
     },
 
     goForward() {
@@ -87,8 +75,6 @@ export default React.createClass({
         return <div>
             { contents }
             <div className={ styles.demoRow }>
-                <Button className="funky-text is-red"
-                        onClick={ this.goBack }>Back</Button>
                 <Button className="funky-text is-green"
                         onClick={ this.goForward }>
                     { this.isLastPage() ? 'To Game' : 'Next' }
