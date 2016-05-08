@@ -4,10 +4,9 @@
 @NUM_BOARD_ROWS: 7;
 @NUM_BOARD_COLS: 10;
 
-// NOTE: Using vmin means sometimes we'll be sizing all the cols to fit in the
-// vertical height. Ideally, this should be min(100vw / num_cols, 100vh / num_rows)
-@TILE_SIZE: floor(100vmin / (@NUM_BOARD_COLS + 2)); // +2 for queue and spacer
+@TILE_SIZE: floor(100vh / (@NUM_BOARD_ROWS + 1));
 
+@FONT_SIZE_SM: @TILE_SIZE / 3;
 @FONT_SIZE_MD: @TILE_SIZE / 2;
 @FONT_SIZE_LG: @TILE_SIZE * 0.75;
 @FONT_SIZE_XL: @TILE_SIZE;

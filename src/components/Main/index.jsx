@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 
 import { GAME_STATES, BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
 import { Tiles } from 'tiles'
@@ -18,6 +19,7 @@ const UNUSED_TILE_PENALTY = 3
 
 const KEYCODE_SPACE = 32
 const FAST_FLOW_SPEED_MS = 400
+const MOBILE_BREAKPOINT = 500
 
 const LEVELS = [{
     startDelayMs: 20000,
@@ -42,10 +44,13 @@ export default React.createClass({
         this.soundPlace = document.getElementById('sound-place')
         this.soundSwap = document.getElementById('sound-swap')
         document.onkeypress = this.onKeyPress
+        this.detectRotate() // Call once at the beginning
+        window.addEventListener('resize', this.detectRotate)
     },
 
     componentWillUnmount() {
         document.onkeypress = null
+        window.removeEventListener('resize', this.detectRotate)
     },
 
     getInitialState() {
@@ -279,6 +284,12 @@ export default React.createClass({
         }
     },
 
+    detectRotate() {
+        const showRotatePrompt = window.innerWidth < MOBILE_BREAKPOINT &&
+            window.innerHeight > window.innerWidth
+        this.setState({ showRotatePrompt })
+    },
+
     render() {
         const levelInfo = this.currentLevel()
         const screen = this.getScreen()
@@ -287,7 +298,13 @@ export default React.createClass({
         const startDelayMs = isFastMode ? 0 : levelInfo.startDelayMs
         const flowSpeedMs = isFastMode ? FAST_FLOW_SPEED_MS : levelInfo.flowSpeedMs
 
-        return <div id="main-wrapper" className={ styles.main }>
+        if (this.state.showRotatePrompt) {
+            return <div className={ cn(styles.main, styles.rotatePrompt) }>
+                This game is best viewed with your device held sideways!
+            </div>
+        }
+
+        return <div className={ styles.main }>
             <div className={ styles.row }>
                 <div className={ styles.queue }>
                     <p>Next</p>
