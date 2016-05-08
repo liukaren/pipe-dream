@@ -27760,15 +27760,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _constants = __webpack_require__(466);
+	var _classnames = __webpack_require__(466);
 
-	var _tiles = __webpack_require__(467);
+	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _tileHelper = __webpack_require__(475);
+	var _constants = __webpack_require__(467);
+
+	var _tiles = __webpack_require__(468);
+
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _Board = __webpack_require__(479);
+	var _Board = __webpack_require__(480);
 
 	var _Board2 = _interopRequireDefault(_Board);
 
@@ -27808,6 +27812,7 @@
 
 	var KEYCODE_SPACE = 32;
 	var FAST_FLOW_SPEED_MS = 400;
+	var MOBILE_BREAKPOINT = 500;
 
 	var LEVELS = [{
 	    startDelayMs: 20000,
@@ -27833,9 +27838,12 @@
 	        this.soundPlace = document.getElementById('sound-place');
 	        this.soundSwap = document.getElementById('sound-swap');
 	        document.onkeypress = this.onKeyPress;
+	        this.detectRotate(); // Call once at the beginning
+	        window.addEventListener('resize', this.detectRotate);
 	    },
 	    componentWillUnmount: function componentWillUnmount() {
 	        document.onkeypress = null;
+	        window.removeEventListener('resize', this.detectRotate);
 	    },
 	    getInitialState: function getInitialState() {
 	        return {
@@ -28087,6 +28095,10 @@
 	            }
 	        }
 	    },
+	    detectRotate: function detectRotate() {
+	        var showRotatePrompt = window.innerWidth < MOBILE_BREAKPOINT && window.innerHeight > window.innerWidth;
+	        this.setState({ showRotatePrompt: showRotatePrompt });
+	    },
 	    render: function render() {
 	        var levelInfo = this.currentLevel();
 	        var screen = this.getScreen();
@@ -28095,9 +28107,17 @@
 	        var startDelayMs = isFastMode ? 0 : levelInfo.startDelayMs;
 	        var flowSpeedMs = isFastMode ? FAST_FLOW_SPEED_MS : levelInfo.flowSpeedMs;
 
+	        if (this.state.showRotatePrompt) {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: (0, _classnames2.default)(_styles2.default.main, _styles2.default.rotatePrompt) },
+	                'This game is best viewed with your device held sideways!'
+	            );
+	        }
+
 	        return _react2.default.createElement(
 	            'div',
-	            { id: 'main-wrapper', className: _styles2.default.main },
+	            { className: _styles2.default.main },
 	            _react2.default.createElement(
 	                'div',
 	                { className: _styles2.default.row },
@@ -28157,6 +28177,60 @@
 /* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 467 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -28200,7 +28274,7 @@
 	};
 
 /***/ },
-/* 467 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28210,9 +28284,9 @@
 	});
 	exports.StartTiles = exports.Tiles = undefined;
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tiles = __webpack_require__(468);
+	var _tiles = __webpack_require__(469);
 
 	var _tiles2 = _interopRequireDefault(_tiles);
 
@@ -28276,16 +28350,16 @@
 	};
 
 /***/ },
-/* 468 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(469);
+	var content = __webpack_require__(470);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28302,15 +28376,15 @@
 	}
 
 /***/ },
-/* 469 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "._1PE5D {\n  background-image: url(" + __webpack_require__(471) + ");\n  background-size: cover;\n  width: 8vmin;\n  height: 8vmin;\n  position: relative;\n}\n._3T9Mi::after,\n._1XZ5o::after,\n._1kTIB::after,\n._1V4vY::after {\n  content: \"\";\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._3T9Mi::after {\n  background-image: url(" + __webpack_require__(472) + ");\n  top: 50%;\n}\n._1XZ5o::after {\n  background-image: url(" + __webpack_require__(473) + ");\n  right: 50%;\n}\n._1kTIB::after {\n  background-image: url(" + __webpack_require__(472) + ");\n  bottom: 50%;\n}\n._1V4vY::after {\n  background-image: url(" + __webpack_require__(473) + ");\n  left: 50%;\n}\n", ""]);
+	exports.push([module.id, "._1PE5D {\n  background-image: url(" + __webpack_require__(472) + ");\n  background-size: cover;\n  width: 12vh;\n  height: 12vh;\n  position: relative;\n}\n._3T9Mi::after,\n._1XZ5o::after,\n._1kTIB::after,\n._1V4vY::after {\n  content: \"\";\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._3T9Mi::after {\n  background-image: url(" + __webpack_require__(473) + ");\n  top: 50%;\n}\n._1XZ5o::after {\n  background-image: url(" + __webpack_require__(474) + ");\n  right: 50%;\n}\n._1kTIB::after {\n  background-image: url(" + __webpack_require__(473) + ");\n  bottom: 50%;\n}\n._1V4vY::after {\n  background-image: url(" + __webpack_require__(474) + ");\n  left: 50%;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -28322,7 +28396,7 @@
 	};
 
 /***/ },
-/* 470 */
+/* 471 */
 /***/ function(module, exports) {
 
 	/*
@@ -28378,25 +28452,25 @@
 
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgdmlld0JveD0iMCAwIDEyOCAxMjgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIwLjcwNDY0MDg1OCI+CiAgICAgICAgPHBvbHlsaW5lIGZpbGw9IiNDOUM5QzkiIHBvaW50cz0iMTI4IDAgMTEyIDE2IDE2IDE2IC00LjIxODg0NzQ5ZS0xNSAwIDEyOCAwIj48L3BvbHlsaW5lPgogICAgICAgIDxwYXRoIGQ9Ik0xMjgsMCBMMTI4LDEyOCBMMTEyLDExMiBMMTEyLDE2IEwxMjgsMCBNLTQuNDQwODkyMWUtMTUsMCBMMTYsMTYgTDE2LDExMiBMLTQuNDQwODkyMWUtMTUsMTI4IEwtNC40NDA4OTIxZS0xNSwwIiBmaWxsPSIjRUNFQ0VDIj48L3BhdGg+CiAgICAgICAgPHBvbHlsaW5lIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMTEyIDExMiAxMjggMTI4IC00LjIxODg0NzQ5ZS0xNSAxMjggMTYgMTEyIDExMiAxMTIiPjwvcG9seWxpbmU+CiAgICAgICAgPHBvbHlsaW5lIGZpbGw9IiNEOUQ5RDkiIHBvaW50cz0iMTEyIDExMiAxNiAxMTIgMTYgMTYgMTEyIDE2IDExMiAxMTIiPjwvcG9seWxpbmU+CiAgICA8L2c+Cjwvc3ZnPgo="
 
 /***/ },
-/* 472 */
+/* 473 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgdmlld0JveD0iMCAwIDEwNCA1NCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxwb2x5bGluZSBpZD0iU2hhcGUiIGZpbGw9IiM4MEJFMUYiIHBvaW50cz0iMTIuOTUgNDAuOTUgMTIuOTUgMTIuOTUgOTAuOTUgMTIuOTUgOTAuOTUgNDAuOTUgMTIuOTUgNDAuOTUiPjwvcG9seWxpbmU+CiAgICAgICAgPHBvbHlsaW5lIGlkPSJTaGFwZSIgZmlsbD0iI0FBREI1QyIgcG9pbnRzPSIxMi45NSAxMi45NSA0Ljk1IDQuOTUgOTguOTUgNC45NSA5MC45NSAxMi45NSAxMi45NSAxMi45NSI+PC9wb2x5bGluZT4KICAgICAgICA8cGF0aCBkPSJNMTIuOTUsMTIuOTUgTDEyLjk1LDQwLjk1IEw0Ljk1LDQ4Ljk1IEw0Ljk1LDQuOTUgTDEyLjk1LDEyLjk1IE05OC45NSw0Ljk1IEw5OC45NSw0OC45NSBMOTAuOTUsNDAuOTUgTDkwLjk1LDEyLjk1IEw5OC45NSw0Ljk1IiBpZD0iU2hhcGUiIGZpbGw9IiM4Q0M5MkMiPjwvcGF0aD4KICAgICAgICA8cG9seWxpbmUgaWQ9IlNoYXBlIiBmaWxsPSIjNkRBNjE1IiBwb2ludHM9IjQuOTUgNDguOTUgMTIuOTUgNDAuOTUgOTAuOTUgNDAuOTUgOTguOTUgNDguOTUgNC45NSA0OC45NSI+PC9wb2x5bGluZT4KICAgICAgICA8cGF0aCBkPSJNNSw0OSBMOTksNDkgTDk5LDUgTDUsNSBMNSw0OSBNNSwwIEw5OSwwIEMxMDAuMzY2NjY3LDAgMTAxLjU1LDAuNSAxMDIuNTUsMS41IEMxMDMuNTE2NjY3LDIuNDY2NjY2NjcgMTA0LDMuNjMzMzMzMzMgMTA0LDUgTDEwNCw0OSBDMTA0LDUwLjM2NjY2NjcgMTAzLjUxNjY2Nyw1MS41NSAxMDIuNTUsNTIuNTUgQzEwMS41NSw1My41MTY2NjY3IDEwMC4zNjY2NjcsNTQgOTksNTQgTDUsNTQgQzMuNjMzMzMzMzMsNTQgMi40NjY2NjY2Nyw1My41MTY2NjY3IDEuNSw1Mi41NSBDMC41LDUxLjU1IDAsNTAuMzY2NjY2NyAwLDQ5IEwwLDUgQzAsMy42MzMzMzMzMyAwLjUsMi40NjY2NjY2NyAxLjUsMS41IEMyLjQ2NjY2NjY3LDAuNSAzLjYzMzMzMzMzLDAgNSwwIiBpZD0iU2hhcGUiIGZpbGw9IiM0NDY5MEIiPjwvcGF0aD4KICAgIDwvZz4KPC9zdmc+Cg=="
 
 /***/ },
-/* 473 */
+/* 474 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgdmlld0JveD0iMCAwIDU0IDEwNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJncmVlbi1ob3Jpem9udGFsIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjUuMDAwMDAwLCAyNS4wMDAwMDApIj4KICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1Mi4wMDAwMDAsIDI3LjAwMDAwMCkgcm90YXRlKC05MC4wMDAwMDApIHRyYW5zbGF0ZSgtNTIuMDAwMDAwLCAtMjcuMDAwMDAwKSAiPgogICAgICAgICAgICAgICAgPHBvbHlsaW5lIGlkPSJTaGFwZSIgZmlsbD0iIzgwQkUxRiIgcG9pbnRzPSIxMi45NSA0MC45NSAxMi45NSAxMi45NSA5MC45NSAxMi45NSA5MC45NSA0MC45NSAxMi45NSA0MC45NSI+PC9wb2x5bGluZT4KICAgICAgICAgICAgICAgIDxwb2x5bGluZSBpZD0iU2hhcGUiIGZpbGw9IiNBQURCNUMiIHBvaW50cz0iMTIuOTUgMTIuOTUgNC45NSA0Ljk1IDk4Ljk1IDQuOTUgOTAuOTUgMTIuOTUgMTIuOTUgMTIuOTUiPjwvcG9seWxpbmU+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTIuOTUsMTIuOTUgTDEyLjk1LDQwLjk1IEw0Ljk1LDQ4Ljk1IEw0Ljk1LDQuOTUgTDEyLjk1LDEyLjk1IE05OC45NSw0Ljk1IEw5OC45NSw0OC45NSBMOTAuOTUsNDAuOTUgTDkwLjk1LDEyLjk1IEw5OC45NSw0Ljk1IiBpZD0iU2hhcGUiIGZpbGw9IiM4Q0M5MkMiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwb2x5bGluZSBpZD0iU2hhcGUiIGZpbGw9IiM2REE2MTUiIHBvaW50cz0iNC45NSA0OC45NSAxMi45NSA0MC45NSA5MC45NSA0MC45NSA5OC45NSA0OC45NSA0Ljk1IDQ4Ljk1Ij48L3BvbHlsaW5lPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTUsNDkgTDk5LDQ5IEw5OSw1IEw1LDUgTDUsNDkgTTUsMCBMOTksMCBDMTAwLjM2NjY2NywwIDEwMS41NSwwLjUgMTAyLjU1LDEuNSBDMTAzLjUxNjY2NywyLjQ2NjY2NjY3IDEwNCwzLjYzMzMzMzMzIDEwNCw1IEwxMDQsNDkgQzEwNCw1MC4zNjY2NjY3IDEwMy41MTY2NjcsNTEuNTUgMTAyLjU1LDUyLjU1IEMxMDEuNTUsNTMuNTE2NjY2NyAxMDAuMzY2NjY3LDU0IDk5LDU0IEw1LDU0IEMzLjYzMzMzMzMzLDU0IDIuNDY2NjY2NjcsNTMuNTE2NjY2NyAxLjUsNTIuNTUgQzAuNSw1MS41NSAwLDUwLjM2NjY2NjcgMCw0OSBMMCw1IEMwLDMuNjMzMzMzMzMgMC41LDIuNDY2NjY2NjcgMS41LDEuNSBDMi40NjY2NjY2NywwLjUgMy42MzMzMzMzMywwIDUsMCIgaWQ9IlNoYXBlIiBmaWxsPSIjNDQ2OTBCIj48L3BhdGg+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo="
 
 /***/ },
-/* 474 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -28648,7 +28722,7 @@
 
 
 /***/ },
-/* 475 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28659,13 +28733,13 @@
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var _animations = __webpack_require__(476);
+	var _animations = __webpack_require__(477);
 
 	var _animations2 = _interopRequireDefault(_animations);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28827,16 +28901,16 @@
 	exports.default = TileHelper;
 
 /***/ },
-/* 476 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(477);
+	var content = __webpack_require__(478);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28853,15 +28927,15 @@
 	}
 
 /***/ },
-/* 477 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes _2utTg {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _2utTg {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _3D9un {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _3D9un {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1RgpW {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _1RgpW {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _3DHnj {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _3DHnj {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _3iuic {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3iuic {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2MB2I {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2MB2I {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _81GH8 {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _81GH8 {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2kUQs {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2kUQs {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes Q-5YJ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes Q-5YJ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1tMyb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _1tMyb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes ME7fr {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes ME7fr {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _2jWPY {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _2jWPY {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2gnQv {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _2gnQv {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _3PvRk {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _3PvRk {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3o3Di {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3o3Di {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _1Ns7O {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _1Ns7O {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _1RgpW 300ms both;\n          animation: _1RgpW 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(478) + ") !important;\n  -webkit-animation: _3DHnj 700ms;\n          animation: _3DHnj 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 8vmin;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes _2utTg {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _2utTg {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _3D9un {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _3D9un {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1RgpW {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _1RgpW {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _3DHnj {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _3DHnj {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _3iuic {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3iuic {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2MB2I {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2MB2I {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _81GH8 {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _81GH8 {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2kUQs {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2kUQs {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes Q-5YJ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes Q-5YJ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1tMyb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _1tMyb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes ME7fr {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes ME7fr {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _2jWPY {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _2jWPY {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2gnQv {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _2gnQv {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _3PvRk {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _3PvRk {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3o3Di {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3o3Di {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _1Ns7O {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _1Ns7O {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _1RgpW 300ms both;\n          animation: _1RgpW 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(479) + ") !important;\n  -webkit-animation: _3DHnj 700ms;\n          animation: _3DHnj 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 12vh;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -28884,13 +28958,13 @@
 	};
 
 /***/ },
-/* 478 */
+/* 479 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgdmlld0JveD0iMCAwIDM0OCAyNTEiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZGVmcz4KICAgICAgICA8cG9seWdvbiBpZD0icGF0aC0xIiBwb2ludHM9IjU5LjAyMzQzNzUgMTc1LjY5MTQwNiA3Ni43NDIxODc1IDIzNS4wNTA3ODEgMTQzLjAwNzgxMiAxNzkuODE2NDA2IDIxOC42MDkzNzUgMjIzLjQ2MDkzOCAyMTUuNzg5MDYyIDE2OS4zNTU0NjkgMzI2LjYwNTQ2OSAxNzUuNjQ4NDM3IDI2Ni45ODA0NjkgMTE0LjE2MDE1NiAzMjQuNjQ4NDM4IDgyLjU1MDc4MTIgMjIxLjY0NDUzMSA2Ni42MTMyODEyIDE5NS45NzY1NjIgMCAxNDkuODU5Mzc1IDc2LjM4MjgxMjUgODkuNSAyMi44ODI4MTI1IDY5Ljc4MTI1IDgyLjkzNzUgMCA3OC43Njk1MzEyIDUwLjcxODc1IDEyNi4wMTU2MjUgMC44NjMyODEyNSAxNzAuMTMyODEyIj48L3BvbHlnb24+CiAgICAgICAgPGZpbHRlciB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItMiI+CiAgICAgICAgICAgIDxmZU9mZnNldCBkeD0iMTAiIGR5PSIxMCIgaW49IlNvdXJjZUFscGhhIiByZXN1bHQ9InNoYWRvd09mZnNldElubmVyMSI+PC9mZU9mZnNldD4KICAgICAgICAgICAgPGZlQ29tcG9zaXRlIGluPSJzaGFkb3dPZmZzZXRJbm5lcjEiIGluMj0iU291cmNlQWxwaGEiIG9wZXJhdG9yPSJhcml0aG1ldGljIiBrMj0iLTEiIGszPSIxIiByZXN1bHQ9InNoYWRvd0lubmVySW5uZXIxIj48L2ZlQ29tcG9zaXRlPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCB2YWx1ZXM9IjAgMCAwIDAgMSAgIDAgMCAwIDAgMSAgIDAgMCAwIDAgMSAgMCAwIDAgMSAwIiB0eXBlPSJtYXRyaXgiIGluPSJzaGFkb3dJbm5lcklubmVyMSI+PC9mZUNvbG9yTWF0cml4PgogICAgICAgIDwvZmlsdGVyPgogICAgICAgIDx0ZXh0IGlkPSJ0ZXh0LTMiIGZvbnQtZmFtaWx5PSJLb21pa2FBeGlzLCBLb21pa2EgQXhpcyIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9Im5vcm1hbCI+CiAgICAgICAgICAgIDx0c3BhbiB4PSI3NS4wNDE4MzM2IiB5PSIxNDguOTc3MTIiPkJPT00hPC90c3Bhbj4KICAgICAgICA8L3RleHQ+CiAgICAgICAgPGZpbHRlciB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIGlkPSJmaWx0ZXItNCI+CiAgICAgICAgICAgIDxmZU9mZnNldCBkeD0iMyIgZHk9IjMiIGluPSJTb3VyY2VBbHBoYSIgcmVzdWx0PSJzaGFkb3dPZmZzZXRPdXRlcjEiPjwvZmVPZmZzZXQ+CiAgICAgICAgICAgIDxmZUNvbG9yTWF0cml4IHZhbHVlcz0iMCAwIDAgMCAxICAgMCAwIDAgMCAxICAgMCAwIDAgMCAxICAwIDAgMCAxIDAiIHR5cGU9Im1hdHJpeCIgaW49InNoYWRvd09mZnNldE91dGVyMSI+PC9mZUNvbG9yTWF0cml4PgogICAgICAgIDwvZmlsdGVyPgogICAgPC9kZWZzPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9ImV4cGxvc2lvbiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTEuMDAwMDAwLCA5LjAwMDAwMCkiPgogICAgICAgICAgICA8ZyBpZD0iUGF0aC0xIj4KICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0iI0Y4RTgxQyIgZmlsbC1ydWxlPSJldmVub2RkIiB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4KICAgICAgICAgICAgICAgIDx1c2UgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMSIgZmlsdGVyPSJ1cmwoI2ZpbHRlci0yKSIgeGxpbms6aHJlZj0iI3BhdGgtMSI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIHN0cm9rZT0iI0Y5NzcyQiIgc3Ryb2tlLXdpZHRoPSI4IiB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8ZyBpZD0iQk9PTSEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2MS4wNjY4MzQsIDEyMS45NzcxMjApIHJvdGF0ZSgtOS4wMDAwMDApIHRyYW5zbGF0ZSgtMTYxLjA2NjgzNCwgLTEyMS45NzcxMjApICIgZmlsbD0iI0Y5NzcyQiI+CiAgICAgICAgICAgICAgICA8dXNlIGZpbGwtb3BhY2l0eT0iMSIgZmlsdGVyPSJ1cmwoI2ZpbHRlci00KSIgeGxpbms6aHJlZj0iI3RleHQtMyI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIGZpbGwtcnVsZT0iZXZlbm9kZCIgeGxpbms6aHJlZj0iI3RleHQtMyI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIGZpbGwtb3BhY2l0eT0iMSIgeGxpbms6aHJlZj0iI3RleHQtMyI+PC91c2U+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo="
 
 /***/ },
-/* 479 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28903,19 +28977,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsCssTransitionGroup = __webpack_require__(480);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(481);
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _classnames = __webpack_require__(487);
+	var _classnames = __webpack_require__(466);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
-	var _tiles2 = __webpack_require__(468);
+	var _tiles2 = __webpack_require__(469);
 
 	var _tiles3 = _interopRequireDefault(_tiles2);
 
@@ -28996,13 +29070,13 @@
 	});
 
 /***/ },
-/* 480 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(481);
+	module.exports = __webpack_require__(482);
 
 /***/ },
-/* 481 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29022,8 +29096,8 @@
 
 	var React = __webpack_require__(302);
 
-	var ReactTransitionGroup = __webpack_require__(482);
-	var ReactCSSTransitionGroupChild = __webpack_require__(484);
+	var ReactTransitionGroup = __webpack_require__(483);
+	var ReactCSSTransitionGroupChild = __webpack_require__(485);
 
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -29089,7 +29163,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 482 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29108,7 +29182,7 @@
 	var _assign = __webpack_require__(303);
 
 	var React = __webpack_require__(302);
-	var ReactTransitionChildMapping = __webpack_require__(483);
+	var ReactTransitionChildMapping = __webpack_require__(484);
 
 	var emptyFunction = __webpack_require__(310);
 
@@ -29300,7 +29374,7 @@
 	module.exports = ReactTransitionGroup;
 
 /***/ },
-/* 483 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29402,7 +29476,7 @@
 	module.exports = ReactTransitionChildMapping;
 
 /***/ },
-/* 484 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29421,8 +29495,8 @@
 	var React = __webpack_require__(302);
 	var ReactDOM = __webpack_require__(332);
 
-	var CSSCore = __webpack_require__(485);
-	var ReactTransitionEvents = __webpack_require__(486);
+	var CSSCore = __webpack_require__(486);
+	var ReactTransitionEvents = __webpack_require__(487);
 
 	var onlyChild = __webpack_require__(330);
 
@@ -29567,7 +29641,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 485 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -29694,7 +29768,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(296)))
 
 /***/ },
-/* 486 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29772,60 +29846,6 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 487 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
 /* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29841,21 +29861,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(487);
+	var _classnames = __webpack_require__(466);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _animations = __webpack_require__(476);
+	var _animations = __webpack_require__(477);
 
 	var _animations2 = _interopRequireDefault(_animations);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tileHelper = __webpack_require__(475);
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
 	var _styles = __webpack_require__(489);
 
@@ -29936,7 +29956,7 @@
 	var content = __webpack_require__(490);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29956,12 +29976,12 @@
 /* 490 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes _39TH5 {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _39TH5 {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes db16u {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes db16u {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1U8fz {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _1U8fz {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _3F2rt {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _3F2rt {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes KkajX {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes KkajX {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2UF2u {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2UF2u {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2Oq2x {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2Oq2x {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2N-4F {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2N-4F {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1gnMK {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes _1gnMK {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _2SWtZ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _2SWtZ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _3zKlL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _3zKlL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _3I36O {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _3I36O {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3DeNJ {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _3DeNJ {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _1UzUr {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _1UzUr {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1_Hth {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _1_Hth {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2-WR2 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _2-WR2 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _1U8fz 300ms both;\n          animation: _1U8fz 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(478) + ") !important;\n  -webkit-animation: _3F2rt 700ms;\n          animation: _3F2rt 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 8vmin;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n@-webkit-keyframes _1-7DB {\n  from {\n    -webkit-transform: scale(0.9, 0.9);\n            transform: scale(0.9, 0.9);\n  }\n  to {\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n@keyframes _1-7DB {\n  from {\n    -webkit-transform: scale(0.9, 0.9);\n            transform: scale(0.9, 0.9);\n  }\n  to {\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n._2wiMF,\n._33x_b,\n._2ImG- {\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n._2wiMF {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._2wiMF ._33x_b {\n  z-index: 1;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._2wiMF ._2ImG- {\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  cursor: pointer;\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  opacity: 0;\n}\n._2wiMF ._2ImG-:hover {\n  opacity: 1;\n  -webkit-animation: _1-7DB 500ms ease-in-out infinite alternate;\n          animation: _1-7DB 500ms ease-in-out infinite alternate;\n}\n.board-enter ._2ImG-:hover,\n.board-leave ._2ImG-:hover {\n  visibility: hidden;\n}\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes _39TH5 {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _39TH5 {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes db16u {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes db16u {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1U8fz {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _1U8fz {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _3F2rt {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _3F2rt {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes KkajX {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes KkajX {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2UF2u {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2UF2u {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2Oq2x {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2Oq2x {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2N-4F {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2N-4F {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1gnMK {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes _1gnMK {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _2SWtZ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _2SWtZ {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _3zKlL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _3zKlL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _3I36O {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _3I36O {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3DeNJ {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _3DeNJ {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _1UzUr {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _1UzUr {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1_Hth {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _1_Hth {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2-WR2 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _2-WR2 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _1U8fz 300ms both;\n          animation: _1U8fz 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(479) + ") !important;\n  -webkit-animation: _3F2rt 700ms;\n          animation: _3F2rt 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 12vh;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n@-webkit-keyframes _1-7DB {\n  from {\n    -webkit-transform: scale(0.9, 0.9);\n            transform: scale(0.9, 0.9);\n  }\n  to {\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n@keyframes _1-7DB {\n  from {\n    -webkit-transform: scale(0.9, 0.9);\n            transform: scale(0.9, 0.9);\n  }\n  to {\n    -webkit-transform: scale(1, 1);\n            transform: scale(1, 1);\n  }\n}\n._2wiMF,\n._33x_b,\n._2ImG- {\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n._2wiMF {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._2wiMF ._33x_b {\n  z-index: 1;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n._2wiMF ._2ImG- {\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  cursor: pointer;\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  opacity: 0;\n}\n._2wiMF ._2ImG-:hover {\n  opacity: 1;\n  -webkit-animation: _1-7DB 500ms ease-in-out infinite alternate;\n          animation: _1-7DB 500ms ease-in-out infinite alternate;\n}\n.board-enter ._2ImG-:hover,\n.board-leave ._2ImG-:hover {\n  visibility: hidden;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -29997,7 +30017,7 @@
 	var content = __webpack_require__(492);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30017,7 +30037,7 @@
 /* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
@@ -30045,13 +30065,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactAddonsCssTransitionGroup = __webpack_require__(480);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(481);
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tiles = __webpack_require__(468);
+	var _tiles = __webpack_require__(469);
 
 	var _tiles2 = _interopRequireDefault(_tiles);
 
@@ -30101,17 +30121,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(487);
+	var _classnames = __webpack_require__(466);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
-	var _tileHelper = __webpack_require__(475);
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _tiles2 = __webpack_require__(468);
+	var _tiles2 = __webpack_require__(469);
 
 	var _tiles3 = _interopRequireDefault(_tiles2);
 
@@ -30248,7 +30268,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(487);
+	var _classnames = __webpack_require__(466);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -30287,7 +30307,7 @@
 	var content = __webpack_require__(497);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30307,12 +30327,12 @@
 /* 497 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "._2qhVp {\n  background-color: #F1CC36;\n  border: 2px solid #FADD69;\n  box-shadow: 2px 2px #C6A726, -2px 2px #C6A726, 2px -2px #C6A726, -2px -2px #C6A726, -2px 6px #C6A726, 2px 6px #C6A726;\n  border-radius: 4px;\n  color: #555;\n  cursor: pointer;\n  font-size: 4vmin;\n  padding: 0.5rem 1rem;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  margin-right: 1rem;\n}\n._2qhVp:focus {\n  outline: none;\n}\n._2qhVp:last-of-type {\n  margin-right: 0;\n}\n", ""]);
+	exports.push([module.id, "._2qhVp {\n  background-color: #F1CC36;\n  border: 2px solid #FADD69;\n  box-shadow: 2px 2px #C6A726, -2px 2px #C6A726, 2px -2px #C6A726, -2px -2px #C6A726, -2px 6px #C6A726, 2px 6px #C6A726;\n  border-radius: 4px;\n  color: #555;\n  cursor: pointer;\n  font-size: 6vh;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  margin-right: 1rem;\n}\n._2qhVp:focus {\n  outline: none;\n}\n._2qhVp:last-of-type {\n  margin-right: 0;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -30366,15 +30386,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tileHelper = __webpack_require__(475);
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
-	var _Board = __webpack_require__(479);
+	var _Board = __webpack_require__(480);
 
 	var _Board2 = _interopRequireDefault(_Board);
 
@@ -30436,7 +30456,7 @@
 	var content = __webpack_require__(501);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30456,12 +30476,12 @@
 /* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes _1CfcV {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _1CfcV {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _39NVl {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _39NVl {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _39OAF {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _39OAF {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1ubUw {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _1ubUw {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _1246o {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1246o {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _3pzve {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3pzve {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2fCbC {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2fCbC {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1tUvX {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1tUvX {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes dzDqb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes dzDqb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes I9j_j {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes I9j_j {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _2ynsL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _2ynsL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _3df_u {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _3df_u {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _27eeK {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _27eeK {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes XtRix {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes XtRix {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3XBA9 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3XBA9 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes L8q6U {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes L8q6U {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _39OAF 300ms both;\n          animation: _39OAF 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(478) + ") !important;\n  -webkit-animation: _1ubUw 700ms;\n          animation: _1ubUw 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 8vmin;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n._5LEKT {\n  margin-top: 1rem;\n  text-align: center;\n}\n._5LEKT ._95zWP {\n  cursor: pointer;\n  display: inline-block;\n}\n._5LEKT ._3YQPz {\n  width: 4vmin;\n}\n._1n3Ch {\n  margin: auto;\n}\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes _1CfcV {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _1CfcV {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _39NVl {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _39NVl {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _39OAF {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _39OAF {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _1ubUw {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _1ubUw {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _1246o {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1246o {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _3pzve {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3pzve {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2fCbC {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2fCbC {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1tUvX {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1tUvX {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes dzDqb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes dzDqb {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes I9j_j {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes I9j_j {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _2ynsL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _2ynsL {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _3df_u {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _3df_u {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _27eeK {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _27eeK {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes XtRix {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes XtRix {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3XBA9 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3XBA9 {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes L8q6U {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes L8q6U {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _39OAF 300ms both;\n          animation: _39OAF 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(479) + ") !important;\n  -webkit-animation: _1ubUw 700ms;\n          animation: _1ubUw 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 12vh;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n._5LEKT {\n  margin-top: 1rem;\n  text-align: center;\n}\n._5LEKT ._95zWP {\n  cursor: pointer;\n  display: inline-block;\n}\n._5LEKT ._3YQPz {\n  width: 6vh;\n}\n._1n3Ch {\n  margin: auto;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -30501,15 +30521,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tileHelper = __webpack_require__(475);
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
-	var _Board = __webpack_require__(479);
+	var _Board = __webpack_require__(480);
 
 	var _Board2 = _interopRequireDefault(_Board);
 
@@ -30575,15 +30595,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _constants = __webpack_require__(466);
+	var _constants = __webpack_require__(467);
 
-	var _tileHelper = __webpack_require__(475);
+	var _tileHelper = __webpack_require__(476);
 
 	var _tileHelper2 = _interopRequireDefault(_tileHelper);
 
-	var _tiles = __webpack_require__(467);
+	var _tiles = __webpack_require__(468);
 
-	var _Board = __webpack_require__(479);
+	var _Board = __webpack_require__(480);
 
 	var _Board2 = _interopRequireDefault(_Board);
 
@@ -30732,7 +30752,7 @@
 	var content = __webpack_require__(506);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -30752,12 +30772,12 @@
 /* 506 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes murGY {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes murGY {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _2_8SE {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _2_8SE {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes DcbdU {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes DcbdU {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _2W_yv {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _2W_yv {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes SZZXp {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes SZZXp {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes CokQo {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes CokQo {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1ITSP {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1ITSP {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1vg3_ {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1vg3_ {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1nZpv {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes _1nZpv {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes qsKci {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes qsKci {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _185yb {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _185yb {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes iXJHM {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes iXJHM {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2zIIG {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _2zIIG {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _38R8X {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _38R8X {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3B7gO {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3B7gO {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3713r {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _3713r {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: DcbdU 300ms both;\n          animation: DcbdU 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(478) + ") !important;\n  -webkit-animation: _2W_yv 700ms;\n          animation: _2W_yv 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 8vmin;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.F0FTr {\n  text-align: center;\n}\n.EApMS {\n  color: #555;\n  font-family: 'Candal', sans-serif;\n  font-size: 4vmin;\n  margin-bottom: 1rem;\n  text-shadow: 1px 1px #DDD;\n}\n.LYvmY,\n._3ZClp {\n  -webkit-animation: _2_8SE 1000ms both;\n          animation: _2_8SE 1000ms both;\n  display: inline-block;\n}\n.LYvmY {\n  -webkit-animation-delay: 200ms;\n          animation-delay: 200ms;\n}\n._3ZClp {\n  -webkit-animation-delay: 1200ms;\n          animation-delay: 1200ms;\n}\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes murGY {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes murGY {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _2_8SE {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _2_8SE {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes DcbdU {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes DcbdU {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _2W_yv {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes _2W_yv {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes SZZXp {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes SZZXp {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes CokQo {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes CokQo {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1ITSP {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1ITSP {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1vg3_ {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _1vg3_ {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _1nZpv {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes _1nZpv {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes qsKci {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes qsKci {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _185yb {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _185yb {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes iXJHM {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes iXJHM {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _2zIIG {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _2zIIG {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _38R8X {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _38R8X {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes _3B7gO {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes _3B7gO {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3713r {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes _3713r {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: DcbdU 300ms both;\n          animation: DcbdU 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(479) + ") !important;\n  -webkit-animation: _2W_yv 700ms;\n          animation: _2W_yv 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 12vh;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.F0FTr {\n  text-align: center;\n}\n.EApMS {\n  color: #555;\n  font-family: 'Candal', sans-serif;\n  font-size: 6vh;\n  margin-bottom: 1rem;\n  text-shadow: 1px 1px #DDD;\n}\n.LYvmY,\n._3ZClp {\n  -webkit-animation: _2_8SE 1000ms both;\n          animation: _2_8SE 1000ms both;\n  display: inline-block;\n}\n.LYvmY {\n  -webkit-animation-delay: 200ms;\n          animation-delay: 200ms;\n}\n._3ZClp {\n  -webkit-animation-delay: 1200ms;\n          animation-delay: 1200ms;\n}\n", ""]);
 
 	// exports
 	exports.locals = {
@@ -30993,7 +31013,7 @@
 	var content = __webpack_require__(511);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(474)(content, {});
+	var update = __webpack_require__(475)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -31013,17 +31033,18 @@
 /* 511 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(470)();
+	exports = module.exports = __webpack_require__(471)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@-webkit-keyframes _30eMb {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _30eMb {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _2VIs5 {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _2VIs5 {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _38TtN {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _38TtN {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes fCoTq {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes fCoTq {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _3BRUq {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3BRUq {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2hujx {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2hujx {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes TkaUb {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes TkaUb {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _3nv5Z {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3nv5Z {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes xVOYU {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes xVOYU {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1pb4k {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _1pb4k {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _37wgZ {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _37wgZ {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _1exQh {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _1exQh {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3yiP2 {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _3yiP2 {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _13Tak {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _13Tak {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes noFgq {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes noFgq {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes sWD-k {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes sWD-k {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _38TtN 300ms both;\n          animation: _38TtN 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(478) + ") !important;\n  -webkit-animation: fCoTq 700ms;\n          animation: fCoTq 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 8vmin;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\np {\n  margin: 5px 0;\n}\n._2QQwd {\n  color: #555;\n  font-family: 'Candal', sans-serif;\n  text-shadow: 1px 1px #DDD;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n}\n._2QQwd ._2oK9s {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: start;\n  -webkit-align-items: flex-start;\n      -ms-flex-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin: 0 auto;\n  width: 92vmin;\n}\n._2QQwd ._2oK9s ._30laM {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n._2QQwd ._2oK9s ._33hgu {\n  -webkit-box-flex: 0.5;\n  -webkit-flex: 0.5;\n      -ms-flex: 0.5;\n          flex: 0.5;\n}\n._2QQwd ._2oK9s .ncdNw {\n  -webkit-box-flex: 10;\n  -webkit-flex: 10;\n      -ms-flex: 10;\n          flex: 10;\n}\n._1k-Wn {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n._1k-Wn ._2tDgS {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.ncdNw {\n  position: relative;\n}\n.ncdNw ._3dcL6 {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-image: url(" + __webpack_require__(512) + ");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  -webkit-animation: _38TtN 200ms both;\n          animation: _38TtN 200ms both;\n  z-index: 5;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n.ncdNw ._3dcL6 ._3wZk6 {\n  width: 70%;\n}\n.funky-text {\n  color: #eee;\n  font-family: \"Slackey\";\n  font-variant: small-caps;\n  font-size: 4vmin;\n  letter-spacing: 2px;\n  text-shadow: 0 1px 0 #d5d5d5, 0 2px 0 #bbbbbb, 0 3px 0 #a2a2a2, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-title {\n  font-size: 8vmin;\n}\n.funky-text.is-green {\n  color: #ACDD46;\n  text-shadow: 0 1px 0 #95cb25, 0 2px 0 #75a01d, 0 3px 0 #567515, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-red {\n  color: #FF5959;\n  text-shadow: 0 1px 0 #ff2626, 0 2px 0 #f20000, 0 3px 0 #bf0000, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-yellow {\n  color: #FFCC00;\n  text-shadow: 0 1px 0 #cca300, 0 2px 0 #997a00, 0 3px 0 #665200, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n", ""]);
+	exports.push([module.id, "@-webkit-keyframes _30eMb {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes _30eMb {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes _2VIs5 {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _2VIs5 {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes _38TtN {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@keyframes _38TtN {\n  from {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  to {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n@-webkit-keyframes fCoTq {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@keyframes fCoTq {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0.5);\n            transform: scale(0.5);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.5);\n            transform: scale(1.5);\n  }\n}\n@-webkit-keyframes _3BRUq {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3BRUq {\n  from {\n    -webkit-clip-path: inset(0% 0% 100% 0%);\n            clip-path: inset(0% 0% 100% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _2hujx {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _2hujx {\n  from {\n    -webkit-clip-path: inset(100% 0% 0% 0%);\n            clip-path: inset(100% 0% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes TkaUb {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes TkaUb {\n  from {\n    -webkit-clip-path: inset(0% 100% 0% 0%);\n            clip-path: inset(0% 100% 0% 0%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes _3nv5Z {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@keyframes _3nv5Z {\n  from {\n    -webkit-clip-path: inset(0% 0% 0% 100%);\n            clip-path: inset(0% 0% 0% 100%);\n  }\n  to {\n    -webkit-clip-path: inset(0% 0% 0% 0%);\n            clip-path: inset(0% 0% 0% 0%);\n  }\n}\n@-webkit-keyframes xVOYU {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@keyframes xVOYU {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);\n  }\n}\n@-webkit-keyframes _1pb4k {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@keyframes _1pb4k {\n  from {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n            clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 0%);\n  }\n}\n@-webkit-keyframes _37wgZ {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@keyframes _37wgZ {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n            clip-path: polygon(100% 100%, 100% 0%, 0% 0%, 0% 100%);\n  }\n}\n@-webkit-keyframes _1exQh {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@keyframes _1exQh {\n  from {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n            clip-path: polygon(100% 100%, 0% 100%, 0% 0%, 100% 0%);\n  }\n}\n@-webkit-keyframes _3yiP2 {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@keyframes _3yiP2 {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 100% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);\n  }\n}\n@-webkit-keyframes _13Tak {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@keyframes _13Tak {\n  from {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n            clip-path: polygon(0% 100%, 0% 0%, 0% 0%, 0% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);\n  }\n}\n@-webkit-keyframes noFgq {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@keyframes noFgq {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 0% 100%, 0% 100%, 0% 100%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n            clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);\n  }\n}\n@-webkit-keyframes sWD-k {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n@keyframes sWD-k {\n  from {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%);\n  }\n  to {\n    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);\n  }\n}\n.board-enter {\n  -webkit-animation: _38TtN 300ms both;\n          animation: _38TtN 300ms both;\n}\n.board-enter.is-replacing.board-enter {\n  -webkit-animation-delay: 700ms;\n          animation-delay: 700ms;\n}\n.board-leave {\n  background-image: url(" + __webpack_require__(479) + ") !important;\n  -webkit-animation: fCoTq 700ms;\n          animation: fCoTq 700ms;\n}\n.queue-enter.queue-enter-active,\n.queue-leave {\n  max-height: 12vh;\n  opacity: 1;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\n.queue-enter,\n.queue-leave.queue-leave-active {\n  max-height: 0;\n  opacity: 0;\n  overflow: hidden;\n  -webkit-transition: max-height 300ms, opacity 300ms;\n  transition: max-height 300ms, opacity 300ms;\n}\np {\n  margin: 5px 0;\n}\n.B96mf {\n  margin: 1rem;\n}\n._2QQwd {\n  color: #555;\n  font-family: 'Candal', sans-serif;\n  font-size: 4vh;\n  text-shadow: 1px 1px #DDD;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n}\n._2QQwd ._2oK9s {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: start;\n  -webkit-align-items: flex-start;\n      -ms-flex-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: justify;\n  -webkit-justify-content: space-between;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin: 0 auto;\n  width: 138vh;\n}\n._2QQwd ._2oK9s ._30laM {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n._2QQwd ._2oK9s ._33hgu {\n  -webkit-box-flex: 0.5;\n  -webkit-flex: 0.5;\n      -ms-flex: 0.5;\n          flex: 0.5;\n}\n._2QQwd ._2oK9s .ncdNw {\n  -webkit-box-flex: 10;\n  -webkit-flex: 10;\n      -ms-flex: 10;\n          flex: 10;\n}\n._1k-Wn {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n}\n._1k-Wn ._2tDgS {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n}\n.ncdNw {\n  position: relative;\n}\n.ncdNw ._3dcL6 {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-image: url(" + __webpack_require__(512) + ");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  -webkit-animation: _38TtN 200ms both;\n          animation: _38TtN 200ms both;\n  z-index: 5;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n.ncdNw ._3dcL6 ._3wZk6 {\n  width: 70%;\n}\n.funky-text {\n  color: #eee;\n  font-family: \"Slackey\";\n  font-variant: small-caps;\n  font-size: 6vh;\n  letter-spacing: 2px;\n  text-shadow: 0 1px 0 #d5d5d5, 0 2px 0 #bbbbbb, 0 3px 0 #a2a2a2, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-title {\n  font-size: 12vh;\n}\n.funky-text.is-green {\n  color: #ACDD46;\n  text-shadow: 0 1px 0 #95cb25, 0 2px 0 #75a01d, 0 3px 0 #567515, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-red {\n  color: #FF5959;\n  text-shadow: 0 1px 0 #ff2626, 0 2px 0 #f20000, 0 3px 0 #bf0000, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n.funky-text.is-yellow {\n  color: #FFCC00;\n  text-shadow: 0 1px 0 #cca300, 0 2px 0 #997a00, 0 3px 0 #665200, 0 -1px 1px rgba(0, 0, 0, 0.1), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25);\n}\n", ""]);
 
 	// exports
 	exports.locals = {
 		"fadeInScaleUp": "_38TtN",
 		"drift": "fCoTq",
+		"rotatePrompt": "B96mf",
 		"main": "_2QQwd",
 		"row": "_2oK9s",
 		"queue": "_30laM",
