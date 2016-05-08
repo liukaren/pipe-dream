@@ -1,7 +1,7 @@
 import { PropTypes as Type } from 'react'
 
 export const TRANSITION_QUEUE_MS = 300
-export const TRANSITION_SCREEN_MS = 300
+export const TRANSITION_SCREEN_MS = 200
 
 export const PLACE_THROTTLE_MS = 300 // How often the user can place new tiles
 export const SWAP_THROTTLE_MS = 800 // How often the user can swap existing tiles
