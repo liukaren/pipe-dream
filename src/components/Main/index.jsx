@@ -100,7 +100,7 @@ export default React.createClass({
             this.setState({
                 board: this.state.board,
                 isReplacingTile: true,
-                score: this.state.score - UNUSED_TILE_PENALTY
+                score: Math.max(this.state.score - UNUSED_TILE_PENALTY, 0)
             })
             this.soundSwap.currentTime = 0
             this.soundSwap.play()
