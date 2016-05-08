@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-import { GAME_STATES, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS, TRANSITION_SCREEN_MS } from 'constants'
+import {
+    GAME_STATES,
+    BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS, TRANSITION_SCREEN_MS
+} from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
@@ -14,6 +17,7 @@ import ScreenWin from 'components/Screens/win'
 import styles from './styles.less'
 
 const TILE_SCORE = 50
+const UNUSED_TILE_PENALTY = 10
 
 const LEVELS = [{
     startDelayMs: 2000,
@@ -81,19 +85,48 @@ export default React.createClass({
         this.setState({ gameState: GAME_STATES.SCREEN_START })
     },
 
+    // A recursive helper method that explodes all unused tiles one by one.
+    clearUnusedTile(resolve, row, col) {
+        if (row >= this.state.board.length) { // Finished with the board
+            return resolve()
+        }
+        if (col >= this.state.board[0].length) { // Ready for the next row
+            return this.clearUnusedTile(resolve, row + 1, 0)
+        }
+
+        const tile = this.state.board[row][col]
+        if (tile.gooDirections.length === 0 && tile.type !== Tiles.EMPTY) {
+            this.state.board[row][col] = TileHelper.initTileWithType(Tiles.EMPTY)
+            this.setState({
+                board: this.state.board,
+                isReplacingTile: true,
+                score: this.state.score - UNUSED_TILE_PENALTY
+            })
+            this.soundSwap.play()
+            setTimeout(() => { this.clearUnusedTile(resolve, row, col + 1) }, BOOM_MS)
+            return
+        } else {
+            return this.clearUnusedTile(resolve, row, col + 1)
+        }
+    },
+
+    clearUnusedTiles() {
+        return new Promise((resolve) => this.clearUnusedTile(resolve, 0, 0))
+    },
+
     endLevel() {
         clearInterval(this.stepIntervalId)
         this.stepIntervalId = null
-        if (this.state.score < LEVELS[this.state.level].targetScore) {
-            this.setState({
-                gameState: GAME_STATES.SCREEN_LOSE,
-                canPlaceTile: false
-            })
-        } else if (this.state.level < LEVELS.length - 1) {
-            this.setState({ gameState: GAME_STATES.SCREEN_NEXT })
-        } else {
-            this.setState({ gameState: GAME_STATES.SCREEN_WIN })
-        }
+        this.setState({ canPlaceTile: false })
+        this.clearUnusedTiles().then(() => {
+            if (this.state.score < LEVELS[this.state.level].targetScore) {
+                this.setState({ gameState: GAME_STATES.SCREEN_LOSE })
+            } else if (this.state.level < LEVELS.length - 1) {
+                this.setState({ gameState: GAME_STATES.SCREEN_NEXT })
+            } else {
+                this.setState({ gameState: GAME_STATES.SCREEN_WIN })
+            }
+        })
     },
 
     onNextClick() {
