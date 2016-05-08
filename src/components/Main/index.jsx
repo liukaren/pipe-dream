@@ -246,7 +246,8 @@ export default React.createClass({
                 return <Rules onExit={ this.hideRules } />
             case GAME_STATES.SCREEN_NEXT:
                 return <ScreenNext onNextClick={ this.onNextClick }
-                                   level={ this.state.level + 2 } />
+                                   level={ this.state.level + 2 }
+                                   score={ this.state.score } />
             case GAME_STATES.SCREEN_LOSE:
                 return <ScreenLose onRestartClick={ this.restartGame }
                                    score={ this.state.score }
