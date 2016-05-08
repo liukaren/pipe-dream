@@ -15,20 +15,28 @@ import styles from './styles.less'
 const TILE_SCORE = 50
 const UNUSED_TILE_PENALTY = 10
 
+const KEYCODE_SPACE = 32
+const FAST_FLOW_SPEED_MS = 400
+
 const LEVELS = [{
-    startDelayMs: 2000,
-    flowSpeedMs: 1000,
-    targetScore: 50
+    startDelayMs: 15000,
+    flowSpeedMs: 3000,
+    targetScore: 250
 }, {
-    startDelayMs: 1000,
-    flowSpeedMs: 1000,
-    targetScore: 100
+    startDelayMs: 10000,
+    flowSpeedMs: 2000,
+    targetScore: 500
 }]
 
 export default React.createClass({
     componentDidMount() {
         this.soundPlace = document.getElementById('sound-place')
         this.soundSwap = document.getElementById('sound-swap')
+        document.onkeypress = this.onKeyPress
+    },
+
+    componentWillUnmount() {
+        document.onkeypress = null
     },
 
     getInitialState() {
@@ -71,8 +79,11 @@ export default React.createClass({
         })
 
         const levelInfo = this.currentLevel()
-        setTimeout(() => {
+        this._startDelayTimeoutId = setTimeout(() => {
+            this._startDelayTimeoutId = null
+
             this.onStep()
+            this.setState({ gameState: GAME_STATES.FLOW_STARTED })
             this._stepIntervalId = setInterval(this.onStep, levelInfo.flowSpeedMs)
         }, levelInfo.startDelayMs)
     },
@@ -177,8 +188,7 @@ export default React.createClass({
             this.state.board[row][col].gooDirections = [[enterDirection, exitDirection]]
             this.setState({
                 gooPosition,
-                board: this.state.board,
-                gameState: GAME_STATES.FLOW_STARTED
+                board: this.state.board
             })
             return
         }
@@ -237,11 +247,34 @@ export default React.createClass({
         }
     },
 
+    onKeyPress(event) {
+        // On spacebar, speed up the flow.
+        if (event.keyCode === KEYCODE_SPACE) {
+            if (this.state.gameState === GAME_STATES.FLOW_NOT_STARTED) {
+                clearTimeout(this._startDelayTimeoutId)
+                this._startDelayTimeoutId = null
+
+                this.setState({ gameState: GAME_STATES.FLOW_FAST })
+                this._stepIntervalId = setInterval(this.onStep, FAST_FLOW_SPEED_MS)
+            }
+            if (this.state.gameState === GAME_STATES.FLOW_STARTED) {
+                clearInterval(this._stepIntervalId)
+
+                this.setState({ gameState: GAME_STATES.FLOW_FAST })
+                this._stepIntervalId = setInterval(this.onStep, FAST_FLOW_SPEED_MS)
+            }
+        }
+    },
+
     render() {
         const levelInfo = this.currentLevel()
         const screen = this.getScreen()
 
-        return <div className={ styles.main }>
+        const isFastMode = this.state.gameState === GAME_STATES.FLOW_FAST
+        const startDelayMs = isFastMode ? 0 : levelInfo.startDelayMs
+        const flowSpeedMs = isFastMode ? FAST_FLOW_SPEED_MS : levelInfo.flowSpeedMs
+
+        return <div id="main-wrapper" className={ styles.main }>
             <div className={ styles.row }>
                 <div className={ styles.queue }>
                     <p>Next</p>
@@ -264,11 +297,11 @@ export default React.createClass({
                     </div> }
                     <Board board={ this.state.board }
                            canPlaceTile={ this.state.canPlaceTile }
-                           flowSpeedMs={ levelInfo.flowSpeedMs }
+                           flowSpeedMs={ flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
                            nextTile={ this.state.queue[0] }
-                           startDelayMs={ levelInfo.startDelayMs } />
+                           startDelayMs={ startDelayMs } />
                 </div>
             </div>
         </div>

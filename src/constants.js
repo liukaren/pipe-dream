@@ -27,7 +27,8 @@ export const GAME_STATES = {
     SCREEN_RULES: 2,
     FLOW_NOT_STARTED: 3,
     FLOW_STARTED: 4,
-    SCREEN_NEXT: 5,
-    SCREEN_LOSE: 6,
-    SCREEN_WIN: 7
+    FLOW_FAST: 5,
+    SCREEN_NEXT: 6,
+    SCREEN_LOSE: 7,
+    SCREEN_WIN: 8
 }
