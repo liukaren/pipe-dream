@@ -73,7 +73,7 @@ export default React.createClass({
         const levelInfo = LEVELS[this.state.level]
         setTimeout(() => {
             this.onStep()
-            this.stepIntervalId = setInterval(this.onStep, levelInfo.flowSpeedMs)
+            this._stepIntervalId = setInterval(this.onStep, levelInfo.flowSpeedMs)
         }, levelInfo.startDelayMs)
     },
 
@@ -115,8 +115,11 @@ export default React.createClass({
     },
 
     endLevel() {
-        clearInterval(this.stepIntervalId)
-        this.stepIntervalId = null
+        clearInterval(this._stepIntervalId)
+        this._stepIntervalId = null
+        clearTimeout(this._tileClickTimeoutId)
+        this._tileClickTimeoutId = null
+
         this.setState({ canPlaceTile: false })
         this.clearUnusedTiles().then(() => {
             if (this.state.score < LEVELS[this.state.level].targetScore) {
@@ -152,7 +155,7 @@ export default React.createClass({
         // After a delay, allow placing a tile again. Replacing a tile takes
         // more time than placing down a new tile.
         const throttle = isReplacingTile ? SWAP_THROTTLE_MS : PLACE_THROTTLE_MS
-        setTimeout(() => this.setState({
+        this._tileClickTimeoutId = setTimeout(() => this.setState({
             canPlaceTile: true,
             isReplacingTile: false
         }), throttle)
