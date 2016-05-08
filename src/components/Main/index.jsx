@@ -267,7 +267,7 @@ export default React.createClass({
 
     onKeyPress(event) {
         // On spacebar, speed up the flow.
-        if (event.keyCode === KEYCODE_SPACE) {
+        if (event.key === ' ' || event.which === KEYCODE_SPACE) {
             if (this.state.gameState === GAME_STATES.FLOW_NOT_STARTED) {
                 clearTimeout(this._startDelayTimeoutId)
                 this._startDelayTimeoutId = null
