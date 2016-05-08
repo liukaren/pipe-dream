@@ -12,6 +12,7 @@ const START_TILES = Object.keys(StartTiles).map((key) => StartTiles[key])
 export default React.createClass({
     propTypes: {
         tile: TileType.isRequired,
+        canPlaceTile: Type.bool,
         nextTile: TileType,
         onClick: Type.func,
         className: Type.string,
@@ -27,7 +28,7 @@ export default React.createClass({
         const nextTile = this.props.nextTile
         const isStartTile = START_TILES.indexOf(tile.type) !== -1
         const hasGoo = tile.gooDirections.length > 0
-        const isChangeableTile = !isStartTile && !hasGoo
+        const isChangeableTile = !isStartTile && !hasGoo && this.props.canPlaceTile
 
         const gooTiles = tile.gooDirections.map(([enter, exit], index) => {
             let gooStyle = {}

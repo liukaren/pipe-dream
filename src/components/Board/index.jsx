@@ -13,6 +13,7 @@ const START_TILES = Object.keys(StartTiles).map((key) => StartTiles[key])
 export default React.createClass({
     propTypes: {
         board: Type.arrayOf(Type.arrayOf(TileType)),
+        canPlaceTile: Type.bool,
         flowSpeedMs: Type.number,
         isReplacingTile: Type.bool,
         nextTile: TileType,
@@ -43,6 +44,7 @@ export default React.createClass({
                                                  transitionEnterTimeout={ enterTimeout }
                                                  transitionLeaveTimeout={ BOOM_MS }>
                             <Tile tile={ tile }
+                                  canPlaceTile={ this.props.canPlaceTile }
                                   className={ this.props.isReplacingTile ? 'is-replacing' : '' }
                                   key={ tile.animationId }
                                   flowSpeedMs={ this.props.flowSpeedMs }

@@ -134,8 +134,6 @@ export default React.createClass({
     },
 
     onTileClick(row, col) {
-        if (!this.state.canPlaceTile) { return }
-
         const board = this.state.board
         const isReplacingTile = board[row][col].type !== Tiles.EMPTY
         board[row][col] = this.state.queue.shift()
@@ -259,6 +257,7 @@ export default React.createClass({
                         </div>
                     </div> }
                     <Board board={ this.state.board }
+                           canPlaceTile={ this.state.canPlaceTile }
                            flowSpeedMs={ levelInfo.flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
