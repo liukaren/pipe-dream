@@ -20,7 +20,7 @@ export default React.createClass({
     },
 
     getDefaultProps() {
-        return { onClick: () => {} }
+        return { canPlaceTile: true, onClick: () => {} }
     },
 
     render() {
