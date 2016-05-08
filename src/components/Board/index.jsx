@@ -52,7 +52,7 @@ export default React.createClass({
                                   onClick={ () => { this.props.onTileClick(row, col) } } />
 
                             { isStartTile && // Timer over start tile (before goo starts flowing)
-                                  <img src="../../../public/images/timer.svg"
+                                  <img src="public/images/timer.svg"
                                        className={ styles.timer }
                                        style={ timerStyle } /> }
                         </ReactCSSTransitionGroup>
