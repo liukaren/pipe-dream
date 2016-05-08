@@ -14,19 +14,27 @@ import styles from './styles.less'
 
 const TILE_SCORE = 50
 const TILE_SCORE_FAST = 70
-const UNUSED_TILE_PENALTY = 10
+const UNUSED_TILE_PENALTY = 3
 
 const KEYCODE_SPACE = 32
 const FAST_FLOW_SPEED_MS = 400
 
 const LEVELS = [{
-    startDelayMs: 15000,
+    startDelayMs: 20000,
     flowSpeedMs: 3000,
     targetScore: 250
 }, {
-    startDelayMs: 10000,
+    startDelayMs: 18000,
+    flowSpeedMs: 2500,
+    targetScore: 400
+}, {
+    startDelayMs: 15000,
     flowSpeedMs: 2000,
     targetScore: 500
+}, {
+    startDelayMs: 10000,
+    flowSpeedMs: 1500,
+    targetScore: 600
 }]
 
 export default React.createClass({
@@ -76,6 +84,7 @@ export default React.createClass({
             gooPosition: null,
             isReplacingTile: false,
             level: level,
+            score: 0,
             startPosition: { row, col }
         })
 
