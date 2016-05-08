@@ -19,7 +19,7 @@ export default React.createClass({
     },
 
     getDefaultProps() {
-        return { onTileClick: () => {} }
+        return { onClick: () => {} }
     },
 
     render() {
