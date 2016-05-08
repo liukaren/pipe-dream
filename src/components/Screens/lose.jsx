@@ -5,7 +5,9 @@ import styles from './styles.less'
 
 export default React.createClass({
     propTypes: {
-        onRestartClick: React.PropTypes.func
+        onRestartClick: React.PropTypes.func,
+        score: React.PropTypes.number,
+        targetScore: React.PropTypes.number
     },
 
     render() {
@@ -14,6 +16,10 @@ export default React.createClass({
                 <div className={ styles.word1 }>Game</div>
                 &nbsp;
                 <div className={ styles.word2 }>Over</div>
+            </div>
+
+            <div className={ styles.subtitle }>
+                Score: { this.props.score } &middot; Target: { this.props.targetScore }
             </div>
 
             <div>

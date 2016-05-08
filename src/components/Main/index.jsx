@@ -44,6 +44,10 @@ export default React.createClass({
         }
     },
 
+    currentLevel() {
+        return LEVELS[this.state.level]
+    },
+
     restartGame() {
         this.setState(this.getInitialState())
     },
@@ -66,7 +70,7 @@ export default React.createClass({
             startPosition: { row, col }
         })
 
-        const levelInfo = LEVELS[this.state.level]
+        const levelInfo = this.currentLevel()
         setTimeout(() => {
             this.onStep()
             this._stepIntervalId = setInterval(this.onStep, levelInfo.flowSpeedMs)
@@ -119,7 +123,7 @@ export default React.createClass({
 
         this.setState({ canPlaceTile: false })
         this.clearUnusedTiles().then(() => {
-            if (this.state.score < LEVELS[this.state.level].targetScore) {
+            if (this.state.score < this.currentLevel().targetScore) {
                 this.setState({ gameState: GAME_STATES.SCREEN_LOSE })
             } else if (this.state.level < LEVELS.length - 1) {
                 this.setState({ gameState: GAME_STATES.SCREEN_NEXT })
@@ -222,7 +226,9 @@ export default React.createClass({
                 return <ScreenNext onNextClick={ this.onNextClick }
                                    level={ this.state.level + 2 } />
             case GAME_STATES.SCREEN_LOSE:
-                return <ScreenLose onRestartClick={ this.restartGame } />
+                return <ScreenLose onRestartClick={ this.restartGame }
+                                   score={ this.state.score }
+                                   targetScore={ this.currentLevel().targetScore } />
             case GAME_STATES.SCREEN_WIN:
                 return <ScreenWin onRestartClick={ this.restartGame }
                                   score={ this.state.score } />
@@ -232,7 +238,7 @@ export default React.createClass({
     },
 
     render() {
-        const levelInfo = LEVELS[this.state.level]
+        const levelInfo = this.currentLevel()
         const screen = this.getScreen()
 
         return <div className={ styles.main }>
