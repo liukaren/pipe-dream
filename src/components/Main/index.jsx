@@ -18,6 +18,8 @@ const TILE_SCORE_FAST = 70
 const UNUSED_TILE_PENALTY = 3
 
 const KEYCODE_SPACE = 32
+const KEY_SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]
+
 const FAST_FLOW_SPEED_MS = 400
 const MOBILE_BREAKPOINT = 500
 
@@ -43,13 +45,14 @@ export default React.createClass({
     componentDidMount() {
         this.soundPlace = document.getElementById('sound-place')
         this.soundSwap = document.getElementById('sound-swap')
-        document.onkeypress = this.onKeyPress
+        document.onkeydown = this.onKeyDown
         this.detectRotate() // Call once at the beginning
         window.addEventListener('resize', this.detectRotate)
+        this._keyLog = []
     },
 
     componentWillUnmount() {
-        document.onkeypress = null
+        document.onkeydown = null
         window.removeEventListener('resize', this.detectRotate)
     },
 
@@ -266,7 +269,7 @@ export default React.createClass({
         }
     },
 
-    onKeyPress(event) {
+    onKeyDown(event) {
         // On spacebar, speed up the flow.
         if (event.key === ' ' || event.which === KEYCODE_SPACE) {
             if (this.state.gameState === GAME_STATES.FLOW_NOT_STARTED) {
@@ -282,6 +285,16 @@ export default React.createClass({
                 this.setState({ gameState: GAME_STATES.FLOW_FAST })
                 this._stepIntervalId = setInterval(this.onStep, FAST_FLOW_SPEED_MS)
             }
+        }
+
+        // Thanks for the idea, Cliff
+        this._keyLog.push(event.which)
+        if (arrayEqual(this._keyLog, KEY_SEQUENCE.slice(0, this._keyLog.length))) {
+            if (this._keyLog.length === KEY_SEQUENCE.length) {
+                this.setState({ decorateTiles: true })
+            }
+        } else {
+            this._keyLog = []
         }
     },
 
@@ -340,6 +353,7 @@ export default React.createClass({
                     </div> }
                     <Board board={ this.state.board }
                            canPlaceTile={ this.state.canPlaceTile }
+                           decorateTiles={ this.state.decorateTiles }
                            flowSpeedMs={ flowSpeedMs }
                            isReplacingTile={ this.state.isReplacingTile }
                            onTileClick={ this.onTileClick }
@@ -350,3 +364,11 @@ export default React.createClass({
         </div>
     }
 })
+
+function arrayEqual(array1, array2) {
+    if (array1.length !== array2.length) { return false }
+    for (let i = 0; i < array1.length; i++) {
+        if (array1[i] !== array2[i]) { return false }
+    }
+    return true
+}

@@ -14,6 +14,7 @@ export default React.createClass({
     propTypes: {
         board: Type.arrayOf(Type.arrayOf(TileType)),
         canPlaceTile: Type.bool,
+        decorateTiles: Type.bool,
         flowSpeedMs: Type.number,
         isReplacingTile: Type.bool,
         nextTile: TileType,
@@ -45,7 +46,8 @@ export default React.createClass({
                                                  transitionLeaveTimeout={ BOOM_MS }>
                             <Tile tile={ tile }
                                   canPlaceTile={ this.props.canPlaceTile }
-                                  className={ this.props.isReplacingTile ? 'is-replacing' : '' }
+                                  className={ cn(this.props.isReplacingTile && 'is-replacing',
+                                                 this.props.decorateTiles && styles.decoratedTile) }
                                   key={ tile.animationId }
                                   flowSpeedMs={ this.props.flowSpeedMs }
                                   nextTile={ this.props.nextTile }
