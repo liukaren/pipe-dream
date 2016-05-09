@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 var baseConfig = require('./webpack.config.common.js');
 
 module.exports = Object.assign(baseConfig, {
@@ -6,6 +7,10 @@ module.exports = Object.assign(baseConfig, {
         'babel-polyfill',
         './src/index.jsx'
     ],
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+    ].concat(baseConfig.plugins),
 
     module: Object.assign(baseConfig.module, {
         loaders: [{
