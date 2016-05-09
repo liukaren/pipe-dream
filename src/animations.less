@@ -96,7 +96,7 @@
 
 :global(.board-enter) {
     animation: fadeInScaleUp @TRANSITION_PLACE both;
-    &:global(.is-replacing.board-enter) {
+    &:global(.is-replacing) {
         animation-delay: @TRANSITION_BOOM;
     }
 }

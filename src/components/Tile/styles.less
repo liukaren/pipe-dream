@@ -10,14 +10,12 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    .positionFill();
 }
 
 .tile {
-    .positionFill();
-
     .tileGoo {
         z-index: @ZINDEX_GOO;
-        .positionFill();
     }
 
     .tilePreview {
@@ -25,7 +23,6 @@
         border-radius: 5px;
         cursor: pointer;
         z-index: @ZINDEX_PREVIEW;
-        .positionFill();
 
         opacity: 0;
         &:hover {
