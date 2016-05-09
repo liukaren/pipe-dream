@@ -21,3 +21,10 @@ To build:
 * `npm run prod` to output the production build as `public/bundle.js`
 
 This project uses React and webpack.
+
+## Credits
+
+* Pipe images and background tile from [kenney.nl](http://kenney.nl/)!
+* Sound files from Open Game Art:
+[tile click](http://opengameart.org/content/forward-button-press-ui-sound)
+[explosion](http://opengameart.org/content/9-explosion-sounds)
