@@ -1,14 +1,6 @@
 @import '~animations.less';
 @import '~constants.less';
 
-:global(p) {
-    margin: 5px 0;
-}
-
-.rotatePrompt {
-    margin: @GUTTER;
-}
-
 .main {
     color: @TEXT_COLOR;
     font-family: 'Candal', sans-serif;
@@ -64,6 +56,19 @@
     }
 }
 
+.rotatePrompt {
+    margin: @GUTTER;
+}
+
+.audioToggle {
+    cursor: pointer;
+    margin-top: @GUTTER;
+    text-align: center;
+    .audioIcon {
+        height: @FONT_SIZE_SM;
+    }
+}
+
 // Adapted from
 // https://designshack.net/articles/css/12-fun-css-text-shadows-you-can-copy-and-paste/
 .funkyTextShadow(@color) {
@@ -104,4 +109,8 @@
         color: #FFCC00;
         .funkyTextShadow(#FFCC00);
     }
+}
+
+:global(p) {
+    margin: 5px 0;
 }

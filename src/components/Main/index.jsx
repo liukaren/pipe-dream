@@ -60,9 +60,17 @@ export default React.createClass({
             canPlaceTile: false,
             gameState: GAME_STATES.SCREEN_START,
             gooPosition: null,
+            hasAudio: true,
             isReplacingTile: false,
             level: 0,
             score: 0
+        }
+    },
+
+    playSound(sound) {
+        if (this.state.hasAudio) {
+            sound.currentTime = 0
+            sound.play()
         }
     },
 
@@ -128,8 +136,7 @@ export default React.createClass({
                 isReplacingTile: true,
                 score: Math.max(this.state.score - UNUSED_TILE_PENALTY, 0)
             })
-            this.soundSwap.currentTime = 0
-            this.soundSwap.play()
+            this.playSound(this.soundSwap)
             setTimeout(() => { this.clearUnusedTile(resolve, row, col + 1) }, BOOM_MS)
             return
         } else {
@@ -175,13 +182,7 @@ export default React.createClass({
         })
 
         // Play a sound
-        if (isReplacingTile) {
-            this.soundSwap.currentTime = 0
-            this.soundSwap.play()
-        } else {
-            this.soundPlace.currentTime = 0
-            this.soundPlace.play()
-        }
+        this.playSound(isReplacingTile ? this.soundSwap : this.soundPlace)
 
         // After a delay, allow placing a tile again. Replacing a tile takes
         // more time than placing down a new tile.
@@ -290,6 +291,10 @@ export default React.createClass({
         this.setState({ showRotatePrompt })
     },
 
+    onToggleAudio() {
+         this.setState({ hasAudio: !this.state.hasAudio })
+    },
+
     render() {
         const levelInfo = this.currentLevel()
         const screen = this.getScreen()
@@ -309,6 +314,14 @@ export default React.createClass({
                 <div className={ styles.queue }>
                     <p>Next</p>
                     <Queue tiles={ this.state.queue } />
+                    <div className={ styles.audioToggle }
+                         onClick={ this.onToggleAudio }>
+                        <img src="public/images/audio.svg"
+                             className={ styles.audioIcon } />&nbsp;
+                        <img src="public/images/audio-on.svg"
+                             className={ styles.audioIcon }
+                             style={{ visibility: (this.state.hasAudio ? 'visible' : 'hidden') }} />
+                    </div>
                 </div>
                 <div className={ styles.spacer }></div>
                 <div className={ styles.board }>
