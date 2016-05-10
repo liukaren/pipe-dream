@@ -1,10 +1,8 @@
 import animationStyles from 'animations.less'
-import { DIRECTIONS } from 'constants'
+import { DIRECTIONS, NUM_QUEUED_TILES } from 'constants'
 import { StartTiles, Tiles } from 'tiles'
 
-const NUM_PLAYABLE_TILES = 7 // Excludes EMPTY tile
 const NUM_START_TILES = 4
-const NUM_QUEUED_TILES = 5
 const NUM_BOARD_ROWS = 7
 const NUM_BOARD_COLS = 10
 
@@ -23,15 +21,37 @@ function initTileWithType(type) {
     return { type, gooDirections: [], animationId: tileIdCounter++ }
 }
 
+// From http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 const TileHelper = {
     initTileWithType: initTileWithType,
 
-    generateRandomTile() {
-        const randomId = Math.floor(Math.random() * NUM_PLAYABLE_TILES) + 1
-        const tileType = Object.keys(Tiles)
-            .map((key) => Tiles[key])
-            .find((tile) => tile.id === randomId)
-        return initTileWithType(tileType)
+    // Random Generator (permuted sequence of possible tiles)
+    // http://tetris.wikia.com/wiki/Random_Generator
+    // Thanks Dave & David!
+    generateRandomTileSet() {
+        const tileTypes = Object.keys(Tiles)
+            .map((key) => initTileWithType(Tiles[key]))
+            .filter((tile) => tile.type !== Tiles.EMPTY)
+        return shuffle(tileTypes)
     },
 
     generateRandomStartTile() {
@@ -90,14 +110,6 @@ const TileHelper = {
         let queue = []
         for (let i = 0; i < NUM_QUEUED_TILES; i++) {
             queue.push(initTileWithType(Tiles.EMPTY))
-        }
-        return queue
-    },
-
-    generateQueue() {
-        let queue = []
-        for (let i = 0; i < NUM_QUEUED_TILES; i++) {
-            queue.push(TileHelper.generateRandomTile())
         }
         return queue
     },

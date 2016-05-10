@@ -1,7 +1,10 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { GAME_STATES, BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS } from 'constants'
+import {
+    GAME_STATES, NUM_QUEUED_TILES,
+    BOOM_MS, PLACE_THROTTLE_MS, SWAP_THROTTLE_MS
+} from 'constants'
 import { Tiles } from 'tiles'
 import TileHelper from 'tileHelper'
 import Board from 'components/Board'
@@ -87,14 +90,14 @@ export default React.createClass({
 
     startLevel(level) {
         const board = TileHelper.generateEmptyBoard()
+        const queue = TileHelper.generateRandomTileSet()
         const startTile = TileHelper.generateRandomStartTile()
         const { row, col } = TileHelper.generateRandomInnerPosition()
 
         board[row][col] = startTile
 
         this.setState({
-            board,
-            queue: TileHelper.generateQueue(),
+            board, queue,
             canPlaceTile: true,
             gameState: GAME_STATES.FLOW_NOT_STARTED,
             gooPosition: null,
@@ -177,9 +180,16 @@ export default React.createClass({
         const board = this.state.board
         const isReplacingTile = board[row][col].type !== Tiles.EMPTY
         board[row][col] = this.state.queue.shift()
+
+        // If we don't have the required number of tiles to display, generate a
+        // new shuffled set.
+        let queue = this.state.queue
+        if (this.state.queue.length < NUM_QUEUED_TILES) {
+            queue = this.state.queue.concat(TileHelper.generateRandomTileSet())
+        }
+
         this.setState({
-            board,
-            queue: this.state.queue.concat([TileHelper.generateRandomTile()]),
+            board, queue,
             canPlaceTile: false,
             isReplacingTile
         })
@@ -326,7 +336,7 @@ export default React.createClass({
             <div className={ styles.row }>
                 <div className={ styles.queue }>
                     <p>Next</p>
-                    <Queue tiles={ this.state.queue } />
+                    <Queue tiles={ this.state.queue.slice(0, NUM_QUEUED_TILES) } />
                     <div className={ styles.audioToggle }
                          onClick={ this.onToggleAudio }>
                         <img src="public/images/audio.svg"
