@@ -11,6 +11,7 @@ This is by no means a complete replica, but it has the same basic gameplay as Pi
 * To replace a tile, just click the occupied square.
 * The queue shows upcoming tiles.
 * The water begins flowing after the timer counts down. Score points by connecting pipes to the start pipe.
+* Water will flow straight until it hits a curve.
 * Press [SPACEBAR] to speed up the flow and score extra points!
 
 ## Contributing

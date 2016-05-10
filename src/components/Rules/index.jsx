@@ -7,6 +7,7 @@ import tileStyles from 'tiles.less'
 import Button from 'components/Button'
 import Tile from 'components/Tile'
 
+import Direction from './direction'
 import FastFlow from './fastFlow'
 import PlaceTile from './placeTile'
 import SwapTile from './swapTile'
@@ -18,7 +19,8 @@ const PAGES = {
     REPLACE_TILE: 2,
     QUEUE: 3,
     START_TILE: 4,
-    FAST_FLOW: 5
+    DIRECTION: 5,
+    FAST_FLOW: 6
 }
 
 export default React.createClass({
@@ -68,6 +70,8 @@ export default React.createClass({
             </div>
         } else if (this.state.page === PAGES.START_TILE) {
             contents = <StartTile />
+        } else if (this.state.page === PAGES.DIRECTION) {
+            contents = <Direction />
         } else if (this.state.page === PAGES.FAST_FLOW) {
             contents = <FastFlow />
         }
